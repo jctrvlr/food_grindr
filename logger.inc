@@ -1,5 +1,4 @@
 <?php
-
 /* 
 * sendLogs
 *
@@ -13,7 +12,6 @@
 * @return void
 */
 function sendLogs($options){
-
     switch (strtolower($options[0])) {
         case 'e':
         case 'error':
@@ -37,7 +35,9 @@ function sendLogs($options){
     $msg = date("m/d/Y h:i:s A", $t) . " --- [" . $level . "] -- " . $options[1] . " -- " . $options[2] . PHP_EOL;
     
     $request = array();
-    $request['type'] = "Log Event";
+    $request['type'] = "log_event";
+    $request['level'] = $level;
+    $request['loc'] = $options[1];
     $request['message'] = $msg;
     $response = $client->publish($request);
 

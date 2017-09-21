@@ -12,6 +12,17 @@ function doLogin($username,$password)
     //return false if not valid
 }
 
+function doLog($level,$loc,$msg) {
+  //Decide where to put logs
+  file_put_contents('./logs/log_'.date("j.n.Y").'.txt', $msg, FILE_APPEND);
+  //If ERROR send to ADMINS
+  if($level === 'ERROR') {
+    $to = array('jic6@njit.edu', 'kn96@njit.edu', 'kld22@njit.edu', 'ga68@njit.edu');
+    $subj = "ERROR - ".$loc;
+    mail($to, $subj, $msg);
+  }
+}
+
 function requestProcessor($request)
 {
   echo "received request".PHP_EOL;
@@ -22,6 +33,8 @@ function requestProcessor($request)
   }
   switch ($request['type'])
   {
+    case "log_event":
+      return doLog($request['level'],$request['loc'],$request['message']);
     case "login":
       return doLogin($request['username'],$request['password']);
     case "validate_session":
