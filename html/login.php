@@ -22,7 +22,7 @@ switch ($request["type"])
 		$response = $client->send_request($req);
 	break;
 }
-echo json_encode($response);
+echo $response;
 exit(0);
 
 ?>
