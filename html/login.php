@@ -16,13 +16,13 @@ switch ($request["type"])
 {
 	case "login":
 		$req = array();
-		$req['type']="Login";
+		$req['type']="login";
 		$req['username']=$request["uname"];
-		$req['password']=$request["password"];
+		$req['password']=$request["pword"];
 		$response = $client->send_request($req);
 	break;
 }
-echo $response;
+echo json_encode($response);
 exit(0);
 
 ?>
