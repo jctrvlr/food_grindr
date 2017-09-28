@@ -44,6 +44,8 @@ function requestProcessor($request)
       return doLog($request['level'],$request['loc'],$request['message']);
     case "login":
       return doLogin($request['username'],$request['password']);
+    case "signup":
+      return doSignup($request['email'],$request['f_name'],$request['l_name'],$request['pass']);
     case "validate_session":
       return doValidate($request['sessionId']);
   }
