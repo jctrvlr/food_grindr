@@ -20,6 +20,9 @@ switch ($request["type"])
 		$req['username']=$request["uname"];
 		$req['password']=$request["pword"];
 		$response = $client->send_request($req);
+	case "signup":
+		$req = array();
+		$req['type'] = "signup"
 	break;
 }
 echo json_encode($response);
