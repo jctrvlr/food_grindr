@@ -7,16 +7,29 @@ require_once('login.php.inc');
 
 function doLogin($username,$password)
 {
-   	 // lookup username in databas
-   	 // check password
-    	$login = new logindb();
-	$output = $login->validateLogin($username,$password);
-	if($output){
-		return true;
-	} else {
-		return false;
-	}
-   	 //return false if not valid
+  // lookup username in databas
+  // check password
+  $login = new logindb();
+  $output = $login->validateLogin($username,$password);
+  if($output){
+    // TODO - Return json object instead of true/false 
+    return true;
+  } else {
+    // TODO - Return json object instead of true/false 
+    return false;
+  }
+}
+
+function doSignup($email, $fname, $lname, $pass){
+  $login = new logindb();
+  $output = $login->signup($email, $fname, $lname, $pass);
+  if($output){
+    // TODO - Return json object instead of true/false 
+    return true;
+  } else {
+    // TODO - Return json object instead of true/false 
+    return false;
+  }
 }
 
 function doLog($level,$loc,$msg) {
