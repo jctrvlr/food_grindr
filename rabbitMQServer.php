@@ -5,18 +5,17 @@ require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 require_once('login.php.inc');
 
-function doLogin($username,$password)
+function doLogin($email,$password)
 {
-   	 // lookup username in databas
-   	 // check password
-    	$login = new logindb();
-	$output = $login->validateLogin($username,$password);
+  // lookup email in database
+  // check password
+  $login = new logindb();
+	$output = $login->validateLogin($email,$password);
 	if($output){
 		return true;
 	} else {
 		return false;
 	}
-   	 //return false if not valid
 }
 
 function doLog($level,$loc,$msg) {
@@ -43,7 +42,7 @@ function requestProcessor($request)
     case "log_event":
       return doLog($request['level'],$request['loc'],$request['message']);
     case "login":
-      return doLogin($request['username'],$request['password']);
+      return doLogin($request['email'],$request['pass']);
     case "signup":
       return doSignup($request['email'],$request['f_name'],$request['l_name'],$request['pass']);
     case "validate_session":
