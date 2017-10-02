@@ -5,31 +5,17 @@ require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 require_once('login.php.inc');
 
-function doLogin($username,$password)
+function doLogin($email,$password)
 {
-  // lookup username in databas
+  // lookup email in database
   // check password
   $login = new logindb();
-  $output = $login->validateLogin($username,$password);
-  if($output){
-    // TODO - Return json object instead of true/false 
-    return true;
-  } else {
-    // TODO - Return json object instead of true/false 
-    return false;
-  }
-}
-
-function doSignup($email, $fname, $lname, $pass){
-  $login = new logindb();
-  $output = $login->signup($email, $fname, $lname, $pass);
-  if($output){
-    // TODO - Return json object instead of true/false 
-    return true;
-  } else {
-    // TODO - Return json object instead of true/false 
-    return false;
-  }
+	$output = $login->validateLogin($email,$password);
+	if($output){
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function doLog($level,$loc,$msg) {
@@ -56,7 +42,7 @@ function requestProcessor($request)
     case "log_event":
       return doLog($request['level'],$request['loc'],$request['message']);
     case "login":
-      return doLogin($request['username'],$request['password']);
+      return doLogin($request['email'],$request['pass']);
     case "signup":
       return doSignup($request['email'],$request['f_name'],$request['l_name'],$request['pass']);
     case "validate_session":
