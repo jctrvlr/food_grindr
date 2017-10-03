@@ -1,0 +1,114 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+<link href='beauty.css' rel='stylesheet' type='text/css'>
+<div class="login-page">
+  <div class="form">
+    <form class="register-form">
+      <input type="email" id="username" required="required" placeholder="Email"/>
+      <input type="text" id="f_name" required="required" placeholder="First Name"/>
+      <input type="text" id="l_name" required="required" placeholder="Last Name"/>
+      <input type="password" id="pass1" required="required" placeholder="Password"/>
+      <input type="password" id="pass2" required="required" onkeyup="checkPass(); return false;" placeholder="Confirm Password"/>
+      <span id="confirmMessage" class="confirmMessage"></span>
+      <button type="submit" id="register" onclick="submitLogin" >create</button>
+      <p class="message">Already registered? <a href="#">Sign In</a></p>
+    </form>
+    <form class="login-form">
+      <input type="email" id="username" required="required" placeholder="Email"/>
+      <input type="password" id="pass" required="required" placeholder="Password"/>
+      <button type="submit" id="login" onclick="submitRegister" >login</button>
+      <p class="message">Not registered? <a href="#">Create an account</a></p>
+    </form>
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $('.message a').click(function(){
+    $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+});
+
+function submitLogin()
+{
+	var uname = document.getElementById("email").value;
+	var pword = document.getElementById("pass").value;
+	document.getElementById("output").innerHTML = "username: " + username + "<p>password: "+pass+"<p>";	
+	sendLoginRequest(uname,pword);
+	return 0;
+}
+function submitRegister()
+{
+	var uname = document.getElementById("email").value;
+    var f_name = document.getElementById("f_name").value;
+    var l_name = document.getElementById("l_name").value;
+	var pword = document.getElementById("pass").value;
+	document.getElementById("output").innerHTML = "username: " + username + "<p>firstname: " + f_name + "<p>lastname: " + l_name + "<p>password: " + pass1 + "<p>";	
+	sendLoginRequest(uname,f_name,l_name,pword);
+	return 0;
+}
+function HandleLoginResponse(response)
+{
+	var text = JSON.parse(response);
+	document.getElementById("output").innerHTML = "response: "+text+"<p>";
+}
+function sendLoginRequest(username,pass)
+{
+	var request = new XMLHttpRequest();
+	request.open("POST","login.php",true);
+	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	request.onreadystatechange= function ()
+	{
+		
+		if ((this.readyState == 4)&&(this.status == 200))
+		{
+			HandleLoginResponse(this.responseText);
+		}		
+	}
+	request.send("type=login&uname="+username+"&pword="+pass);
+}
+
+function sendRegisterRequest(username,f_name,l_name,pass1)
+{
+	var request = new XMLHttpRequest();
+	request.open("POST","login.php",true);
+	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	request.onreadystatechange= function ()
+	{
+		
+		if ((this.readyState == 4)&&(this.status == 200))
+		{
+			HandleLoginResponse(this.responseText);
+		}		
+	}
+	request.send("type=login&uname="+username+"&f_name="+f_name+"&l_name="+l_name+"&pword="+pass1);
+}
+
+function checkPass()
+{
+    //Store the password field objects into variables ...
+    var pass1 = document.getElementById('pass1');
+    var pass2 = document.getElementById('cpass2');
+    //Store the Confimation Message Object ...
+    var message = document.getElementById('confirmMessage');
+    //Set the colors we will be using ...
+    var goodColor = "#66cc66";
+    var badColor = "#ff6666";
+    //Compare the values in the password field 
+    //and the confirmation field
+    if(pass1.value == pass2.value){
+        //The passwords match. 
+        //Set the color to the good color and inform
+        //the user that they have entered the correct password 
+        pass2.style.backgroundColor = goodColor;
+        message.style.color = goodColor;
+        message.innerHTML = "Passwords Match!"
+    }else{
+        //The passwords do not match.
+        //Set the color to the bad color and
+        //notify the user.
+        pass2.style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = "Passwords Do Not Match!"
+    }
+} 
+
+</script>
