@@ -65,7 +65,7 @@ class loginDB {
 		$ln = $this->logindb->real_escape_string($l_name);
 		$pw = password_hash($pass, PASSWORD_DEFAULT);
 
-		$statement = "insert into users ('f_name', 'l_name', 'email', 'pass') values ('".$fn."', '".$ln."', '".$em."', '".$pw."');";
+		$statement = "insert into users (f_name, l_name, email, pass) values ('".$fn."', '".$ln."', '".$em."', '".$pw."');";
 		$response = $this->logindb->query($statement);
 		$options = array();
 		$options[0] = 'debug';
