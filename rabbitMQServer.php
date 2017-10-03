@@ -10,7 +10,8 @@ function doLogin($email,$password)
   // lookup email in database
   // check password
   $login = new logindb();
-	$output = $login->validateLogin($email,$password);
+  $output = $login->validateLogin($email,$password);
+  echo $output;
 	if($output) {
 		return true;
 	} else {
