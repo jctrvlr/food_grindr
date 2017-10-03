@@ -1,8 +1,8 @@
 <?php
-require('get_host_info.inc');
-require('path.inc');
-require('rabbitMQLib.inc');
-require('logger.inc');
+require(dirname(__FILE__) . 'get_host_info.inc');
+require(dirname(__FILE__) . 'path.inc');
+require(dirname(__FILE__) . 'rabbitMQLib.inc');
+require(dirname(__FILE__) . 'logger.inc');
 
 if (!isset($_POST))
 {
