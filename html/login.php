@@ -31,6 +31,7 @@ switch ($request["type"])
 	break;
 }
 echo json_encode($response);
+echo 'test';
 exit(0);
 
 ?>
