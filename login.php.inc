@@ -30,7 +30,7 @@ class loginDB {
 		while ($row = $response->fetch_assoc())
 		{
 			echo "checking password for $email".PHP_EOL;
-			if (password_verify($pw, $row["password"]))
+			if (password_verify($pw, $row["pass"]))
 			{
 				echo "passwords match for $email".PHP_EOL;
 				// Info logging
