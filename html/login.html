@@ -64,7 +64,7 @@ function HandleRegisterResponse(response)
 	document.getElementById("output").innerHTML = "response: "+text+"<p>";
 }
 
-function sendLoginRequest(username,pass)
+function sendLoginRequest(email,pass)
 {
     console.log('Inside sendLoginRequest');
 	var request = new XMLHttpRequest();
@@ -78,10 +78,10 @@ function sendLoginRequest(username,pass)
 			HandleLoginResponse(this.responseText);
 		}		
 	}
-	request.send("type=login&uname="+username+"&pword="+pass);
+	request.send("type=login&uname="+email+"&pword="+pass);
 }
 
-function sendRegisterRequest(username,f_name,l_name,pass1)
+function sendRegisterRequest(email,f_name,l_name,pass1)
 {
     console.log('Inside sendRegisterRequest');
 	var request = new XMLHttpRequest();
@@ -95,7 +95,7 @@ function sendRegisterRequest(username,f_name,l_name,pass1)
 			HandleRegisterResponse(this.responseText);
 		}		
 	}
-	request.send("type=signup&uname="+username+"&f_name="+f_name+"&l_name="+l_name+"&pword="+pass1);
+	request.send("type=signup&uname="+email+"&f_name="+f_name+"&l_name="+l_name+"&pword="+pass1);
 }
 
 function checkPass()
