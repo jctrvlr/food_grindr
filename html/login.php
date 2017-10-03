@@ -17,6 +17,11 @@ if (!isset($_POST))
 	exit(0);
 }
 $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
+$options = array();
+$options[0] = 'debug';
+$options[1] = 'loginClient';
+$options[2] = 'Inside login.php after instantiating client';
+sendLogs($options);
 $request = $_POST;
 $response = "unsupported request type, politely FUCK OFF";
 switch ($request["type"])
