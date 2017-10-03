@@ -1,9 +1,9 @@
 <?php
 set_include_path(dirname(__FILE__));
-require_once(dirname(__FILE__) . 'get_host_info.inc');
-require_once(dirname(__FILE__) . 'path.inc');
-require_once(dirname(__FILE__) . 'rabbitMQLib.inc');
-require_once(dirname(__FILE__) . 'logger.inc');
+require_once('get_host_info.inc');
+require_once('path.inc');
+require_once('rabbitMQLib.inc');
+require_once('logger.inc');
 
 if (!isset($_POST))
 {
