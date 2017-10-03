@@ -31,7 +31,7 @@ function submitLogin()
 {
 	var uname = document.getElementById("email").value;
 	var pword = document.getElementById("pass").value;
-	document.getElementById("output").innerHTML = "username: " + username + "<p>password: "+pass+"<p>";	
+	document.getElementById("output").innerHTML = "username: " + uname + "<p>password: "+pword+"<p>";	
 	sendLoginRequest(uname,pword);
 	return 0;
 }
@@ -41,8 +41,8 @@ function submitRegister()
     var f_name = document.getElementById("f_name").value;
     var l_name = document.getElementById("l_name").value;
 	var pword = document.getElementById("pass").value;
-	document.getElementById("output").innerHTML = "username: " + username + "<p>firstname: " + f_name + "<p>lastname: " + l_name + "<p>password: " + pass1 + "<p>";	
-	sendLoginRequest(uname,f_name,l_name,pword);
+	document.getElementById("output").innerHTML = "username: " + uname + "<p>firstname: " + f_name + "<p>lastname: " + l_name + "<p>password: " + pword + "<p>";	
+	sendRegisterRequest(uname,f_name,l_name,pword);
 	return 0;
 }
 function HandleLoginResponse(response)
@@ -79,7 +79,7 @@ function sendRegisterRequest(username,f_name,l_name,pass1)
 			HandleLoginResponse(this.responseText);
 		}		
 	}
-	request.send("type=login&uname="+username+"&f_name="+f_name+"&l_name="+l_name+"&pword="+pass1);
+	request.send("type=signup&uname="+username+"&f_name="+f_name+"&l_name="+l_name+"&pword="+pass1);
 }
 
 function checkPass()
