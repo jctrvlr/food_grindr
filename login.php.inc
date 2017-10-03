@@ -34,21 +34,21 @@ class loginDB {
 			{
 				echo "passwords match for $email".PHP_EOL;
 				// Info logging
-				$options = array();
-				$options[0] = 'info';
-				$options[1] = 'loginServer';
-				$options[2] = $email.' has logged in.';
-				sendLogs($options);
+				//$options = array();
+				//$options[0] = 'info';
+				//$options[1] = 'loginServer';
+				//$options[2] = $email.' has logged in.';
+				//sendLogs($options);
 				return 1;// password match
 			}
 			echo "passwords did not match for $email".PHP_EOL;
 		}
 		// Info logging
-		$options = array();
-		$options[0] = 'info';
-		$options[1] = 'loginServer';
-		$options[2] = $email.' cannot be found in database.';
-		sendLogs($options);
+		//$options = array();
+		//$options[0] = 'info';
+		//$options[1] = 'loginServer';
+		//$options[2] = $email.' cannot be found in database.';
+		//sendLogs($options);
 		
 		return 0;//no users matched username
 	}
