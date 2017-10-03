@@ -41,6 +41,7 @@ function submitLogin()
 }
 function submitRegister()
 {
+    console.log('Inside submitRegister');
 	var uname = document.getElementById("email").value;
     var f_name = document.getElementById("f_name").value;
     var l_name = document.getElementById("l_name").value;
@@ -51,18 +52,21 @@ function submitRegister()
 }
 function HandleLoginResponse(response)
 {
+    console.log('Inside handleLoginRequest');
 	var text = JSON.parse(response);
 	document.getElementById("output").innerHTML = "response: "+text+"<p>";
 }
 
 function HandleRegisterResponse(response)
 {
+    console.log('Inside handleRegisterRequest');
 	var text = JSON.parse(response);
 	document.getElementById("output").innerHTML = "response: "+text+"<p>";
 }
 
 function sendLoginRequest(username,pass)
 {
+    console.log('Inside sendLoginRequest');
 	var request = new XMLHttpRequest();
 	request.open("POST","login.php",true);
 	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
@@ -79,6 +83,7 @@ function sendLoginRequest(username,pass)
 
 function sendRegisterRequest(username,f_name,l_name,pass1)
 {
+    console.log('Inside sendRegisterRequest');
 	var request = new XMLHttpRequest();
 	request.open("POST","login.php",true);
 	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
