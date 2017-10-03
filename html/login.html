@@ -95,7 +95,7 @@ function sendRegisterRequest(email,f_name,l_name,pass2)
 			HandleRegisterResponse(this.responseText);
 		}		
 	}
-	request.send("type=signup&uname="+email+"&f_name="+f_name+"&l_name="+l_name+"&pword="+pass2);
+	request.send("type=signup&email="+email+"&f_name="+f_name+"&l_name="+l_name+"&pword="+pass2);
 }
 
 function checkPass()
