@@ -2,26 +2,14 @@
 require_once('get_host_info.inc');
 require_once('path.inc');
 require_once('rabbitMQLib.inc');
-require_once('logger.inc');
 
 if (!isset($_POST))
 {
-	$options = array();
-	$options[0] = 'error';
-	$options[1] = 'loginClient';
-	$options[2] = $_SERVER['REMOTE_ADDR'].' has no post message set.';
-	sendLogs($options);
-	
 	$msg = "NO POST MESSAGE SET, POLITELY FUCK OFF";
 	echo json_encode($msg);
 	exit(0);
 }
 $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
-$options = array();
-$options[0] = 'debug';
-$options[1] = 'loginClient';
-$options[2] = 'Inside login.php after instantiating client';
-sendLogs($options);
 $request = $_POST;
 $response = "unsupported request type, politely FUCK OFF";
 switch ($request["type"])
