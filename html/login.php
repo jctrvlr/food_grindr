@@ -2,6 +2,7 @@
 require_once('get_host_info.inc');
 require_once('path.inc');
 require_once('rabbitMQLib.inc');
+require_once('logger.inc');
 
 if (!isset($_POST))
 {
@@ -20,6 +21,7 @@ switch ($request["type"])
 		$req['email']=$request["email"];
 		$req['pass']=$request["pword"];
 		$response = $client->send_request($req);
+
 	case "signup":
 		$req = array();
 		$req['type'] = 'signup';
@@ -30,6 +32,12 @@ switch ($request["type"])
 		$response = $client->send_request($req);
 	break;
 }
+$samp_options = array();
+$samp_options[0] = 'debug';
+$samp_options[1] = 'login.php';
+$samp_options[2] = 'Right before sending back response: '.$response;
+sendLogs($samp_options);
+
 echo json_encode($response);
 echo 'test';
 exit(0);
