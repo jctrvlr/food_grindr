@@ -45,7 +45,7 @@ function submitRegister()
 	var uname = document.getElementById("email").value;
     var f_name = document.getElementById("f_name").value;
     var l_name = document.getElementById("l_name").value;
-	var pword = document.getElementById("pass").value;
+	var pword = document.getElementById("pass2").value;
 	document.getElementById("output").innerHTML = "username: " + uname + "<p>firstname: " + f_name + "<p>lastname: " + l_name + "<p>password: " + pword + "<p>";	
 	sendRegisterRequest(uname,f_name,l_name,pword);
 	return 0;
@@ -81,7 +81,7 @@ function sendLoginRequest(email,pass)
 	request.send("type=login&uname="+email+"&pword="+pass);
 }
 
-function sendRegisterRequest(email,f_name,l_name,pass1)
+function sendRegisterRequest(email,f_name,l_name,pass2)
 {
     console.log('Inside sendRegisterRequest');
 	var request = new XMLHttpRequest();
@@ -95,7 +95,7 @@ function sendRegisterRequest(email,f_name,l_name,pass1)
 			HandleRegisterResponse(this.responseText);
 		}		
 	}
-	request.send("type=signup&uname="+email+"&f_name="+f_name+"&l_name="+l_name+"&pword="+pass1);
+	request.send("type=signup&uname="+email+"&f_name="+f_name+"&l_name="+l_name+"&pword="+pass2);
 }
 
 function checkPass()
