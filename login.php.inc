@@ -23,7 +23,7 @@ class loginDB {
 
 	public function validateLogin($email,$password) {
 		$em = $this->logindb->real_escape_string($email);
-		$pw = $this->logindb->real_escape_string($password);
+		$pw = $password;
 		$statement = "select * from users where email = '$em';";
 		$response = $this->logindb->query($statement);
 
@@ -42,12 +42,6 @@ class loginDB {
 				return 1;// password match
 			}
 			echo "passwords did not match for $email".PHP_EOL;
-			// Info logging
-			$options = array();
-			$options[0] = 'info';
-			$options[1] = 'loginServer';
-			$options[2] = $email.' has logged in.';
-			sendLogs($options);
 		}
 		// Info logging
 		$options = array();
