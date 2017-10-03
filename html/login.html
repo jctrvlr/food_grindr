@@ -72,14 +72,15 @@ function sendLoginRequest(email,pass)
 	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 	request.onreadystatechange= function ()
 	{
-		
+		console.log('receievd response');
 		if ((this.readyState == 4)&&(this.status == 200))
 		{
             console.log('response text' + this.responseText);
 			HandleLoginResponse(this.responseText);
 		}		
 	}
-	request.send("type=login&email="+email+"&pword="+pass);
+    request.send("type=login&email="+email+"&pword="+pass);
+    console.log('sent request');
 }
 
 function sendRegisterRequest(email,f_name,l_name,pass2)
