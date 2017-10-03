@@ -14,13 +14,13 @@
       <input type="password" id="pass1" required="required" placeholder="Password"/>
       <input type="password" id="pass2" required="required" onkeyup="checkPass(); return false;" placeholder="Confirm Password"/>
       <span id="confirmMessage" class="confirmMessage"></span>
-      <button type="submit" id="register" onclick="submitLogin" >create</button>
+      <button type="submit" id="register" onclick="submitRegister" >create</button>
       <p class="message">Already registered? <a href="#">Sign In</a></p>
     </form>
     <form class="login-form">
       <input type="email" id="username" required="required" placeholder="Email"/>
       <input type="password" id="pass" required="required" placeholder="Password"/>
-      <button type="submit" id="login" onclick="submitRegister" >login</button>
+      <button type="submit" id="login" onclick="submitLogin" >login</button>
       <p class="message">Not registered? <a href="#">Create an account</a></p>
     </form>
   </div>
@@ -54,6 +54,13 @@ function HandleLoginResponse(response)
 	var text = JSON.parse(response);
 	document.getElementById("output").innerHTML = "response: "+text+"<p>";
 }
+
+function HandleRegisterResponse(response)
+{
+	var text = JSON.parse(response);
+	document.getElementById("output").innerHTML = "response: "+text+"<p>";
+}
+
 function sendLoginRequest(username,pass)
 {
 	var request = new XMLHttpRequest();
@@ -80,7 +87,7 @@ function sendRegisterRequest(username,f_name,l_name,pass1)
 		
 		if ((this.readyState == 4)&&(this.status == 200))
 		{
-			HandleLoginResponse(this.responseText);
+			HandleRegisterResponse(this.responseText);
 		}		
 	}
 	request.send("type=signup&uname="+username+"&f_name="+f_name+"&l_name="+l_name+"&pword="+pass1);
