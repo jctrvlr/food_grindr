@@ -8,7 +8,7 @@
   <div id="output"></div>
   <div class="form">
     <form class="register-form">
-      <input type="email" id="email" required="required" placeholder="Email"/>
+      <input type="email" id="emailr" required="required" placeholder="Email"/>
       <input type="text" id="f_name" required="required" placeholder="First Name"/>
       <input type="text" id="l_name" required="required" placeholder="Last Name"/>
       <input type="password" id="pass1" required="required" placeholder="Password"/>
@@ -18,7 +18,7 @@
       <p class="message">Already registered? <a href="#">Sign In</a></p>
     </form>
     <form class="login-form">
-      <input type="email" id="email" required="required" placeholder="Email"/>
+      <input type="email" id="emaill" required="required" placeholder="Email"/>
       <input type="password" id="pass" required="required" placeholder="Password"/>
       <button type="submit" id="login" onclick="submitLogin()" >login</button>
       <p class="message">Not registered? <a href="#">Create an account</a></p>
@@ -33,7 +33,7 @@
 
 function submitLogin()
 {
-	var uname = document.getElementById("email").value;
+	var uname = document.getElementById("emaill").value;
 	var pword = document.getElementById("pass").value;
 	document.getElementById("output").innerHTML = "username: " + uname + "<p>password: "+pword+"<p>";	
 	sendLoginRequest(uname,pword);
@@ -42,7 +42,7 @@ function submitLogin()
 function submitRegister()
 {
     console.log('Inside submitRegister');
-	var uname = document.getElementById("email").value;
+	var uname = document.getElementById("emailr").value;
     var f_name = document.getElementById("f_name").value;
     var l_name = document.getElementById("l_name").value;
 	var pword = document.getElementById("pass2").value;
