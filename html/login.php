@@ -1,8 +1,8 @@
 <?php
-require_once('get_host_info.inc');
-require_once('path.inc');
-require_once('rabbitMQLib.inc');
-require_once('logger.inc');
+require('get_host_info.inc');
+require('path.inc');
+require('rabbitMQLib.inc');
+require('logger.inc');
 
 if (!isset($_POST))
 {
