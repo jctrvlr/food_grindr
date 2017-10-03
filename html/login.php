@@ -28,7 +28,6 @@ switch ($request["type"])
 		$req['l_name']=$request['l_name'];
 		$req['pass']=$request['pword'];
 		$response = $client->send_request($req);
-		echo $response;
 	break;
 }
 echo json_encode($response);
