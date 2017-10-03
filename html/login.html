@@ -67,35 +67,34 @@ function HandleRegisterResponse(response)
 function sendLoginRequest(email,pass)
 {
     console.log('Inside sendLoginRequest');
-	var request = new XMLHttpRequest();
-	request.open("POST","login.php",true);
-	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-	request.onreadystatechange= function ()
-	{
-		
-		if ((this.readyState == 4)&&(this.status == 200))
-		{
-			HandleLoginResponse(this.responseText);
-		}		
-	}
-	request.send("type=login&email="+email+"&pword="+pass);
+    $.ajax({
+            url: 'login.php',
+            data: {
+                type: 'login',
+                email: email,
+                pword: pass
+            },
+            type: 'post',
+            success: function (output) {
+                HandleLoginResponse(output);
+            }
+    });
 }
 
-function sendRegisterRequest(email,f_name,l_name,pass2)
+function sendRegisterRequest(email,f_name,l_name,pass)
 {
     console.log('Inside sendRegisterRequest');
-	var request = new XMLHttpRequest();
-	request.open("POST","login.php",true);
-	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-	request.onreadystatechange= function ()
-	{
-		
-		if ((this.readyState == 4)&&(this.status == 200))
-		{
-			HandleRegisterResponse(this.responseText);
-		}		
-	}
-	request.send("type=signup&email="+email+"&f_name="+f_name+"&l_name="+l_name+"&pword="+pass2);
+    $.ajax({url: 'login.php',
+            data: {type: 'signup',
+                   email: email,
+                   f_name: f_name,
+                   l_name: l_name,
+                   pword: pass},
+            type: 'post', 
+            success: function(output) {
+                HandleRegisterResponse(output);
+            }
+    });
 }
 
 function checkPass()
