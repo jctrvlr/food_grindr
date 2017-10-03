@@ -11,11 +11,11 @@ if (!isset($_POST))
 }
 $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
 $request = $_POST;
-$response = "unsupported request type, politely FUCK OFF";
+
 switch ($request["type"])
 {
 	case "login":
-		$req = array();
+		$req=array();
 		$req['type']="login";
 		$req['email']=$request["email"];
 		$req['pass']=$request["pword"];
