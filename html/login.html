@@ -78,7 +78,7 @@ function sendLoginRequest(email,pass)
 			HandleLoginResponse(this.responseText);
 		}		
 	}
-	request.send("type=login&uname="+email+"&pword="+pass);
+	request.send("type=login&email="+email+"&pword="+pass);
 }
 
 function sendRegisterRequest(email,f_name,l_name,pass2)
