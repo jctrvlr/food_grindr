@@ -11,21 +11,14 @@ function doLogin($email,$password)
   // check password
   $login = new logindb();
 	$output = $login->validateLogin($email,$password);
-	if($output) {
-		return true;
-	} else {
-		return false;
-	}
+  return $output;
+  
 }
 
 function doSignup($email, $f_name, $l_name, $pass) {
   $login = new logindb();
   $output = $login->signup($email, $f_name, $l_name, $pass);
-  if($output) {
-    return true;
-  } else {
-    return false;
-  }
+  return $output;
 }
 
 function doLog($level,$loc,$msg) {
