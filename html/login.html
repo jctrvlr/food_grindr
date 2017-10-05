@@ -8,7 +8,7 @@
   <div id="output"></div>
   <div class="form">
     <form class="register-form">
-      <input type="email" id="emailr" required="required" placeholder="Email"/>
+      <input type="email" id="email1" required="required" placeholder="Email"/>
       <input type="text" id="f_name" required="required" placeholder="First Name"/>
       <input type="text" id="l_name" required="required" placeholder="Last Name"/>
       <input type="password" id="pass1" required="required" placeholder="Password"/>
@@ -18,7 +18,7 @@
       <p class="message">Already registered? <a href="#">Sign In</a></p>
     </form>
     <form class="login-form">
-      <input type="email" id="emaill" required="required" placeholder="Email"/>
+      <input type="email" id="email2" required="required" placeholder="Email"/>
       <input type="password" id="pass" required="required" placeholder="Password"/>
       <button type="submitl" id="login" onclick="submitLogin()" >login</button>
       <p class="message">Not registered? <a href="#">Create an account</a></p>
@@ -33,7 +33,7 @@
 
 function submitLogin()
 {
-	var uname = document.getElementById("emaill").value;
+	var uname = document.getElementById("email2").value;
 	var pword = document.getElementById("pass").value;
 	document.getElementById("output").innerHTML = "username: " + uname + "<p>password: "+pword+"<p>";	
 	sendLoginRequest(uname,pword);
@@ -42,7 +42,7 @@ function submitLogin()
 function submitRegister()
 {
     console.log('Inside submitRegister');
-	var uname = document.getElementById("emailr").value;
+	var uname = document.getElementById("email1").value;
     var f_name = document.getElementById("f_name").value;
     var l_name = document.getElementById("l_name").value;
 	var pword = document.getElementById("pass2").value;
@@ -52,8 +52,8 @@ function submitRegister()
 }
 function HandleLoginResponse(response)
 {
-    console.log('Inside handleLoginRequest');
-	var text = JSON.parse(response);
+    console.log('Inside handleLoginRequest: ' + response);
+    var text = JSON.parse(response);
 	document.getElementById("output").innerHTML = "response: "+text+"<p>";
 }
 
@@ -67,37 +67,34 @@ function HandleRegisterResponse(response)
 function sendLoginRequest(email,pass)
 {
     console.log('Inside sendLoginRequest');
-	var request = new XMLHttpRequest();
-	request.open("POST","login.php",true);
-	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-	request.onreadystatechange= function ()
-	{
-		console.log('receievd response');
-		if ((this.readyState == 4)&&(this.status == 200))
-		{
-            console.log('response text' + this.responseText);
-			HandleLoginResponse(this.responseText);
-		}		
-	}
-    request.send("type=login&email="+email+"&pword="+pass);
-    console.log('sent request');
+    $.ajax({
+            url: 'login.php',
+            data: {
+                type: 'login',
+                email: email,
+                pword: pass
+            },
+            type: 'post',
+            success: function (output) {
+                HandleLoginResponse(output);
+            }
+    });
 }
 
-function sendRegisterRequest(email,f_name,l_name,pass2)
+function sendRegisterRequest(email,f_name,l_name,pass)
 {
     console.log('Inside sendRegisterRequest');
-	var request = new XMLHttpRequest();
-	request.open("POST","login.php",true);
-	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-	request.onreadystatechange= function ()
-	{
-		
-		if ((this.readyState == 4)&&(this.status == 200))
-		{
-			HandleRegisterResponse(this.responseText);
-		}		
-	}
-	request.send("type=signup&email="+email+"&f_name="+f_name+"&l_name="+l_name+"&pword="+pass2);
+    $.ajax({url: 'login.php',
+            data: {type: 'signup',
+                   email: email,
+                   f_name: f_name,
+                   l_name: l_name,
+                   pword: pass},
+            type: 'post', 
+            success: function(output) {
+                HandleRegisterResponse(output);
+            }
+    });
 }
 
 function checkPass()

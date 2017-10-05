@@ -10,23 +10,15 @@ function doLogin($email,$password)
   // lookup email in database
   // check password
   $login = new logindb();
-  $output = $login->validateLogin($email,$password);
-  echo $output;
-	if($output) {
-		return true;
-	} else {
-		return false;
-	}
+	$output = $login->validateLogin($email,$password);
+  return $output;
+  
 }
 
 function doSignup($email, $f_name, $l_name, $pass) {
   $login = new logindb();
   $output = $login->signup($email, $f_name, $l_name, $pass);
-  if($output) {
-    return true;
-  } else {
-    return false;
-  }
+  return $output;
 }
 
 function doLog($level,$loc,$msg) {
