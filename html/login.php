@@ -34,6 +34,7 @@ switch ($request["type"])
 		$response = $client->send_request($req);
 		break;
 }
+$response = 'test';
 echo $response;
 exit(0);
 
