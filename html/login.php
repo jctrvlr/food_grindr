@@ -2,6 +2,8 @@
 require_once('get_host_info.inc');
 require_once('path.inc');
 require_once('rabbitMQLib.inc');
+require_once('logger.inc');
+
 
 if (!isset($_POST))
 {
@@ -19,7 +21,8 @@ switch ($request["type"])
 		$req['type']="login";
 		$req['email']=$request["email"];
 		$req['pass']=$request["pword"];
-		$response = $client->send_request($req);
+		$respons = $client->send_request($req);
+		$response = 'tetst';
 		break;
 	case "signup":
 		$req = array();
