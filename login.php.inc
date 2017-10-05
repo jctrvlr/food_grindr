@@ -66,11 +66,12 @@ class loginDB {
 		$options[1] = 'loginServer';
 		$options[2] = 'Signup function '. $response;
 		sendLogs($options);
-		if ($response) {
-			return 1;
-		} else {
-			return 0;
-		}
+		return $response;
+		//if ($response) {
+		//	return 1;
+		//} else {
+		//	return 0;
+		//}
 	}
 }
 ?>
