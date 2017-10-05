@@ -33,8 +33,7 @@ switch ($request["type"])
 		$response = $client->send_request($req);
 		break;
 }
-echo 'lol';
-//echo $response;
+echo $response;
 exit(0);
 
 ?>
