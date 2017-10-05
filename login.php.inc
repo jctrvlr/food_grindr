@@ -39,7 +39,7 @@ class loginDB {
 				$options[1] = 'loginServer';
 				$options[2] = $email.' has logged in.';
 				sendLogs($options);
-				return 1;// password match
+				return true;// password match
 			}
 			echo "passwords did not match for $email".PHP_EOL;
 		}
@@ -50,7 +50,7 @@ class loginDB {
 		$options[2] = $email.' cannot be found in database.';
 		sendLogs($options);
 		
-		return 0;//no users matched username
+		return false;//no users matched username
 	}
 	
 	public function signup($email, $f_name, $l_name, $pass) {
@@ -66,12 +66,11 @@ class loginDB {
 		$options[1] = 'loginServer';
 		$options[2] = 'Signup function '. $response;
 		sendLogs($options);
-		return $response;
-		//if ($response) {
-		//	return 1;
-		//} else {
-		//	return 0;
-		//}
+		if ($response) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 ?>

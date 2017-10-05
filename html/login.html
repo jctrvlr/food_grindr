@@ -61,7 +61,7 @@ function HandleLoginResponse(response)
 function HandleRegisterResponse(response)
 {
     console.log('Inside handleRegisterRequest');
-	var text = response;
+	var text = JSON.parse(response);
 	document.getElementById("output").innerHTML = "response: "+text+"<p>";
 }
 
