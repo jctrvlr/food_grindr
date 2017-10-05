@@ -21,8 +21,7 @@ switch ($request["type"])
 		$req['type']="login";
 		$req['email']=$request["email"];
 		$req['pass']=$request["pword"];
-		$respons = $client->send_request($req);
-		$response = 'tetst';
+		$response = $client->send_request($req);
 		break;
 	case "signup":
 		$req = array();
@@ -34,8 +33,8 @@ switch ($request["type"])
 		$response = $client->send_request($req);
 		break;
 }
-$response = 'test';
-echo $response;
+echo 'lol';
+//echo $response;
 exit(0);
 
 ?>
