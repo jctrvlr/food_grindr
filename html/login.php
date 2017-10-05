@@ -27,7 +27,6 @@ switch ($request["type"])
 		$options[2] = 'before response';
 		sendLogs($options);
 		$response = $client->send_request($req);
-		break;
 	case "signup":
 		$req = array();
 		$req['type'] = 'signup';
@@ -36,7 +35,7 @@ switch ($request["type"])
 		$req['l_name']=$request['l_name'];
 		$req['pass']=$request['pword'];
 		$response = $client->send_request($req);
-		break;
+	break;
 }
 
 echo $response;
