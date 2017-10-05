@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 require_once('path.inc');
 require_once('get_host_info.inc');
@@ -38,6 +39,7 @@ switch ($request["type"])
 		$response = $client->send_request($req);
 		break;
 }
+
 echo $response;
 exit(0);
 

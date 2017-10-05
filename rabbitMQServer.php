@@ -12,8 +12,10 @@ function doLogin($email,$password)
   $login = new logindb();
 	$output = $login->validateLogin($email,$password);
 	if($output) {
+    echo 'return true';
 		return true;
 	} else {
+    echo 'return false';
 		return false;
 	}
 }
