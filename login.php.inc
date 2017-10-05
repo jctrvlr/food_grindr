@@ -61,16 +61,16 @@ class loginDB {
 
 		$statement = "insert into users (f_name, l_name, email, pass) values ('".$fn."', '".$ln."', '".$em."', '".$pw."');";
 		$response = $this->logindb->query($statement);
-		if ($response) {
-			return 1;
-		} else {
-			return 0;
-		}
 		$options = array();
 		$options[0] = 'debug';
 		$options[1] = 'loginServer';
 		$options[2] = 'Signup function '. $response;
 		sendLogs($options);
+		if ($response) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 }
 ?>
