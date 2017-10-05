@@ -16,13 +16,15 @@ $request = $_POST;
 
 switch ($request["type"])
 {
-	case "login":
+	case "login": {
 		$req=array();
 		$req['type']="login";
 		$req['email']=$request["email"];
 		$req['pass']=$request["pword"];
 		$response = $client->send_request($req);
-	case "signup":
+		break;
+	}
+	case "signup": {
 		$req = array();
 		$req['type'] = 'signup';
 		$req['email']=$request['email'];
@@ -30,7 +32,8 @@ switch ($request["type"])
 		$req['l_name']=$request['l_name'];
 		$req['pass']=$request['pword'];
 		$response = $client->send_request($req);
-	break;
+		break;
+	}
 }
 
 echo json_encode($response);
