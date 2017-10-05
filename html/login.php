@@ -21,11 +21,6 @@ switch ($request["type"])
 		$req['type']="login";
 		$req['email']=$request["email"];
 		$req['pass']=$request["pword"];
-		$options = array();
-		$options[0] = 'info';
-		$options[1] = 'login.php';
-		$options[2] = 'before response';
-		sendLogs($options);
 		$response = $client->send_request($req);
 	case "signup":
 		$req = array();
