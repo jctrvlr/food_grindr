@@ -31,15 +31,7 @@
     $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
 });
 
-$('input[type="submit"]').attr('disabled','disabled');
-$('input[type="text"]').keyup(function(){
-    if($('input[type="text"]').val() == ""){
-        $('input[type="submit"]').attr('disabled','disabled');
-    }
-    else{
-        $('input[type="submit"]').removeAttr('disabled');
-    }
-})
+
 
 function submitLogin()
 {
