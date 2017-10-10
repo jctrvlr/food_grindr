@@ -15,6 +15,11 @@ function doLogin($email,$password)
   
 }
 
+function doValidate($sessionID) {
+  //TODO Validate Session
+  //TODO Start session somewhere
+}
+
 function doSignup($email, $f_name, $l_name, $pass) {
   $login = new logindb();
   $output = $login->signup($email, $f_name, $l_name, $pass);
@@ -50,6 +55,8 @@ function requestProcessor($request)
       return doSignup($request['email'],$request['f_name'],$request['l_name'],$request['pass']);
     case "validate_session":
       return doValidate($request['sessionId']);
+    case "get_rest":
+      //return getRest($request['']);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
