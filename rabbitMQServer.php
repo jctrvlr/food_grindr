@@ -55,8 +55,6 @@ function requestProcessor($request)
       return doSignup($request['email'],$request['f_name'],$request['l_name'],$request['pass']);
     case "validate_session":
       return doValidate($request['sessionId']);
-    case "get_rest":
-      //return getRest($request['']);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
