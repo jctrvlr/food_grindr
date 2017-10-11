@@ -14,7 +14,7 @@ $request['type'] = "get_loc";
 $request['loc'] = $loc;
 $request['lat'] = $lat;
 $request['lon'] = $lon;
-$response = $client->publish($request);
+$response = $client->send_request($request);
 
 echo $response;
 ?>
