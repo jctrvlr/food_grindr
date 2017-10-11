@@ -5,7 +5,7 @@ var axios = require('axios');
 const key = '1b90ae9b4a76dd0cf044bfc1332206cf';
 
 // Change localhost to correct IP of rabbitMQ server
-amqp.connect('amqp://localhost', function (err, conn) {
+amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
     conn.createChannel(function (err, ch) {
         var q = 'loc';
 

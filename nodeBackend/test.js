@@ -23,7 +23,7 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
                     var lat = content.lat;
                     var lon = content.lon;
                     console.log('Got message from get_loc queue: ', content);
-                    var r = "Response to get_loc message";
+                    var r = {"message": "Response to get_loc message"};
                     //var r = getLocations(loc, lat, lon);
                     ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(r)), { correlationId: msg.properties.correlationId });
                     ch.ack(msg);
