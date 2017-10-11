@@ -1,39 +1,76 @@
 var amqp = require('amqplib/callback_api');
+var axios = require('axios');
 
-var args = process.argv.slice(2);
 
-if (args.length == 0) {
-    console.log("Usage: rpc_client.js num");
-    process.exit(1);
-}
+const key = '1b90ae9b4a76dd0cf044bfc1332206cf';
 
+// Change localhost to correct IP of rabbitMQ server
 amqp.connect('amqp://localhost', function (err, conn) {
     conn.createChannel(function (err, ch) {
-        ch.assertQueue('', { exclusive: true }, function (err, q) {
-            var corr = generateUuid();
-            var num = parseInt(args[0]);
+        var q = 'loc';
 
+        ch.assertQueue(q, { durable: false });
+        ch.prefetch(1);
+        console.log(' [x] Awaiting RPC requests');
+        ch.consume(q, function reply(msg) {
+            var content = JSON.parse(msg.content);
+            if(!msg.content.type) {
 
-            ch.consume(q.queue, function (msg) {
-                if (msg.properties.correlationId == corr) {
-                    console.log(' [.] Got %s', msg.content.toString());
-                    setTimeout(function () { conn.close(); process.exit(0) }, 500);
-                }
-            }, { noAck: true });
+            }
+            switch(content.type) {
+                case "get_loc":
+                    var loc = content.loc;
+                    var lat = content.lat;
+                    var lon = content.lon;
 
-            ch.sendToQueue('rpc_queue',
-                new Buffer(num.toString()),
-                { correlationId: corr, replyTo: q.queue });
+                    var r = getLocations(loc, lat, lon);
+                    ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(r)), { correlationId: msg.properties.correlationId });
+                    ch.ack(msg);
+                case "calc_dist":
+
+            }
         });
     });
 });
 
-function generateUuid() {
-    return Math.random().toString() +
-        Math.random().toString() +
-        Math.random().toString();
+function getLocations(loc, lat, lon) {
+    let url = "https://developers.zomato.com/api/v2.1/locations?query=" + loc + "&lat=" + lat + "&lon=" + lon;
+    axios.get(url, {
+        headers: { 'Accept': 'application/json', 'user-key': key }
+    })
+    .then(function (response) {
+        console.log("Response from locations: ", response);
+        let ent_type = response.location_suggestions[0].entity_type;
+        let ent_id = response.location_suggestions[0].entity_id;
+
+        // Insert into cities database here
+
+        let res = getRestaurants(ent_id, ent_type);
+        return res;
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+    // send back json array
 }
 
+function getRestaurants(ent_id, ent_type) {
+    let url = "https://developers.zomato.com/api/v2.1/location_details?entity_id=" + ent_id + "&entity_type=" + ent_type;
+    axios.get(url, {
+        headers: { 'Accept': 'application/json', 'user-key': key }
+    })
+        .then(function (response) {
+
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function sendLog(level, loc, mess) {
+    
+}
 
 // Calculate distance from restaurant to users location
 function degreesToRadians(degrees) {
