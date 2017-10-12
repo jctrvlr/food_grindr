@@ -31,22 +31,6 @@
     $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
 });
 
-$(document).ready(function() {
-$('input[type="submit"]').attr('disabled', true);
-$('input[type="password"],input[type="email"]').on('keyup',function() {
-    var email_value = $('input[name="email2"]').val();
-    var pwd_value = $('input[name="pass"]').val();
-    if(email_value != '' && pwd_value != '') {
-        $('input[type="submit"]').attr('disabled' , false);
-    }else{
-        $('input[type="submit"]').attr('disabled' , true);
-    }
-});
-
-
-
-});
-
 function submitLogin()
 {
 	var uname = document.getElementById("email2").value;
