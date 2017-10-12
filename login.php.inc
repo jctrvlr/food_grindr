@@ -5,7 +5,7 @@ class loginDB {
 	private $logindb;
 
 	public function __construct() {
-		$this->logindb = new mysqli("127.0.0.1","root","Ireland2018","login");
+		$this->logindb = new mysqli("127.0.0.1","root","katt1234","login");
 
 		if ($this->logindb->connect_errno != 0)
 		{
