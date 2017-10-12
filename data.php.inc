@@ -39,12 +39,6 @@ class dataProc {
     }
 
     public function insertLoc($loc, $ent_type, $ent_id, $lat, $lon) {
-        $loc = $this->logindb->real_escape_string($loc);
-		$ent_type = $this->logindb->real_escape_string($ent_type);
-        $ent_id = $this->logindb->real_escape_string($ent_id);
-        $lat = $this->logindb->real_escape_string($lat);
-        $lon = $this->logindb->real_escape_string($lon);
-
 		$statement = "insert into city (name, entity_id, entity_type, longitude, latitude) values ('".$loc."', '".$ent_id."', '".$ent_type."', '".$lon."', '".$lat."');";
 		$response = $this->logindb->query($statement);
 		$options = array();
@@ -60,8 +54,14 @@ class dataProc {
     }
 
     public function insertRes($res_arr) {
-        // iterate thru array and insert each restaurant
+        $json = json_decode($res_arr, true);
         
+        foreach($json as $item) {
+            $item[0]->id
+            $statement = "insert ignore into restaurants (res_id, name, address, zipcode, longitude, latitude, cuisine, price_range, thumbnail, online_delivery) values ('".;
+        }
+        // iterate thru array and insert each restaurant
+
     }
 
     private function checkLocation($loc, $zip, $lat, $lon) {
