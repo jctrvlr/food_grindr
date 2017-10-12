@@ -45,6 +45,33 @@ INSERT INTO `city` VALUES (1,'Scranton',234,'city',40.744373,-40.000000,'2017-10
 UNLOCK TABLES;
 
 --
+-- Table structure for table `ratings`
+--
+
+DROP TABLE IF EXISTS `ratings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ratings` (
+  `res_id` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
+  KEY `res_id` (`res_id`),
+  KEY `email` (`email`),
+  CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`res_id`) REFERENCES `restaurants` (`res_id`),
+  CONSTRAINT `ratings_ibfk_2` FOREIGN KEY (`email`) REFERENCES `users` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ratings`
+--
+
+LOCK TABLES `ratings` WRITE;
+/*!40000 ALTER TABLE `ratings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ratings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `responses`
 --
 
@@ -114,7 +141,8 @@ CREATE TABLE `users` (
   `email` varchar(255) DEFAULT NULL,
   `pass` varchar(255) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -137,4 +165,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-12 10:52:48
+-- Dump completed on 2017-10-12 11:34:52
