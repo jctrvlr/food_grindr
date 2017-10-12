@@ -8,18 +8,18 @@
   <div id="output"></div>
   <div class="form">
     <form class="register-form">
-      <input type="email" id="email1" required="required" placeholder="Email"/>
-      <input type="text" id="f_name" required="required" placeholder="First Name"/>
-      <input type="text" id="l_name" required="required" placeholder="Last Name"/>
-      <input type="password" id="pass1" required="required" placeholder="Password"/>
-      <input type="password" id="pass2" required="required" onkeyup="checkPass(); return false;" placeholder="Confirm Password"/>
+      <input type="email" id="email1" name="email1" required="required" placeholder="Email"/>
+      <input type="text" id="f_name" name="f_name" required="required" placeholder="First Name"/>
+      <input type="text" id="l_name" name="l_name" required="required" placeholder="Last Name"/>
+      <input type="password" id="pass1" name="pass1" required="required" placeholder="Password"/>
+      <input type="password" id="pass2" name="pass2" required="required" onkeyup="checkPass(); return false;" placeholder="Confirm Password"/>
       <span id="confirmMessage" class="confirmMessage"></span>
       <button type="submit" id="register" onclick="submitRegister()" >create</button>
       <p class="message">Already registered? <a href="#">Sign In</a></p>
     </form>
     <form class="login-form">
-      <input type="email" id="email2" required="required" placeholder="Email"/>
-      <input type="password" id="pass" required="required" placeholder="Password"/>
+      <input type="email" id="email2" name="email2" required="required" placeholder="Email"/>
+      <input type="password" id="pass" name="pass" required="required" placeholder="Password"/>
       <button type="submit" id="login" onclick="submitLogin()" >login</button>
       <p class="message">Not registered? <a href="#">Create an account</a></p>
     </form>
@@ -31,7 +31,19 @@
     $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
 });
 
+$(document).ready(function() {
+$('input[type="submit"]').attr('disabled', true);
+$('input[type="password"],input[type="email"]').on('keyup',function() {
+    var email_value = $('input[name="email2"]').val();
+    var pwd_value = $('input[name="pass"]').val();
+    if(email_value != '' && pwd_value != '') {
+        $('input[type="submit"]').attr('disabled' , false);
+    }else{
+        $('input[type="submit"]').attr('disabled' , true);
+    }
+});
 
+});
 
 function submitLogin()
 {
