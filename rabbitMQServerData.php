@@ -3,7 +3,7 @@
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
-require_once('login.php.inc');
+require_once('data.php.inc');
 
 function getRest() {
     // return json array with one restaurant info
@@ -11,6 +11,18 @@ function getRest() {
 
 function restResp() {
     // return json array with one restaurant info after storing response
+}
+
+function insertLoc($loc, $ent_type, $ent_id, $lat, $lon) {
+  $dat = new dataProc();
+  $output = $dat->insertLoc($loc, $ent_type, $ent_id, $lat, $lon);
+  return $output;
+}
+
+function insertRes($res_arr) {
+  $dat = new dataProc();
+  $output = $dat->insertRes($res_arr);
+  return $output;
 }
 
 function requestProcessor($request)
@@ -24,9 +36,13 @@ function requestProcessor($request)
   switch ($request['type'])
   {
     case "get_rest":
-      //return getRest($request['']);
+      return getRest($request['']); // figure out what requests
     case "rest_response":
       return restResp($request['email'], $request['rest_id'], $request['like'], $request['']);
+    case "insert_loc":
+      return insertLoc($request['loc'], $request['ent_type'], $request['ent_id'], $request['lat'], $request['lon']);
+    case "insert_res":
+      return insertRes($request["rest_arr"]);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }

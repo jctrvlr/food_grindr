@@ -38,6 +38,32 @@ class dataProc {
         // Then call getRest()
     }
 
+    public function insertLoc($loc, $ent_type, $ent_id, $lat, $lon) {
+        $loc = $this->logindb->real_escape_string($loc);
+		$ent_type = $this->logindb->real_escape_string($ent_type);
+        $ent_id = $this->logindb->real_escape_string($ent_id);
+        $lat = $this->logindb->real_escape_string($lat);
+        $lon = $this->logindb->real_escape_string($lon);
+
+		$statement = "insert into city (name, entity_id, entity_type, longitude, latitude) values ('".$loc."', '".$ent_id."', '".$ent_type."', '".$lon."', '".$lat."');";
+		$response = $this->logindb->query($statement);
+		$options = array();
+		$options[0] = 'debug';
+		$options[1] = 'dataServer';
+		$options[2] = 'insertLoc function: '. $response;
+		sendLogs($options);
+		if ($response) {
+			return true;
+		} else {
+			return false;
+		}
+    }
+
+    public function insertRes($res_arr) {
+        // iterate thru array and insert each restaurant
+        
+    }
+
     private function checkLocation($loc, $zip, $lat, $lon) {
         // Check if location is in database and if empty send request through rabbitmq to backend to get locations
         if(exists) { // TODO Check if exists in database here
@@ -49,8 +75,8 @@ class dataProc {
             $request['loc'] = $loc;
             $request['lat'] = $lat;
             $request['lon'] = $lon;
-            $response = $client->publish($request); // return true if successfully inserted into db
-            if($response) {
+            $response = $client->send_request($request); // return true if successfully inserted into db
+            if(json_decode($response)) {
                 return true;
             } else {
                 // Error Logging

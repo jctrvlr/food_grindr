@@ -22,6 +22,7 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
                     var loc = content.loc;
                     var lat = content.lat;
                     var lon = content.lon;
+                    var zip = content.zip;
 
                     var r = getLocations(loc, lat, lon);
                     ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(r)), { correlationId: msg.properties.correlationId });
@@ -42,8 +43,17 @@ function getLocations(loc, lat, lon) {
         console.log("Response from locations: ", response);
         let ent_type = response.location_suggestions[0].entity_type;
         let ent_id = response.location_suggestions[0].entity_id;
+        let zipcode = response.location_suggestions[0].zipcode;
 
-        // Insert into cities database here
+        let request = { "type":"insert_loc", "loc": loc, "ent_type": ent_type, "ent_id": ent_id, "lat": lat, "lon": lon };
+
+        amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
+            conn.createChannel(function (err, ch) {
+                var q = 'loc';
+                ch.assertQueue(q, { durable: false });
+                ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(request)), { correlationId: msg.properties.correlationId });
+            });
+        });
 
         let res = getRestaurants(ent_id, ent_type);
         return res;
@@ -51,7 +61,6 @@ function getLocations(loc, lat, lon) {
     .catch(function (error) {
         console.log(error);
     });
-    // send back json array
 }
 
 function getRestaurants(ent_id, ent_type) {
@@ -60,8 +69,17 @@ function getRestaurants(ent_id, ent_type) {
         headers: { 'Accept': 'application/json', 'user-key': key }
     })
         .then(function (response) {
+            let rest_arr = response.best_rated_restaurant;
+            let request = { "type": "insert_res", "rest_arr": rest_arr };
 
-            console.log(response);
+            amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
+                conn.createChannel(function (err, ch) {
+                    var q = 'loc';
+                    ch.assertQueue(q, { durable: false });
+                    ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(request)), { correlationId: msg.properties.correlationId });
+                });
+            });
+
         })
         .catch(function (error) {
             console.log(error);
@@ -71,7 +89,6 @@ function getRestaurants(ent_id, ent_type) {
 function sendLog(level, loc, mess) {
     
 }
-
 // Calculate distance from restaurant to users location
 function degreesToRadians(degrees) {
     return degrees * Math.PI / 180;
