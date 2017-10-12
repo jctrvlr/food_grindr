@@ -24,6 +24,8 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
                     var lat = content.lat;
                     var lon = content.lon;
 
+                    console.log("Inside switchcase: ", msg);
+
                     var r = getLocations(loc, lat, lon);
                     //var r = getLocations(loc, lat, lon);
                     ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(r)), { correlationId: msg.properties.correlationId });
@@ -33,6 +35,7 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
     });
 });
 function getLocations(loc, lat, lon) {
+    console.log("Inside getLocations");
     let url = "https://developers.zomato.com/api/v2.1/locations?query=" + loc + "&lat=" + lat + "&lon=" + lon;
     axios.get(url, {
         headers: { 'Accept': 'application/json', 'user-key': key }
@@ -62,6 +65,7 @@ function getLocations(loc, lat, lon) {
 }
 
 function getRestaurants(ent_id, ent_type) {
+    console.log("Inside getRestaurants");
     let url = "https://developers.zomato.com/api/v2.1/location_details?entity_id=" + ent_id + "&entity_type=" + ent_type;
     axios.get(url, {
         headers: { 'Accept': 'application/json', 'user-key': key }
