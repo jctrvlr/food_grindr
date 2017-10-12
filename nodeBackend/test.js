@@ -23,7 +23,7 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
                     var loc = content.loc;
                     var lat = content.lat;
                     var lon = content.lon;
-                    console.log("content: "content);
+                    console.log("content: ", content);
                     console.log("Inside switchcase: ", msg);
 
                     var r = getLocations(loc, lat, lon);
