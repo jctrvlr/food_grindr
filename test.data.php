@@ -37,7 +37,7 @@ $server->process_requests('requestProcessor');
 exit();
 
 
-public function insertRes($res_arr) {
+function insertRes($res_arr) {
     $json = json_decode($res_arr, true);
         
     foreach($json as $item) {
