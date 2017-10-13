@@ -41,9 +41,9 @@ function getLocations(loc, lat, lon) {
     })
     .then(function (response) {
         console.log("Response from locations: ", response);
-        let ent_type = response.location_suggestions[0].entity_type;
-        let ent_id = response.location_suggestions[0].entity_id;
-        let zipcode = response.location_suggestions[0].zipcode;
+        let ent_type = response.data.location_suggestions[0].entity_type;
+        let ent_id = response.data.location_suggestions[0].entity_id;
+        let zipcode = response.data.location_suggestions[0].zipcode;
 
         let request = { "type":"insert_loc", "loc": loc, "ent_type": ent_type, "ent_id": ent_id, "lat": lat, "lon": lon };
 
@@ -69,7 +69,7 @@ function getRestaurants(ent_id, ent_type) {
         headers: { 'Accept': 'application/json', 'user-key': key }
     })
         .then(function (response) {
-            let rest_arr = response.best_rated_restaurant;
+            let rest_arr = response.data.best_rated_restaurant;
             let request = { "type": "insert_res", "rest_arr": rest_arr };
 
             amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {

@@ -2,7 +2,6 @@
 var amqp = require('amqplib/callback_api');
 var axios = require('axios');
 
-
 const key = '1b90ae9b4a76dd0cf044bfc1332206cf';
 
 // Change localhost to correct IP of rabbitMQ server
@@ -44,9 +43,9 @@ function getLocations(loc, lat, lon) {
     })
         .then(function (response) {
             console.log("Response from locations: ", response);
-            let ent_type = response.location_suggestions[0].entity_type;
-            let ent_id = response.location_suggestions[0].entity_id;
-            let zipcode = response.location_suggestions[0].zipcode;
+            let ent_type = response.data.location_suggestions[0].entity_type;
+            let ent_id = response.data.location_suggestions[0].entity_id;
+            let zipcode = response.data.location_suggestions[0].zipcode;
 
             let request = { "type": "insert_loc", "loc": loc, "ent_type": ent_type, "ent_id": ent_id, "lat": lat, "lon": lon };
 
