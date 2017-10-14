@@ -50,8 +50,8 @@ function getLocations(loc, lat, lon) {
         amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
             conn.createChannel(function (err, ch) {
                 var q = 'loc';
-                ch.assertQueue(q, { durable: false });
-                ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(request)), { correlationId: msg.properties.correlationId });
+                ch.assertExchange('testExchange', 'topic', {durable: false});
+                ch.publish('testExchange', 'loc', new Buffer(JSON.stringify(request)));
             });
         });
 
@@ -75,8 +75,8 @@ function getRestaurants(ent_id, ent_type) {
             amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
                 conn.createChannel(function (err, ch) {
                     var q = 'loc';
-                    ch.assertQueue(q, { durable: false });
-                    ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(request)), { correlationId: msg.properties.correlationId });
+                    ch.assertExchange('testExchange', 'topic', {durable: false});
+                    ch.publish('testExchange', 'loc', new Buffer(JSON.stringify(request)));
                 });
             });
 

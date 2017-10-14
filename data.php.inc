@@ -23,19 +23,41 @@ class dataProc {
     }
     
     public function getRest($user, $zip, $last) {
-
-        // Get loc rest list and preferences of user
-        // TODO Sorting algorithm based on preference?
-        // Find $last (last restaurant sent) in array and give next item
+        if(!isset($last)) {
+            // Get zipcode to send to check location
+            $loc_arr = getCoord($zip);
+            $check_loc = checkLocation($loc_arr['name'], $zip, $loc_arr['latitude'], $loc_arr['longitude']);
+            if($check_loc) {
+                getRest($user, $zip, TRUE);
+            } else {
+                $options = array();
+                $options[0] = 'error';
+                $options[1] = 'dataServer - getRest';
+                $options[2] = 'checkLocation returned false and/or error code';
+                sendLogs($options);
+            }
+        }
+        $statement = "select * from restaurants where zipcode = '".$zip."';";
+        // Get restaurants from zipcode
+        $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
+        // Get user preferences
+        $pref = getUser($user);
+        $chosen_rest = chooseRest($resp, $last); // Only input resp for now -- Later input preference
         $rest_array = array();
         // Set other fields here from database/restchoose function
         $rest_array['dist'] = distance($lat1, $lon1, $lat2, $lon2, $unit);
         // Return one restaurant
-        return $rest_array;
+        return json_encode($rest_array);
     }
+
+    
 
     public function restResp($user, $res_id, $like, $zip, $last) {
         $statement = "insert into responses (user, res_id, liked) values ('".$user."','".$res_id."','".$like."');";
+        $response = $this->logindb->query($statement);
+        if($response) {
+            
+        }
         // Store response in database table 
         // Then call getRest()
         $res = getRest($user, $zip, $last);
@@ -54,51 +76,101 @@ class dataProc {
 		if ($response) {
 			return true;
 		} else {
+            $options = array();
+            $options[0] = 'error';
+            $options[1] = 'dataServer - insertLoc()';
+            $options[2] = 'Failed to insert into database: '. $response;
+            sendLogs($options);
 			return false;
 		}
     }
     // TODO FINISH INSERTRES
     public function insertRes($res_arr) {
         $json = json_decode($res_arr, true);
-        
         foreach($json as $item) {
-            $item[0]->id;
-            $statement = "insert ignore into restaurants (res_id, name, address, zipcode, longitude, latitude, cuisine, price_range, thumbnail, online_delivery) values ('".;
-        }
-        // iterate thru array and insert each restaurant
+            $location = json_decode($item['location'], true);
+            $statement = "insert ignore into restaurants (res_id, name, address, zipcode, longitude, latitude, cuisine, price_range, thumbnail, online_delivery) values ('".$item['id']."','".$item['name']."','".$location['address']."','".$location['zipcode']."','".$location['longitude']."','".$location['latitude']."','".$item['cuisines']."','".$item['price_range']."','".$item['thumb']."','".$item['has_online_delivery']."');";
+            $response = $this->logindb->query($statement);
 
-    }
-
-    private function checkLocation($loc, $zip, $lat, $lon) {
-        // Check if location is in database and if empty send request through rabbitmq to backend to get locations
-        if(exists) { // TODO Check if exists in database here
-
-        } else {
-            $client = new rabbitMQClient("rabbitMQLoc.ini","testServer");
-            $request = array();
-            $request['type'] = "get_loc";
-            $request['loc'] = $loc;
-            $request['lat'] = $lat;
-            $request['lon'] = $lon;
-            $response = $client->send_request($request); // return true if successfully inserted into db
-            if(json_decode($response)) {
+            if ($response) {
                 return true;
             } else {
-                // Error Logging
-				$options = array();
-				$options[0] = 'error';
-				$options[1] = 'data functions - checkLocation';
-				$options[2] = 'Error inserting new restaurant locations into db.';
-				sendLogs($options);
+                $options = array();
+                $options[0] = 'error';
+                $options[1] = 'dataServer - insertRes()';
+                $options[2] = 'Failed to insert into database: '. $response;
+                sendLogs($options);
+                return false;
             }
         }
     }
 
-    private function getUser($user) {
+    private function checkLocation($loc, $zip, $lat, $lon) {
+        // Check if location is in database and if empty send request through rabbitmq to backend to get locations
+        $statement = "select * from city where zip = '".$zip."';";
+        $response = $this->logindb->query($statement);
+        if($response) { // Check if exists in database here
+            if($response->num_rows === 0) {
+                $client = new rabbitMQClient("rabbitMQLoc.ini","testServer");
+                $request = array();
+                $request['type'] = "get_loc";
+                $request['loc'] = $loc;
+                $request['lat'] = $lat;
+                $request['lon'] = $lon;
+                $response = $client->send_request($request); // return true if successfully inserted into db
+                if(json_decode($response)) {
+                    return true;
+                } else {
+                    // Error Logging
+                    $options = array();
+                    $options[0] = 'error';
+                    $options[1] = 'data functions - checkLocation';
+                    $options[2] = 'Error inserting new restaurant locations into db.';
+                    sendLogs($options);
+                }
+            } else {
+                return true;
+            }
+        } else {
+           // Error Logging
+           $options = array();
+           $options[0] = 'error';
+           $options[1] = 'data functions - checkLocation';
+           $options[2] = 'Error querying db.';
+           sendLogs($options);
+        }
+    }
 
+    private function getUser($user) {
+        //TODO WRITE CODE TO GET USER -- pref etc.
+    }   
+
+    private function sortArr($res_array, $pref) {
+        //TODO WRITE SORTING ALGORITHM BASD ON PREFERENCE
+    }
+
+    private function chooseRest($res_arr, $last) {
+        if(is_string($last)) {
+            // Find $last (last restaurant sent) in array and give next item
+            $last_key = array_search($last, $res_arr);
+            $chosen_rest = $res_arr[$last_key+1];
+        } else {
+            $chosen_rest = $res_arr[0];
+        }
+        // TODO Sorting algorithm based on preference? sortArr()
+        return $chosen_rest; // Return one restaurant
     }
 
     private function getCoord($zip) {
+        $statement = "select * from zips where zipcode='".$zip."';";
+        $response = $this->logindb->query($statement);
+        while($row = $response->fetch_assoc()) {
+            $loc_arr = array();
+            $loc_arr['name']->$row["City"];
+            $loc_arr['latitude']->$row["Lat"];
+            $loc_arr['longitude']->$row["Long"];
+            return $loc_arr;
+        }
         // Get coordinates from zip/coor database
     }
 
