@@ -36,9 +36,9 @@ function requestProcessor($request)
   switch ($request['type'])
   {
     case "get_rest":
-      return getRest($request['']); // figure out what requests
+      return getRest($request['user'], $request['zip'], $request['last']); // user is associative array of 
     case "rest_response":
-      return restResp($request['email'], $request['rest_id'], $request['like'], $request['']);
+      return restResp($request['user'], $request['res_id'], $request['like'], $request['zip'], $request['last']); //Anything else?
     case "insert_loc":
       return insertLoc($request['loc'], $request['ent_type'], $request['ent_id'], $request['lat'], $request['lon']);
     case "insert_res":

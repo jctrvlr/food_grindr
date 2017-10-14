@@ -7,8 +7,6 @@ require_once('login.php.inc');
 
 function doLogin($email,$password)
 {
-  // lookup email in database
-  // check password
   $login = new logindb();
 	$output = $login->validateLogin($email,$password);
   return $output;

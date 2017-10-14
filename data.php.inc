@@ -22,7 +22,8 @@ class dataProc {
 		echo "correctly connected to database".PHP_EOL;
     }
     
-    public function getRest($user, $loc, $last) {
+    public function getRest($user, $zip, $last) {
+
         // Get loc rest list and preferences of user
         // TODO Sorting algorithm based on preference?
         // Find $last (last restaurant sent) in array and give next item
@@ -33,9 +34,13 @@ class dataProc {
         return $rest_array;
     }
 
-    public function restResp() {
+    public function restResp($user, $res_id, $like, $zip, $last) {
+        $statement = "insert into responses (user, res_id, liked) values ('".$user."','".$res_id."','".$like."');";
         // Store response in database table 
         // Then call getRest()
+        $res = getRest($user, $zip, $last);
+        // Return one restaurant
+        return $res;
     }
 
     public function insertLoc($loc, $ent_type, $ent_id, $lat, $lon) {
@@ -52,12 +57,12 @@ class dataProc {
 			return false;
 		}
     }
-
+    // TODO FINISH INSERTRES
     public function insertRes($res_arr) {
         $json = json_decode($res_arr, true);
         
         foreach($json as $item) {
-            $item[0]->id
+            $item[0]->id;
             $statement = "insert ignore into restaurants (res_id, name, address, zipcode, longitude, latitude, cuisine, price_range, thumbnail, online_delivery) values ('".;
         }
         // iterate thru array and insert each restaurant
@@ -87,6 +92,10 @@ class dataProc {
 				sendLogs($options);
             }
         }
+    }
+
+    private function getUser($user) {
+
     }
 
     private function getCoord($zip) {
