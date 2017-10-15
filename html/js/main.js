@@ -1,9 +1,9 @@
-/*$(function(){
+$(function(){
   $('#toggle').click(function(){
     $('#target').toggleClass('active');
   });
 });
-*/
+
 console.log("Hi Katy, Im working");
 
 function poopValues(){
