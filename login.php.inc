@@ -5,12 +5,7 @@ class loginDB {
 	private $logindb;
 
 	public function __construct() {
-<<<<<<< HEAD
 		$this->logindb = new mysqli("127.0.0.1","root","gary3195","login");
-=======
-		$this->logindb = new mysqli("127.0.0.1","root","katt1234","login");
->>>>>>> 535ea331946cc9ced7e2e005881d34516584da51
-
 		if ($this->logindb->connect_errno != 0)
 		{
 			echo "Error connecting to database: ".$this->logindb->connect_error.PHP_EOL;
