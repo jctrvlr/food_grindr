@@ -1,15 +1,16 @@
+"use strict";
 var amqp = require('amqplib/callback_api');
 var axios = require('axios');
-
+var http = require('http');
 
 const key = '1b90ae9b4a76dd0cf044bfc1332206cf';
 
 // Change localhost to correct IP of rabbitMQ server
 amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
     conn.createChannel(function (err, ch) {
-        var q = 'loc';
+        var q = 'backendApi';
 
-        ch.assertQueue(q, { durable: false });
+        ch.assertQueue(q, { durable: true });
         ch.prefetch(1);
         console.log(' [x] Awaiting RPC requests');
         ch.consume(q, function reply(msg) {
@@ -23,10 +24,12 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
                     var lat = content.lat;
                     var lon = content.lon;
                     var zip = content.zip;
-
-                    var r = getLocations(loc, lat, lon);
-                    ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(r)), { correlationId: msg.properties.correlationId });
-                    ch.ack(msg);
+                    console.log(loc, lat, lon, zip);
+                    var r = getLocations(loc, lat, lon, (res) => {
+                        console.log(res);
+                        ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(r)), { correlationId: msg.properties.correlationId });
+                        ch.ack(msg);
+                    });
                 case "calc_dist":
 
             }
@@ -34,7 +37,7 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
     });
 });
 
-function getLocations(loc, lat, lon) {
+function getLocations(loc, lat, lon, callback) {
     let url = "https://developers.zomato.com/api/v2.1/locations?query=" + loc + "&lat=" + lat + "&lon=" + lon;
     axios.get(url, {
         headers: { 'Accept': 'application/json', 'user-key': key }
@@ -46,24 +49,25 @@ function getLocations(loc, lat, lon) {
         let zipcode = response.data.location_suggestions[0].zipcode;
 
         let request = { "type":"insert_loc", "loc": loc, "ent_type": ent_type, "ent_id": ent_id, "lat": lat, "lon": lon };
-
         amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
             conn.createChannel(function (err, ch) {
-                var q = 'loc';
-                ch.assertExchange('testExchange', 'topic', {durable: false});
-                ch.publish('testExchange', 'loc', new Buffer(JSON.stringify(request)));
+                var q = 'dataQueue';
+                ch.assertExchange('dataExchnge', 'topic', {durable: true});
+                ch.publish('dataExchnge', 'dataQueue', new Buffer(JSON.stringify(request)));
+                console.log(request);
             });
         });
 
-        let res = getRestaurants(ent_id, ent_type);
-        return res;
+        let res = getRestaurants(ent_id, ent_type, (r)=> {
+            callback(r);
+        });
     })
     .catch(function (error) {
         console.log(error);
     });
 }
 
-function getRestaurants(ent_id, ent_type) {
+function getRestaurants(ent_id, ent_type, cb) {
     let url = "https://developers.zomato.com/api/v2.1/location_details?entity_id=" + ent_id + "&entity_type=" + ent_type;
     axios.get(url, {
         headers: { 'Accept': 'application/json', 'user-key': key }
@@ -74,12 +78,12 @@ function getRestaurants(ent_id, ent_type) {
 
             amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
                 conn.createChannel(function (err, ch) {
-                    var q = 'loc';
-                    ch.assertExchange('testExchange', 'topic', {durable: false});
-                    ch.publish('testExchange', 'loc', new Buffer(JSON.stringify(request)));
+                    var q = 'dataQueue';
+                    ch.assertExchange('dataExchnge', 'topic', {durable: true});
+                    ch.publish('dataExchnge', 'dataQueue', new Buffer(JSON.stringify(request)));
                 });
             });
-
+            cb(true);
         })
         .catch(function (error) {
             console.log(error);

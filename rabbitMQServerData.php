@@ -5,11 +5,17 @@ require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 require_once('data.php.inc');
 
-function getRest() {
+function getRest($user, $zip, $last) {
+  $dat = new dataProc();
+  $output = $dat->getRest($user, $zip, $last);
+  return $output;
     // return json array with one restaurant info
 }
 
-function restResp() {
+function restResp($user, $res_id, $like, $zip, $last) {
+  $dat = new dataProc();
+  $output = $dat->restResp($user, $res_id, $like, $zip, $last);
+  return $output;
     // return json array with one restaurant info after storing response
 }
 
