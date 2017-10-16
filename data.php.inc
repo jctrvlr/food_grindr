@@ -172,9 +172,9 @@ class dataProc {
         $response = $this->logindb->query($statement);
         while($row = $response->fetch_assoc()) {
             $loc_arr = array();
-            $loc_arr['name']->$row["City"];
-            $loc_arr['latitude']->$row["Lat"];
-            $loc_arr['longitude']->$row["Long"];
+            $loc_arr['name']=$row["City"];
+            $loc_arr['latitude']=$row["Lat"];
+            $loc_arr['longitude']=$row["Long"];
             return $loc_arr;
         }
         // Get coordinates from zip/coor database
