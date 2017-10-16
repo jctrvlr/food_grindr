@@ -53,7 +53,6 @@ function getLocations(loc, lat, lon, callback) {
             conn.createChannel(function (err, ch) {
                 var q = 'dataQueue';
                 ch.assertExchange('dataExchnge', 'topic', {durable: true});
-                ch.bindQueue(q, 'dataExchnge', 'topic');
                 ch.publish('dataExchnge', 'dataQueue', new Buffer(JSON.stringify(request)));
                 console.log(request);
             });
