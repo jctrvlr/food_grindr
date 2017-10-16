@@ -26,6 +26,7 @@ class dataProc {
         if(!isset($last)) {
             // Get zipcode to send to check location
             $loc_arr = $this->getCoord($zip);
+            var_dump($loc_arr);
             $check_loc = $this->checkLocation($loc_arr['name'], $zip, $loc_arr['latitude'], $loc_arr['longitude']);
             if($check_loc) {
                 $this->getRest($user, $zip, TRUE);
@@ -167,7 +168,7 @@ class dataProc {
     }
     // Utility Functions
     private function getCoord($zip) {
-        $statement = "select * from zips where zipcode='".$zip."';";
+        $statement = "select * from zipcode where zipcode='".$zip."';";
         $response = $this->logindb->query($statement);
         while($row = $response->fetch_assoc()) {
             $loc_arr = array();
