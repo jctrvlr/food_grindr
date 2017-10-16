@@ -113,6 +113,7 @@ class dataProc {
         // Check if location is in database and if empty send request through rabbitmq to backend to get locations
         $statement = "select * from city where zip = '".$zip."';";
         $response = $this->logindb->query($statement);
+        var_dump($response);
         if($response) { // Check if exists in database here
             if($response->num_rows === 0) {
                 $client = new rabbitMQClient("rabbitMQLoc.ini","testServer");
