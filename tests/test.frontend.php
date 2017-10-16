@@ -16,7 +16,7 @@ if (!isset($_POST))
 	echo json_encode($msg);
 	exit(0);
 }
-$client = new rabbitMQClient("testRabbitMQ.ini","testServer");
+$client = new rabbitMQClient("rabbitMQData.ini","testServer");
 $request = $_POST;
 
 switch ($request["type"])
