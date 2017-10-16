@@ -46,7 +46,7 @@ class dataProc {
         // Set other fields here from database/restchoose function
         // $rest_array['dist'] = distance($lat1, $lon1, $lat2, $lon2, $unit);
         // Return one restaurant
-        return json_encode($chosen_array);
+        return json_encode($chosen_rest);
     }
 
     
