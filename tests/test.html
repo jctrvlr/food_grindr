@@ -20,7 +20,7 @@
             //var last = document.getElementById("last").value;
 
             document.getElementById("output").innerHTML = "username: " + uname + "<p>password: " + pword + "<p>";
-            sendGetResRequest(uname, pword);
+            sendGetResRequest(u, zip);
             return 0;
         }
         
@@ -30,7 +30,7 @@
             document.getElementById("output").innerHTML = "response: " + text + "<p>";
         }
         
-        function sendGetResRequest(email, pass) {
+        function sendGetResRequest(u, zip) {
             console.log('Inside sendRequest');
             $.ajax({
                 url: 'test.frontend.php',
