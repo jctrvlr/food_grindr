@@ -116,7 +116,7 @@ class dataProc {
         $statement = "select * from city where zip = '".$zip."';";
         $response = $this->logindb->query($statement);
         var_dump($response);
-        if($response) { // Check if exists in database here
+        if(!$response) { // Check if exists in database here
             if($response->num_rows === 0) {
                 $client = new rabbitMQClient("rabbitMQBack.ini","testServer");
                 $request = array();
