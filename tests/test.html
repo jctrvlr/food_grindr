@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <div id="output">
+
+        </div>
+        <div id="input">
+            <form class="register-form">
+                <input type="email" id="user" />
+                <input type="text" id="zip" />
+                <button type="submit" id="submit" onclick="submitGetRes()">Submit</button>
+            </form>
+        </div>
+        <script type="text/javascript">
+        function submitGetRes() {
+            var u = document.getElementById("user").value;
+            var zip = document.getElementById("zip").value;
+            //var last = document.getElementById("last").value;
+
+            document.getElementById("output").innerHTML = "username: " + uname + "<p>password: " + pword + "<p>";
+            sendGetResRequest(uname, pword);
+            return 0;
+        }
+        
+        function HandleGetResResponse(response) {
+            console.log('Inside handleRequest: ' + response);
+            var text = JSON.parse(response);
+            document.getElementById("output").innerHTML = "response: " + text + "<p>";
+        }
+        
+        function sendGetResRequest(email, pass) {
+            console.log('Inside sendRequest');
+            $.ajax({
+                url: 'test.frontend.php',
+                data: {
+                    type: 'get_res',
+                },
+                type: 'post',
+                success: function (output) {
+                    HandleGetResResponse(output);
+                }
+            });
+        }
+        
+        </script>
+    </body>
+</html>

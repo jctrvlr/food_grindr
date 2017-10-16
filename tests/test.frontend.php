@@ -6,6 +6,10 @@ require_once('logger.inc');
 
 session_start();
 
+// Hardcoded session variables that are set when log in.$_COOKIE
+$_SESSION["email"] = "jic6@njit.edu";
+$_SESSION["zipcode"] = "07103";
+
 if (!isset($_POST))
 {
 	$msg = "NO POST MESSAGE SET, POLITELY FUCK OFF";
@@ -17,15 +21,17 @@ $request = $_POST;
 
 switch ($request["type"])
 {
-	case "login": {
+	case "get_res": {
 		$req=array();
-		$req['type']="login";
-		$req['email']=$request["email"];
-		$req['pass']=$request["pword"];
+		$req['type'] = "get_rest";
+		$req['user'] = $_SESSION["email"];
+		$req['zip'] = $_SESSION["zipcode"];
+		$req['last'] = $_SESSION["last"];
 		$response = $client->send_request($req);
+		$_SESSION["last"] = $response;
 		break;
 	}
-	case "signup": {
+	case "send_res": {
 		$req = array();
 		$req['type'] = 'signup';
 		$req['email']=$request['email'];
