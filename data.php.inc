@@ -142,25 +142,24 @@ class dataProc {
     }
 
     private function getUser($user) {
+        // TODO CHANGE STATEMENT -- No preferences table atm
+        $statement = "select * from city where zip = '".$zip."';";
+        $response = $this->logindb->query($statement);
         //TODO WRITE CODE TO GET USER -- pref etc.
     }   
 
-    private function sortArr($res_array, $pref) {
-        //TODO WRITE SORTING ALGORITHM BASD ON PREFERENCE
-    }
-
-    private function chooseRest($res_arr, $last) {
+    private function chooseRest($arr, $last) {
+        //$arr = sortArr(); // Sorting function when it works
         if(is_string($last)) {
             // Find $last (last restaurant sent) in array and give next item
-            $last_key = array_search($last, $res_arr);
-            $chosen_rest = $res_arr[$last_key+1];
+            $last_key = array_search($last, $arr);
+            $chosen_rest = $arr[$last_key+1];
         } else {
-            $chosen_rest = $res_arr[0];
+            $chosen_rest = $arr[0];
         }
-        // TODO Sorting algorithm based on preference? sortArr()
         return $chosen_rest; // Return one restaurant
     }
-
+    // Utility Functions
     private function getCoord($zip) {
         $statement = "select * from zips where zipcode='".$zip."';";
         $response = $this->logindb->query($statement);
@@ -189,5 +188,24 @@ class dataProc {
         } else {
             return $miles;
         }
+    }
+
+    // Sorting functions
+    private function sortArr($res_array, $pref) {
+        $key = findKey($res_array, "cuisine", $pref);
+        $moverest = $colours[$key];
+        unset($colours[$key]);
+        array_unshift($colours, $moverest);
+        return $arr;
+    }
+
+    private function findKey($restaurants, $field, $value)
+    {
+       foreach($restaurants as $key => $restaurant)
+       {
+          if (strpos($restaurants[$field], $value))
+             return $key;
+       }
+       return false;
     }
 }
