@@ -118,7 +118,7 @@ class dataProc {
         var_dump($response);
         if($response) { // Check if exists in database here
             if($response->num_rows === 0) {
-                $client = new rabbitMQClient("rabbitMQLoc.ini","testServer");
+                $client = new rabbitMQClient("rabbitMQBack.ini","testServer");
                 $request = array();
                 $request['type'] = "get_loc";
                 $request['loc'] = $loc;
