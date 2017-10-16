@@ -24,7 +24,7 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
                     var lat = content.lat;
                     var lon = content.lon;
                     var zip = content.zip;
-
+                    console.log(loc, lat, lon, zip);
                     var r = getLocations(loc, lat, lon);
                     console.log(r);
                     ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(r)), { correlationId: msg.properties.correlationId });
