@@ -25,10 +25,10 @@ class dataProc {
     public function getRest($user, $zip, $last) {
         if(!isset($last)) {
             // Get zipcode to send to check location
-            $loc_arr = getCoord($zip);
-            $check_loc = checkLocation($loc_arr['name'], $zip, $loc_arr['latitude'], $loc_arr['longitude']);
+            $loc_arr = $this->getCoord($zip);
+            $check_loc = $this->checkLocation($loc_arr['name'], $zip, $loc_arr['latitude'], $loc_arr['longitude']);
             if($check_loc) {
-                getRest($user, $zip, TRUE);
+                $this->getRest($user, $zip, TRUE);
             } else {
                 $options = array();
                 $options[0] = 'error';
@@ -41,8 +41,8 @@ class dataProc {
         // Get restaurants from zipcode
         $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
         // Get user preferences
-        $pref = getUser($user);
-        $chosen_rest = chooseRest($resp, $last); // Only input resp for now -- Later input preference
+        $pref = $this->getUser($user);
+        $chosen_rest = $this->chooseRest($resp, $last); // Only input resp for now -- Later input preference
         // Set other fields here from database/restchoose function
         // $rest_array['dist'] = distance($lat1, $lon1, $lat2, $lon2, $unit);
         // Return one restaurant
@@ -55,7 +55,7 @@ class dataProc {
         $statement = "insert into responses (user, res_id, liked) values ('".$user."','".$res_id."','".$like."');";
         $response = $this->logindb->query($statement);
         if($response) {
-            $res = getRest($user, $zip, $last);
+            $res = $this->getRest($user, $zip, $last);
         } else {
             $options = array();
             $options[0] = 'error';
