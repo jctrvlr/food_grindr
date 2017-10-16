@@ -117,26 +117,23 @@ class dataProc {
         $response = $this->logindb->query($statement);
         var_dump($response);
         if(!$response) { // Check if exists in database here
-            if($response->num_rows === 0) {
-                $client = new rabbitMQClient("rabbitMQBack.ini","testServer");
-                $request = array();
-                $request['type'] = "get_loc";
-                $request['loc'] = $loc;
-                $request['lat'] = $lat;
-                $request['lon'] = $lon;
-                $response = $client->send_request($request); // return true if successfully inserted into db
-                if(json_decode($response)) {
-                    return true;
-                } else {
-                    // Error Logging
-                    $options = array();
-                    $options[0] = 'error';
-                    $options[1] = 'data functions - checkLocation';
-                    $options[2] = 'Error inserting new restaurant locations into db.';
-                    sendLogs($options);
-                }
+            $client = new rabbitMQClient("rabbitMQBack.ini","testServer");
+            $request = array();
+            $request['type'] = "get_loc";
+            $request['loc'] = $loc;
+            $request['lat'] = $lat;
+            $request['lon'] = $lon;
+            $response = $client->send_request($request); 
+            $json = json_decode($response);
+            if($json) {
+                return $json;
             } else {
-                return true;
+                // Error Logging
+                $options = array();
+                $options[0] = 'error';
+                $options[1] = 'data functions - checkLocation';
+                $options[2] = 'Error inserting new restaurant locations into db.';
+                sendLogs($options);
             }
         } else {
            // Error Logging
