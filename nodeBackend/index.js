@@ -10,7 +10,7 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
     conn.createChannel(function (err, ch) {
         var q = 'backendApi';
 
-        ch.assertQueue(q, { durable: false });
+        ch.assertQueue(q, { durable: true });
         ch.prefetch(1);
         console.log(' [x] Awaiting RPC requests');
         ch.consume(q, function reply(msg) {
