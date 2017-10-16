@@ -8,7 +8,7 @@ const key = '1b90ae9b4a76dd0cf044bfc1332206cf';
 // Change localhost to correct IP of rabbitMQ server
 amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
     conn.createChannel(function (err, ch) {
-        var q = 'loc';
+        var q = 'backendApi';
 
         ch.assertQueue(q, { durable: false });
         ch.prefetch(1);
@@ -75,9 +75,9 @@ function getRestaurants(ent_id, ent_type) {
 
             amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
                 conn.createChannel(function (err, ch) {
-                    var q = 'loc';
-                    ch.assertExchange('testExchange', 'topic', {durable: false});
-                    ch.publish('testExchange', 'loc', new Buffer(JSON.stringify(request)));
+                    var q = 'dataQueue';
+                    ch.assertExchange('dataExchnge', 'topic', {durable: false});
+                    ch.publish('dataExchnge', 'dataQueue', new Buffer(JSON.stringify(request)));
                 });
             });
 
