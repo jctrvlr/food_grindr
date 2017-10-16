@@ -174,9 +174,9 @@ class dataProc {
         while($row = $response->fetch_assoc()) {
             var_dump($row);
             $loc_arr = array();
-            $loc_arr['name']=$row["City"];
-            $loc_arr['latitude']=$row["Lat"];
-            $loc_arr['longitude']=$row["Long"];
+            $loc_arr['name']=$row["city"];
+            $loc_arr['latitude']=$row["lat"];
+            $loc_arr['longitude']=$row["lon"];
             return $loc_arr;
         }
         // Get coordinates from zip/coor database
