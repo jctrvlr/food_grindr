@@ -55,6 +55,7 @@ function getLocations(loc, lat, lon, callback) {
                 var q = 'dataQueue';
                 ch.assertExchange('dataExchnge', 'topic', {durable: true});
                 ch.publish('dataExchnge', 'dataQueue', new Buffer(JSON.stringify(request)));
+                console.log(err);
             });
         });
 
