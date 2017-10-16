@@ -1,7 +1,7 @@
 "use strict";
 var amqp = require('amqplib/callback_api');
 var axios = require('axios');
-
+var http = require('http');
 
 const key = '1b90ae9b4a76dd0cf044bfc1332206cf';
 
@@ -25,10 +25,11 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
                     var lon = content.lon;
                     var zip = content.zip;
                     console.log(loc, lat, lon, zip);
-                    var r = getLocations(loc, lat, lon);
-                    console.log(r);
-                    ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(r)), { correlationId: msg.properties.correlationId });
-                    ch.ack(msg);
+                    var r = getLocations(loc, lat, lon, (r) => {
+                        console.log(r);
+                        ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(r)), { correlationId: msg.properties.correlationId });
+                        ch.ack(msg);
+                    });
                 case "calc_dist":
 
             }
@@ -36,7 +37,7 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
     });
 });
 
-function getLocations(loc, lat, lon) {
+function getLocations(loc, lat, lon, callback) {
     let url = "https://developers.zomato.com/api/v2.1/locations?query=" + loc + "&lat=" + lat + "&lon=" + lon;
     console.log(url);
     axios.get(url, {
@@ -58,15 +59,16 @@ function getLocations(loc, lat, lon) {
             });
         });
 
-        let res = getRestaurants(ent_id, ent_type);
-        return res;
+        let res = getRestaurants(ent_id, ent_type, ()=> {
+            callback(res);
+        });
     })
     .catch(function (error) {
         console.log(error);
     });
 }
 
-function getRestaurants(ent_id, ent_type) {
+function getRestaurants(ent_id, ent_type, callback) {
     let url = "https://developers.zomato.com/api/v2.1/location_details?entity_id=" + ent_id + "&entity_type=" + ent_type;
     axios.get(url, {
         headers: { 'Accept': 'application/json', 'user-key': key }
@@ -82,7 +84,7 @@ function getRestaurants(ent_id, ent_type) {
                     ch.publish('dataExchnge', 'dataQueue', new Buffer(JSON.stringify(request)));
                 });
             });
-
+            callback(true);
         })
         .catch(function (error) {
             console.log(error);

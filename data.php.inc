@@ -124,9 +124,8 @@ class dataProc {
             $request['lat'] = $lat;
             $request['lon'] = $lon;
             $response = $client->send_request($request); 
-            $json = json_decode($response);
-            if($json) {
-                return $json;
+            if($response) {
+                return true;
             } else {
                 // Error Logging
                 $options = array();
