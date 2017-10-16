@@ -53,9 +53,9 @@ function getLocations(loc, lat, lon, callback) {
 
         amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
             conn.createChannel(function (err, ch) {
-                var q = 'loc';
-                ch.assertExchange('testExchange', 'topic', {durable: false});
-                ch.publish('testExchange', 'loc', new Buffer(JSON.stringify(request)));
+                var q = 'dataQueue';
+                ch.assertExchange('dataExchnge', 'topic', {durable: true});
+                ch.publish('dataExchnge', 'dataQueue', new Buffer(JSON.stringify(request)));
             });
         });
 
@@ -80,7 +80,7 @@ function getRestaurants(ent_id, ent_type, callback) {
             amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
                 conn.createChannel(function (err, ch) {
                     var q = 'dataQueue';
-                    ch.assertExchange('dataExchnge', 'topic', {durable: false});
+                    ch.assertExchange('dataExchnge', 'topic', {durable: true});
                     ch.publish('dataExchnge', 'dataQueue', new Buffer(JSON.stringify(request)));
                 });
             });
