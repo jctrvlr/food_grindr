@@ -1,10 +1,12 @@
 <?php
+session_start();
+
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 require_once('logger.inc');
 
-session_start();
+
 
 // Hardcoded session variables that are set when log in.$_COOKIE
 $_SESSION["email"] = "jic6@njit.edu";
