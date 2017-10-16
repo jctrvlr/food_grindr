@@ -49,13 +49,12 @@ function getLocations(loc, lat, lon, callback) {
         let zipcode = response.data.location_suggestions[0].zipcode;
 
         let request = { "type":"insert_loc", "loc": loc, "ent_type": ent_type, "ent_id": ent_id, "lat": lat, "lon": lon };
-
         amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
             conn.createChannel(function (err, ch) {
                 var q = 'dataQueue';
                 ch.assertExchange('dataExchnge', 'topic', {durable: true});
                 ch.publish('dataExchnge', 'dataQueue', new Buffer(JSON.stringify(request)));
-                console.log(err);
+                console.log(request);
             });
         });
 
