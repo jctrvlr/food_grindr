@@ -43,11 +43,10 @@ class dataProc {
         // Get user preferences
         $pref = getUser($user);
         $chosen_rest = chooseRest($resp, $last); // Only input resp for now -- Later input preference
-        $rest_array = array();
         // Set other fields here from database/restchoose function
-        $rest_array['dist'] = distance($lat1, $lon1, $lat2, $lon2, $unit);
+        // $rest_array['dist'] = distance($lat1, $lon1, $lat2, $lon2, $unit);
         // Return one restaurant
-        return json_encode($rest_array);
+        return json_encode($chosen_array);
     }
 
     
@@ -56,11 +55,15 @@ class dataProc {
         $statement = "insert into responses (user, res_id, liked) values ('".$user."','".$res_id."','".$like."');";
         $response = $this->logindb->query($statement);
         if($response) {
-            
+            $res = getRest($user, $zip, $last);
+        } else {
+            $options = array();
+            $options[0] = 'error';
+            $options[1] = 'dataServer - insertLoc()';
+            $options[2] = 'Failed to insert into database: '. $response;
+            sendLogs($options);
+
         }
-        // Store response in database table 
-        // Then call getRest()
-        $res = getRest($user, $zip, $last);
         // Return one restaurant
         return $res;
     }
@@ -143,7 +146,7 @@ class dataProc {
 
     private function getUser($user) {
         // TODO CHANGE STATEMENT -- No preferences table atm
-        $statement = "select * from city where zip = '".$zip."';";
+        $statement = "select * from preferences where email = '".$user."';";
         $response = $this->logindb->query($statement);
         //TODO WRITE CODE TO GET USER -- pref etc.
     }   
