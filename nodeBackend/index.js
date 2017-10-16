@@ -25,7 +25,7 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
                     var lon = content.lon;
                     var zip = content.zip;
                     console.log(loc, lat, lon, zip);
-                    var r = getLocations(loc, lat, lon);
+                    var r = this.getLocations(loc, lat, lon);
                     console.log(r);
                     ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(r)), { correlationId: msg.properties.correlationId });
                     ch.ack(msg);
@@ -38,6 +38,7 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
 
 function getLocations(loc, lat, lon) {
     let url = "https://developers.zomato.com/api/v2.1/locations?query=" + loc + "&lat=" + lat + "&lon=" + lon;
+    console.log(url);
     axios.get(url, {
         headers: { 'Accept': 'application/json', 'user-key': key }
     })
