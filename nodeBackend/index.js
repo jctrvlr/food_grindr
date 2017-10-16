@@ -25,8 +25,8 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
                     var lon = content.lon;
                     var zip = content.zip;
                     console.log(loc, lat, lon, zip);
-                    var r = getLocations(loc, lat, lon, (r) => {
-                        console.log(r);
+                    var r = getLocations(loc, lat, lon, (res) => {
+                        console.log(res);
                         ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(r)), { correlationId: msg.properties.correlationId });
                         ch.ack(msg);
                     });
@@ -39,7 +39,6 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
 
 function getLocations(loc, lat, lon, callback) {
     let url = "https://developers.zomato.com/api/v2.1/locations?query=" + loc + "&lat=" + lat + "&lon=" + lon;
-    console.log(url);
     axios.get(url, {
         headers: { 'Accept': 'application/json', 'user-key': key }
     })
@@ -59,8 +58,8 @@ function getLocations(loc, lat, lon, callback) {
             });
         });
 
-        let res = getRestaurants(ent_id, ent_type, ()=> {
-            callback(res);
+        let res = getRestaurants(ent_id, ent_type, (r)=> {
+            callback(r);
         });
     })
     .catch(function (error) {
@@ -68,7 +67,7 @@ function getLocations(loc, lat, lon, callback) {
     });
 }
 
-function getRestaurants(ent_id, ent_type, callback) {
+function getRestaurants(ent_id, ent_type, cb) {
     let url = "https://developers.zomato.com/api/v2.1/location_details?entity_id=" + ent_id + "&entity_type=" + ent_type;
     axios.get(url, {
         headers: { 'Accept': 'application/json', 'user-key': key }
@@ -84,7 +83,7 @@ function getRestaurants(ent_id, ent_type, callback) {
                     ch.publish('dataExchnge', 'dataQueue', new Buffer(JSON.stringify(request)));
                 });
             });
-            callback(true);
+            cb(true);
         })
         .catch(function (error) {
             console.log(error);
