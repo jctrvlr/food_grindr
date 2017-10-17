@@ -55,8 +55,8 @@ DROP TABLE IF EXISTS `preferences`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `preferences` (
   `email` varchar(255) NOT NULL,
-  `zipcode` int(11) NOT NULL,
-  `cuisine` varchar(255) NOT NULL,
+  `zipcode` char(5) DEFAULT NULL,
+  `cuisine` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`email`),
@@ -71,6 +71,7 @@ CREATE TABLE `preferences` (
 
 LOCK TABLES `preferences` WRITE;
 /*!40000 ALTER TABLE `preferences` DISABLE KEYS */;
+INSERT INTO `preferences` VALUES ('jic6@njit.edu','07103',NULL,NULL,'8564309985');
 /*!40000 ALTER TABLE `preferences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +119,7 @@ CREATE TABLE `responses` (
   KEY `res_id` (`res_id`),
   CONSTRAINT `responses_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`email`),
   CONSTRAINT `responses_ibfk_2` FOREIGN KEY (`res_id`) REFERENCES `restaurants` (`res_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,6 +128,7 @@ CREATE TABLE `responses` (
 
 LOCK TABLES `responses` WRITE;
 /*!40000 ALTER TABLE `responses` DISABLE KEYS */;
+INSERT INTO `responses` VALUES (5,'jic6@njit.edu','17211777',1),(6,'jic6@njit.edu','17211777',1),(7,'jic6@njit.edu','17212124',1),(8,'jic6@njit.edu','17212750',0),(9,'jic6@njit.edu','17213353',0),(10,'jic6@njit.edu','17214159',1),(11,'jic6@njit.edu','17214546',1);
 /*!40000 ALTER TABLE `responses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,7 +184,7 @@ CREATE TABLE `users` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,7 +193,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (3,'Jack','Cummings','cummingsJack@email.com','jack123','2017-09-29 03:07:34'),(4,'Khari','Davis','daviskhari@email.com','khari123','2017-09-29 03:31:57');
+INSERT INTO `users` VALUES (3,'Jack','Cummings','cummingsJack@email.com','jack123','2017-09-29 03:07:34'),(4,'Khari','Davis','daviskhari@email.com','khari123','2017-09-29 03:31:57'),(5,'john','cummings','jic6@njit.edu','password','2017-10-17 17:40:54');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,4 +234,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-17 13:02:20
+-- Dump completed on 2017-10-17 14:47:45
