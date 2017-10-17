@@ -91,7 +91,6 @@ class dataProc {
     // TODO FINISH INSERTRES
     public function insertRes($res_arr) {
         foreach($res_arr as $item) {
-            var_dump($item);
             $location = $item['restaurant']['location'];
             $statement = "insert ignore into restaurants (res_id, name, address, zipcode, longitude, latitude, cuisine, price_range, thumbnail, online_delivery) values ('".$item['restaurant']['id']."','".$item['restaurant']['name']."','".$location['address']."','".$location['zipcode']."','".$location['longitude']."','".$location['latitude']."','".$item['restaurant']['cuisines']."','".$item['restaurant']['price_range']."','".$item['restaurant']['thumb']."','".$item['restaurant']['has_online_delivery']."');";
             $response = $this->logindb->query($statement);
