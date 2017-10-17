@@ -67,7 +67,6 @@ class dataProc {
         $statement = "insert into responses (user, res_id, liked) values ('".$user."','".$res_id."',".$like.");";
         echo $statement.PHP_EOL;
         $response = $this->logindb->query($statement);
-        var_dump($response);
         if($response) {
             $res = $this->getRest($user, $zip, $last);
         } else {
@@ -86,7 +85,6 @@ class dataProc {
 		$statement = "insert into city (name, entity_id, entity_type, longitude, latitude, zip) values ('".$loc."', '".$ent_id."', '".$ent_type."', '".$lon."', '".$lat."', '".$zip."');";
         echo "Statement: ".$statement.PHP_EOL;
         $response = $this->logindb->query($statement);
-		var_dump($response);
 		if ($response) {
 			return true;
 		} else {
@@ -160,11 +158,9 @@ class dataProc {
     private function chooseRest($arr, $last) {
         echo "Inside chooseRest".PHP_EOL;
         $chosen_rest = array();
-        //$arr = sortArr(); // Sorting function when it works
+        $arr = sortArr($arr); // Sorting function when it works
         if(is_string($last)) {
             // Find $last (last restaurant sent) in array and give next item
-            echo "Inside is_bool".PHP_EOL;
-            var_dump($arr);
             $last_key = $this->searchForName($last, $arr);
             echo "Key: ".$last_key;
             $key = $last_key+1;
@@ -271,7 +267,6 @@ class dataProc {
             }
             arsort($count);
             $ak = array_keys($count);
-            var_dump($ak);
             $st = "UPDATE preferences SET cuisine='".$ak[0]."' WHERE email='".$resp[$x]['email']."';";
             $this->logindb->query($st);
         }
