@@ -33,7 +33,7 @@ CREATE TABLE `city` (
   `zip` char(5) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `entity_id` (`entity_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `city` (
 
 LOCK TABLES `city` WRITE;
 /*!40000 ALTER TABLE `city` DISABLE KEYS */;
-INSERT INTO `city` VALUES (28,'NEWARK','3976','city',-74.169998,40.720001,'2017-10-17 05:13:13','07103');
+INSERT INTO `city` VALUES (1,'NEWARK','3976','city',-74.169998,40.720001,'2017-10-17 12:33:52','07103');
 /*!40000 ALTER TABLE `city` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +60,8 @@ CREATE TABLE `preferences` (
   `name` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`email`),
-  CONSTRAINT `preferences_ibfk_1` FOREIGN KEY (`email`) REFERENCES `users` (`email`)
+  CONSTRAINT `preferences_ibfk_1` FOREIGN KEY (`email`) REFERENCES `users` (`email`),
+  CONSTRAINT `preferences_ibfk_2` FOREIGN KEY (`email`) REFERENCES `users` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -112,7 +113,9 @@ CREATE TABLE `responses` (
   `user` varchar(255) NOT NULL,
   `res_id` varchar(255) NOT NULL,
   `liked` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `user` (`user`),
+  CONSTRAINT `responses_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -227,4 +230,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-17  1:28:25
+-- Dump completed on 2017-10-17 12:36:26
