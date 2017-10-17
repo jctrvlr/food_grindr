@@ -7,7 +7,7 @@ It uses the Zomato API and pull info from there.
 
 ***
 
-###Team Members
+## Team Members
 <dl>
 	<dt>John Cummings</dt>
 		<dd>Email: jic6@njit.edu</dd>
