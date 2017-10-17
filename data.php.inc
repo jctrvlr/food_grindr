@@ -26,8 +26,6 @@ class dataProc {
         if(!isset($last)) {
             // Get zipcode to send to check location
             $loc_arr = $this->getCoord($zip);
-            echo "Loc_Arr";
-            var_dump($loc_arr);
             $check_loc = $this->checkLocation($loc_arr['name'], $zip, $loc_arr['latitude'], $loc_arr['longitude']);
             if($check_loc) {
                 $this->getRest($user, $zip, TRUE);
@@ -115,7 +113,6 @@ class dataProc {
         // Check if location is in database and if empty send request through rabbitmq to backend to get locations
         $statement = "select * from city where zip = '".$zip."';";
         $response = $this->logindb->query($statement);
-        var_dump($response);
         if(!$response) { // Check if exists in database here
             $client = new rabbitMQClient("rabbitMQBack.ini","testServer");
             $request = array();

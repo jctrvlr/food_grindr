@@ -26,8 +26,8 @@ amqp.connect('amqp://test:test@localhost:5672/testHost', function (err, conn) {
                     var zip = content.zip;
                     console.log(loc, lat, lon, zip);
                     var r = getLocations(loc, lat, lon, (res) => {
-                        console.log(res);
-                        ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(r)), { correlationId: msg.properties.correlationId });
+                        console.log("callback from getLocations:", res);
+                        ch.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(res)), { correlationId: msg.properties.correlationId });
                         ch.ack(msg);
                     });
                 case "calc_dist":
@@ -59,6 +59,7 @@ function getLocations(loc, lat, lon, callback) {
         });
 
         let res = getRestaurants(ent_id, ent_type, (r)=> {
+            console.log("callback from getRestaurants: ", r);
             callback(r);
         });
     })
