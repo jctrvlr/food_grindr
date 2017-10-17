@@ -154,7 +154,8 @@ class dataProc {
         if(is_string($last)) {
             // Find $last (last restaurant sent) in array and give next item
             $last_key = array_search($last, $arr);
-            $chosen_rest = $arr[$last_key+1];
+            $key = $last_key + 1;
+            $chosen_rest = $arr[$key];
         } else {
             $chosen_rest = $arr[0];
         }
