@@ -19,8 +19,8 @@ function getLocations($loc, $lat, $lon) {
   curl_close($ch);
   $json = json_decode($resp, true);
   var_dump($json);
-  $ent_id = $json['data']['location_suggestions'][0]['entity_id'];
-  $ent_type = $json['data']['location_suggestions'][0]['entity_type'];
+  $ent_id = $json['location_suggestions'][0]['entity_id'];
+  $ent_type = $json['location_suggestions'][0]['entity_type'];
   echo $ent_id." ".$ent_type;
   $client = new rabbitMQClient("rabbitMQData.ini","testServer");
   $request = array();
@@ -50,7 +50,7 @@ function getRestaurants($ent_id, $ent_type) {
   $resp = curl_exec($ch);
   curl_close($ch);
   $json = json_decode($resp, true);
-  $rest_arr = $json['data']['best_rated_restaurant'];
+  $rest_arr = $json['best_rated_restaurant'];
 
   $client = new rabbitMQClient("rabbitMQData.ini","testServer");
   $request = array();
