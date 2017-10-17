@@ -7,13 +7,18 @@ It uses the Zomato API and pull info from there.
 
 ***
 
+## Team Members
 <dl>
-	<dt>Team Members</dt>
-		<dd>John Cummings</dd>
-		<dd>Khari Davis-Fletcher</dd>
-		<dd>Katy Nyby</dd>
-		<dd>Gary Avendano</dd>
-		<dd>Joe Palella</dd>
+	<dt>John Cummings</dt>
+		<dd>Email: jic6@njit.edu</dd>
+	<dt>Khari Davis-Fletcher</dt>
+		<dd>Email: kld22@njit.edu</dd>
+	<dt>Katy Nyby</dt>
+		<dd>Email: kn96@njit.edu</dd>
+	<dt>Gary Avendano</dt>
+		<dd>Email: ga68@njit.edu</dd>
+	<dt>Joe Palella</dt>
+		<dd>Email: jp465@njit.edu</dd>
 </dl>
 
 ***
