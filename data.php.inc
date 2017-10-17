@@ -161,10 +161,10 @@ class dataProc {
             echo "Inside is_bool".PHP_EOL;
             $last_key = $this->searchForName($last, $arr);
             echo "Key: ".$last_key;
+            var_dump($arr);
             $chosen_rest = $arr[$last_key+1];
         } else {
             $chosen_rest = $arr[0];
-            var_dump($chosen_rest);
         }
         return $chosen_rest; // Return one restaurant
     }
