@@ -65,7 +65,6 @@ class dataProc {
 
     public function restResp($user, $res_id, $like, $zip, $last) {
         $statement = "insert into responses (user, res_id, liked) values ('".$user."','".$res_id."',".$like.");";
-        echo $statement.PHP_EOL;
         $response = $this->logindb->query($statement);
         if($response) {
             $res = $this->getRest($user, $zip, $last);
@@ -83,7 +82,6 @@ class dataProc {
 
     public function insertLoc($loc, $ent_type, $ent_id, $lat, $lon, $zip) {
 		$statement = "insert into city (name, entity_id, entity_type, longitude, latitude, zip) values ('".$loc."', '".$ent_id."', '".$ent_type."', '".$lon."', '".$lat."', '".$zip."');";
-        echo "Statement: ".$statement.PHP_EOL;
         $response = $this->logindb->query($statement);
 		if ($response) {
 			return true;
