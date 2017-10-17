@@ -9,6 +9,7 @@ function getLocations($loc, $lat, $lon) {
   $url = "https://developers.zomato.com/api/v2.1/locations?query=".$loc."&lat=".$lat."&lon=".$lon;
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_HTTPHEADER, array(
     'Accept: application/json',
     'user-key: 1b90ae9b4a76dd0cf044bfc1332206cf'
@@ -40,6 +41,7 @@ function getRestaurants($ent_id, $ent_type) {
   $url = "https://developers.zomato.com/api/v2.1/location_details?entity_id=".$ent_id."&entity_type=".$ent_type;
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_HTTPHEADER, array(
     'Accept: application/json',
     'user-key: 1b90ae9b4a76dd0cf044bfc1332206cf'

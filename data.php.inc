@@ -166,7 +166,6 @@ class dataProc {
         $statement = "select * from zipcode where zipcode='".$zip."';";
         $response = $this->logindb->query($statement);
         while($row = $response->fetch_assoc()) {
-            var_dump($row);
             $loc_arr = array();
             $loc_arr['name']=$row["city"];
             $loc_arr['latitude']=$row["lat"];
