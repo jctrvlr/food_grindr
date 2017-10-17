@@ -262,17 +262,15 @@ class dataProc {
                 $cuisine = explode(",", $cuisine);
                 foreach($cuisine as $i) {
                     if(array_key_exists($i, $count)){
-                        echo "Array key exists";
                         $count[$i]++;
                     } else {
-                        echo "Array Key doesn't exist";
-                        var_dump($count);
                         $count[$i]=1;
                     }
                 }
 
             }
             asort($count);
+            var_dump($count);
             $st = "UPDATE preferences SET cuisine='".$count[0]."' WHERE email='".$resp[$x]['email']."';";
             $this->logindb->query($st);
         }
