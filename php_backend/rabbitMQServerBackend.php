@@ -29,6 +29,7 @@ function getLocations($loc, $lat, $lon) {
   $request['ent_type'] = $ent_type;
   $request['ent_id'] = $ent_id;
   $response = $client->send_request($request); 
+  var_dump($response);
   $r = getRestaurants($ent_id, $ent_type);
 
   return $r;
@@ -53,7 +54,7 @@ function getRestaurants($ent_id, $ent_type) {
   $request['type'] = "insert_res";
   $request['rest_arr'] = $rest_arr;
   $response = $client->send_request($request);
-
+  var_dump($response);
   return $response;
   
 
