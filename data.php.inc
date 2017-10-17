@@ -222,7 +222,7 @@ class dataProc {
         }
         $i = 0;
         while($i < count($res_array)) {
-            $key = $this->findKey($res_array, "cuisine", $this->pref);
+            $key = $this->findKey($res_array, "cuisines", $this->pref);
             $moverest = $res_array[$key];
             unset($res_array[$key]);
             array_unshift($res_array, $moverest);
