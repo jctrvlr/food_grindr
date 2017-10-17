@@ -164,7 +164,7 @@ class dataProc {
             $chosen_rest = $arr[$last_key+1];
         } else {
             $chosen_rest = $arr[0];
-            echo $chosen_rest.PHP_EOL;
+            var_dump($chosen_rest);
         }
         return $chosen_rest; // Return one restaurant
     }
