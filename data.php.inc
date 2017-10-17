@@ -70,7 +70,7 @@ class dataProc {
     }
 
     public function insertLoc($loc, $ent_type, $ent_id, $lat, $lon, $zip) {
-		$statement = "insert into city (name, entity_id, entity_type, longitude, latitude) values ('".$loc."', '".$ent_id."', '".$ent_type."', '".$lon."', '".$lat."');";
+		$statement = "insert into city (name, entity_id, entity_type, longitude, latitude, zip) values ('".$loc."', '".$ent_id."', '".$ent_type."', '".$lon."', '".$lat."', '".$zip."');";
 		$response = $this->logindb->query($statement);
 		$options = array();
 		$options[0] = 'debug';
