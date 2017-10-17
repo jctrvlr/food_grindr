@@ -7,6 +7,7 @@ class dataProc {
 
     public function __construct() {
         $this->logindb = new mysqli("127.0.0.1","root","Ireland2018","it490");
+        $this->ent_id;
 
 		if ($this->logindb->connect_errno != 0)
 		{
@@ -28,6 +29,7 @@ class dataProc {
             $loc_arr = $this->getCoord($zip);
             $check_loc = $this->checkLocation($loc_arr['name'], $zip, $loc_arr['latitude'], $loc_arr['longitude']);
             if($check_loc) {
+                $this->ent_id = $this->getEnt($zip);
                 $this->getRest($user, $zip, TRUE);
             } else {
                 $options = array();
@@ -37,7 +39,8 @@ class dataProc {
                 sendLogs($options);
             }
         }
-        $statement = "select * from restaurants where zipcode = '".$zip."';";
+
+        $statement = "select * from restaurants where entity_id = '".$this->ent_id."';";
         // Get restaurants from zipcode
         $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
         // Get user preferences
@@ -48,6 +51,13 @@ class dataProc {
         // $rest_array['dist'] = distance($lat1, $lon1, $lat2, $lon2, $unit);
         // Return one restaurant
         return json_encode($chosen_rest);
+    }
+
+    private function getEnt($zipcode) {
+        $statement = "select * from city where zip=".$zipcode.";";
+        $resp = $this->logindb->query($statement);
+        $row = mysqli_fetch_array($resp, MYSQLI_ASSOC);
+        return $row['entity_id'];
     }
 
     
@@ -132,12 +142,7 @@ class dataProc {
                 sendLogs($options);
             }
         } else {
-           // Error Logging
-           $options = array();
-           $options[0] = 'error';
-           $options[1] = 'data functions - checkLocation';
-           $options[2] = 'Error querying db.';
-           sendLogs($options);
+            return true;
         }
     }
 
