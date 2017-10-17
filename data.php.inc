@@ -97,16 +97,17 @@ class dataProc {
             $response = $this->logindb->query($statement);
 
             if ($response) {
-                return true;
+                //return true;
             } else {
                 $options = array();
                 $options[0] = 'error';
                 $options[1] = 'dataServer - insertRes()';
                 $options[2] = 'Failed to insert into database: '. $response;
                 sendLogs($options);
-                return false;
+                //return false;
             }
         }
+        return true;
     }
 
     private function checkLocation($loc, $zip, $lat, $lon) {
