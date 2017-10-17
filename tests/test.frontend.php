@@ -28,7 +28,7 @@ switch ($request["type"])
 		$req['type'] = "get_rest";
 		$req['user'] = $_SESSION["email"];
 		$req['zip'] = $_SESSION["zipcode"];
-		$req['last'] = $_SESSION["last"];
+		$req['last'] = NULL;
 		$response = $client->send_request($req);
 		$_SESSION["last"] = $response;
 		break;

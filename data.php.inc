@@ -26,8 +26,6 @@ class dataProc {
         if(!isset($last)) {
             // Get zipcode to send to check location
             $loc_arr = $this->getCoord($zip);
-            echo "Loc_Arr";
-            var_dump($loc_arr);
             $check_loc = $this->checkLocation($loc_arr['name'], $zip, $loc_arr['latitude'], $loc_arr['longitude']);
             if($check_loc) {
                 $this->getRest($user, $zip, TRUE);
@@ -43,8 +41,8 @@ class dataProc {
         // Get restaurants from zipcode
         $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
         // Get user preferences
-        $pref = $this->getUser($user);
-        var_dump($resp);
+        //$pref = $this->getUser($user);
+
         $chosen_rest = $this->chooseRest($resp, $last); // Only input resp for now -- Later input preference
         // Set other fields here from database/restchoose function
         // $rest_array['dist'] = distance($lat1, $lon1, $lat2, $lon2, $unit);
@@ -92,30 +90,29 @@ class dataProc {
     }
     // TODO FINISH INSERTRES
     public function insertRes($res_arr) {
-        $json = json_decode($res_arr, true);
-        foreach($json as $item) {
-            $location = json_decode($item['location'], true);
-            $statement = "insert ignore into restaurants (res_id, name, address, zipcode, longitude, latitude, cuisine, price_range, thumbnail, online_delivery) values ('".$item['id']."','".$item['name']."','".$location['address']."','".$location['zipcode']."','".$location['longitude']."','".$location['latitude']."','".$item['cuisines']."','".$item['price_range']."','".$item['thumb']."','".$item['has_online_delivery']."');";
+        foreach($res_arr as $item) {
+            $location = $item['restaurant']['location'];
+            $statement = "insert ignore into restaurants (res_id, name, address, zipcode, longitude, latitude, cuisine, price_range, thumbnail, online_delivery) values ('".$item['restaurant']['id']."','".$item['restaurant']['name']."','".$location['address']."','".$location['zipcode']."','".$location['longitude']."','".$location['latitude']."','".$item['restaurant']['cuisines']."','".$item['restaurant']['price_range']."','".$item['restaurant']['thumb']."','".$item['restaurant']['has_online_delivery']."');";
             $response = $this->logindb->query($statement);
 
-            if ($response) {
-                return true;
-            } else {
-                $options = array();
-                $options[0] = 'error';
-                $options[1] = 'dataServer - insertRes()';
-                $options[2] = 'Failed to insert into database: '. $response;
-                sendLogs($options);
-                return false;
-            }
+           // if ($response) {
+                //return true;
+           // } else {
+               // $options = array();
+               // $options[0] = 'error';
+                //$options[1] = 'dataServer - insertRes()';
+                //$options[2] = 'Failed to insert into database: '. $response;
+                //sendLogs($options);
+                //return false;
+            //}
         }
+        return true;
     }
 
     private function checkLocation($loc, $zip, $lat, $lon) {
         // Check if location is in database and if empty send request through rabbitmq to backend to get locations
         $statement = "select * from city where zip = '".$zip."';";
         $response = $this->logindb->query($statement);
-        var_dump($response);
         if(!$response) { // Check if exists in database here
             $client = new rabbitMQClient("rabbitMQBack.ini","testServer");
             $request = array();
@@ -124,6 +121,7 @@ class dataProc {
             $request['lat'] = $lat;
             $request['lon'] = $lon;
             $response = $client->send_request($request); 
+            echo "Response from get_loc in checkLocation".$response.PHP_EOL;
             if($response) {
                 return true;
             } else {
@@ -152,14 +150,17 @@ class dataProc {
     }   
 
     private function chooseRest($arr, $last) {
-        var_dump($arr);
+        echo "Inside chooseRest".PHP_EOL;
+        $chosen_rest = array();
         //$arr = sortArr(); // Sorting function when it works
-        if(is_string($last)) {
+        if(!is_bool($last)) {
             // Find $last (last restaurant sent) in array and give next item
+            echo "Inside is_bool".PHP_EOL;
             $last_key = array_search($last, $arr);
             $chosen_rest = $arr[$last_key+1];
         } else {
             $chosen_rest = $arr[0];
+            echo $chosen_rest.PHP_EOL;
         }
         return $chosen_rest; // Return one restaurant
     }

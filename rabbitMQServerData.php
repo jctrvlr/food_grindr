@@ -42,7 +42,7 @@ function requestProcessor($request)
   switch ($request['type'])
   {
     case "get_rest":
-      return getRest($request['user'], $request['zip'], $request['last']); // last is last name, user is email
+      return getRest($request['user'], $request['zip'], $request['last']); // last is last restaurant name, user is email
     case "rest_response":
       return restResp($request['user'], $request['res_id'], $request['like'], $request['zip'], $request['last']); //Anything else?
     case "insert_loc":
