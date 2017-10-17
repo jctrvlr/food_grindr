@@ -19,9 +19,9 @@ function restResp($user, $res_id, $like, $zip, $last) {
     // return json array with one restaurant info after storing response
 }
 
-function insertLoc($loc, $ent_type, $ent_id, $lat, $lon) {
+function insertLoc($loc, $ent_type, $ent_id, $lat, $lon, $zip) {
   $dat = new dataProc();
-  $output = $dat->insertLoc($loc, $ent_type, $ent_id, $lat, $lon);
+  $output = $dat->insertLoc($loc, $ent_type, $ent_id, $lat, $lon, $zip);
   return $output;
 }
 
@@ -46,7 +46,7 @@ function requestProcessor($request)
     case "rest_response":
       return restResp($request['user'], $request['res_id'], $request['like'], $request['zip'], $request['last']); //Anything else?
     case "insert_loc":
-      return insertLoc($request['loc'], $request['ent_type'], $request['ent_id'], $request['lat'], $request['lon']);
+      return insertLoc($request['loc'], $request['ent_type'], $request['ent_id'], $request['lat'], $request['lon'], $request['zip']);
     case "insert_res":
       return insertRes($request["rest_arr"]);
   }

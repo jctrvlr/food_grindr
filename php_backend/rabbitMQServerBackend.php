@@ -5,7 +5,7 @@ require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
 
-function getLocations($loc, $lat, $lon) {
+function getLocations($loc, $lat, $lon, $zip) {
   $url = "https://developers.zomato.com/api/v2.1/locations?query=".$loc."&lat=".$lat."&lon=".$lon;
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
@@ -30,6 +30,7 @@ function getLocations($loc, $lat, $lon) {
   $request['lon'] = $lon;
   $request['ent_type'] = $ent_type;
   $request['ent_id'] = $ent_id;
+  $request['zip'] = $zip;
   $response = $client->publish($request); 
   echo "Sent request insert_loc".PHP_EOL;
   getRestaurants($ent_id, $ent_type);
@@ -75,7 +76,7 @@ function requestProcessor($request)
   switch ($request['type'])
   {
     case "get_loc":
-      return getLocations($request['loc'], $request['lat'], $request['lon']); 
+      return getLocations($request['loc'], $request['lat'], $request['lon'], $request['zip']); 
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }

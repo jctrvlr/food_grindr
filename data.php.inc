@@ -69,7 +69,7 @@ class dataProc {
         return $res;
     }
 
-    public function insertLoc($loc, $ent_type, $ent_id, $lat, $lon) {
+    public function insertLoc($loc, $ent_type, $ent_id, $lat, $lon, $zip) {
 		$statement = "insert into city (name, entity_id, entity_type, longitude, latitude) values ('".$loc."', '".$ent_id."', '".$ent_type."', '".$lon."', '".$lat."');";
 		$response = $this->logindb->query($statement);
 		$options = array();
@@ -120,6 +120,8 @@ class dataProc {
             $request['loc'] = $loc;
             $request['lat'] = $lat;
             $request['lon'] = $lon;
+            $request['zip'] = $zip;
+
             $response = $client->send_request($request); 
             echo "Response from get_loc in checkLocation".$response.PHP_EOL;
             if($response) {
