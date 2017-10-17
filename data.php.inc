@@ -156,7 +156,7 @@ class dataProc {
         echo "Inside chooseRest".PHP_EOL;
         $chosen_rest = array();
         //$arr = sortArr(); // Sorting function when it works
-        if(is_bool($last)) {
+        if(is_string($last)) {
             // Find $last (last restaurant sent) in array and give next item
             echo "Inside is_bool".PHP_EOL;
             $last_key = $this->searchForName($last, $arr);
