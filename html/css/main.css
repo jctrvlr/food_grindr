@@ -18,6 +18,7 @@ body {
   clear: both;
 }
 
+/*The size, orientation of just blocks, not content*/
 .col-1 {
   width: 33.333%;
   padding: 0 15px;
@@ -190,12 +191,16 @@ body {
   max-width: 100%;
 }
 .user-item_info {
-  padding: 15px;
+  padding: 30px;
+  text-align: left;
+}
+.user-item_infoname {
+  padding: 30px;
   text-align: center;
 }
 .user-item_info .name {
   color: #34495E;
-  font-size: 20px;
+  font-size: 25px;
   letter-spacing: 1px;
   font-weight: bold;
   margin-bottom: 5px;
@@ -326,34 +331,5 @@ body {
       -ms-flex-pack: start;
           justify-content: flex-start;
 }
-.chat_inner-item .photo {
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  overflow: hidden;
-  margin-right: 10px;
-}
-.chat_inner-item .photo img {
-  width: 40px;
-  height: 40px;
-  display: block;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-.chat_inner-item .message {
-  padding: 12px 20px;
-  background-color: #ECECEC;
-  border-radius: 5px;
-  color: #808080;
-  letter-spacing: 1px;
-}
-.chat_inner-item .message ~ .photo {
-  margin-right: 0;
-  margin-left: 10px;
-}
-.chat_inner-item.right {
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-}
+
 
