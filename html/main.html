@@ -2,69 +2,57 @@
 
 <html>
 
-    <meta charset="utf-8"/>
+<script src="js/main.js"></script>
 
+<head>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
 
-    <script src="js/main.js"></script>
-
-    <head>
-            <link rel="stylesheet" type="text/css" href="css/main.css">
-    </head>
-
-    <body onload="poopValues();" >
-
-    <div class="wrapper">
-    <div class="wrapper_container">
-    <!-- start content -->
-        <div class="site-wrapper active" id="target">
-        <div class="site-wrapper_left-col">
-            <a href="#" class="logo">Logo</a>
-            <div class="left-nav">
-                <a href="#"><i class="fa fa-pie-chart"></i>Dashboard</a>
-                <a href="#"><i class="fa fa-home"></i>Favorites</a>
-                <a href="#"><i class="fa fa-cog"></i>Settings</a>
-                <a href="#"><i class="fa fa-comment"></i>About</a>
-            </div>
+<div class="wrapper">
+  <div class="wrapper_container">
+  <!-- start content -->
+    <div class="site-wrapper active" id="target">
+      <div class="site-wrapper_left-col">
+        <a href="#" class="logo">Logo</a>
+        <div class="left-nav">
+          <a href="#"><i class="fa fa-home"></i>Home</a>
+          <a href="#"><i class="fa fa-pie-chart"></i>Dashboard</a>
+          <a href="#" class="active"><i class="fa fa-user"></i>Profile</a>
+          <a href="#"><i class="fa fa-comment"></i>About</a>
+          <a href="#"><i class="fa fa-cog"></i>Settings</a>
         </div>
-        <div class="site-wrapper_top-bar">
-            <a href="#" id="toggle"><i class="fa fa-bars"></i></a>
+      </div>
+      <div class="site-wrapper_top-bar">
+        <a href="#" id="toggle"><i class="fa fa-bars"></i></a>
+      </div>
+      <!-- inner content -->
+      <div class="row">
+        <div class="col-1">
+          <div class="user-item">
+            <div class="user-item_photo">
+              <img src="http://www.clker.com/cliparts/Q/3/D/I/L/u/knife-and-fork-clipart-hi.png" alt="myphoto" />
+            </div>
+            <div class="user-item_info">
+              <p class="name">Stanislav Golts</p>
+              <p class="sub">Front-End developer</p>
+              <div class="controls">
+                <a href="#"><i class="fa fa-camera"></i></a>
+                <a href="#"><i class="fa fa-pencil"></i></a>
+              </div>
+            </div>
+          </div>
         </div>
-        <!-- inner content -->
-        <div class="row">
-            <div class="col-1">
-            <div class="user-item">
-                <div class="user-item_photo">
-                <img src="http://www.clker.com/cliparts/Q/3/D/I/L/u/knife-and-fork-clipart-hi.png" alt="myphoto" />
-                </div>
-                <div class="user-item_info">
-                <p id="name" class="name">Katy's Kitchen</p>
-                <p class="sub">Front-End developer</p>
-                <div class="controls">
-                    <a href="#"><i class="fa fa-camera"></i></a>
-                    <a href="#"><i class="fa fa-pencil"></i></a>
-                </div>
-                </div>
+        <div class="col-2">
+            <div class="chat">
+              
+              </div>
             </div>
-            </div>
-            <div class="col-2">
-                <div class="chat">
-                    <div class="user-item_info">
-                    <!--<p id="name"></p>-->
-                    <p id="address">Front-End developer</p>
-                    <p id="cuisine">Front-End developer</p>
-                    <p id="rating">Front-End developer</p>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end inner content -->
-        </div>  
-    <!-- end content -->
-    </div>
-    </div>
-    </body>
-    <script>
-        poopValues();
-    </script>
+          </div>
+      </div>
+      <!-- end inner content -->
+    </div>  
+  <!-- end content -->
+  </div>
+</div>
+
 </html>
