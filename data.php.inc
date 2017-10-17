@@ -95,16 +95,16 @@ class dataProc {
             $statement = "insert ignore into restaurants (res_id, name, address, zipcode, longitude, latitude, cuisine, price_range, thumbnail, online_delivery) values ('".$item['restaurant']['id']."','".$item['restaurant']['name']."','".$location['address']."','".$location['zipcode']."','".$location['longitude']."','".$location['latitude']."','".$item['restaurant']['cuisines']."','".$item['restaurant']['price_range']."','".$item['restaurant']['thumb']."','".$item['restaurant']['has_online_delivery']."');";
             $response = $this->logindb->query($statement);
 
-            if ($response) {
+           // if ($response) {
                 //return true;
-            } else {
-                $options = array();
-                $options[0] = 'error';
-                $options[1] = 'dataServer - insertRes()';
-                $options[2] = 'Failed to insert into database: '. $response;
-                sendLogs($options);
+           // } else {
+               // $options = array();
+               // $options[0] = 'error';
+                //$options[1] = 'dataServer - insertRes()';
+                //$options[2] = 'Failed to insert into database: '. $response;
+                //sendLogs($options);
                 //return false;
-            }
+            //}
         }
         return true;
     }
