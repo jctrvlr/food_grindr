@@ -267,7 +267,11 @@ class dataProc {
             }
             arsort($count);
             $ak = array_keys($count);
+            if(empty($ak)) {
+                return;
+            }
             var_dump($resp[$x]['email']);
+            var_dump($ak);
             var_dump($ak[0]);
             $st = "UPDATE preferences SET cuisine='".$ak[0]."' WHERE email='".$resp[$x]['email']."';";
             $this->logindb->query($st);
