@@ -258,7 +258,7 @@ class dataProc {
             var_dump($res);
             $count = array();
             foreach($res as $item) {
-                var_dump($item)
+                var_dump($item);
                 $cuisine = $item['cuisine'];
                 $cuisine = str_replace(' ','',$cuisine);
                 $cuisine = explode(",", $cuisine);
