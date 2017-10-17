@@ -18,6 +18,7 @@ function getLocations($loc, $lat, $lon) {
   $resp = curl_exec($ch);
   curl_close($ch);
   $json = json_decode($resp, true);
+  vardump($json);
   $ent_id = $json['data']['location_suggestions'][0]['entity_id'];
   $ent_type = $json['data']['location_suggestions'][0]['entity_type'];
   echo $ent_id." ".$ent_type;
