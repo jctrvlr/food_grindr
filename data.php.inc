@@ -38,7 +38,7 @@ class dataProc {
                 sendLogs($options);
             }
         }
-        echo "Ent_ID: ".$this->ent_id.PHP_EOL;
+        $this->ent_id = $this->getEnt($zip);
         $statement = "select * from restaurants where entity_id = '".$this->ent_id."';";
         // Get restaurants from zipcode
         $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
