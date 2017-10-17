@@ -90,8 +90,7 @@ class dataProc {
     }
     // TODO FINISH INSERTRES
     public function insertRes($res_arr) {
-        $json = json_decode($res_arr, true);
-        foreach($json as $item) {
+        foreach($res_arr as $item) {
             $location = json_decode($item['location'], true);
             $statement = "insert ignore into restaurants (res_id, name, address, zipcode, longitude, latitude, cuisine, price_range, thumbnail, online_delivery) values ('".$item['id']."','".$item['name']."','".$location['address']."','".$location['zipcode']."','".$location['longitude']."','".$location['latitude']."','".$item['cuisines']."','".$item['price_range']."','".$item['thumb']."','".$item['has_online_delivery']."');";
             $response = $this->logindb->query($statement);
