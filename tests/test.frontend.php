@@ -28,9 +28,10 @@ switch ($request["type"])
 		$req['type'] = "get_rest";
 		$req['user'] = $_SESSION["email"];
 		$req['zip'] = $_SESSION["zipcode"];
-		$req['last'] = NULL;
+		$req['last'] = $_SESSION['last'];
 		$response = $client->send_request($req);
-		$_SESSION["last"] = $response;
+		$json = json_decode($response, true);
+		$_SESSION["last"] = $json['name'];
 		break;
 	}
 	case "send_res": {
