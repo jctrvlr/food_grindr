@@ -12,6 +12,12 @@ function getRest($user, $zip, $last) {
     // return json array with one restaurant info
 }
 
+function findPref(){
+  $dat = new dataProc();
+  $output = $dat->findPref();
+  return $output;
+}
+
 function restResp($user, $res_id, $like, $zip, $last) {
   $dat = new dataProc();
   $output = $dat->restResp($user, $res_id, $like, $zip, $last);
@@ -49,6 +55,8 @@ function requestProcessor($request)
       return insertLoc($request['loc'], $request['ent_type'], $request['ent_id'], $request['lat'], $request['lon'], $request['zip']);
     case "insert_res":
       return insertRes($request["rest_arr"], $request['ent_id']);
+    case "find_pref":
+      return findPref();
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }

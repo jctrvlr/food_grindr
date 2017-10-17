@@ -5,6 +5,8 @@ require_once('logger.inc');
 class dataProc {
     private $datadb;
     private $ent_id;
+    private $pref;
+
     public function __construct() {
         $this->logindb = new mysqli("127.0.0.1","root","Ireland2018","it490");
 
@@ -43,9 +45,9 @@ class dataProc {
         // Get restaurants from zipcode
         $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
         // Get user preferences
-        //$pref = $this->getUser($user);
+        $this->pref = $this->getUser($user);
 
-        $chosen_rest = $this->chooseRest($resp, $last); // Only input resp for now -- Later input preference
+        $chosen_rest = $this->chooseRest($resp, $last); 
         // Set other fields here from database/restchoose function
         // $rest_array['dist'] = distance($lat1, $lon1, $lat2, $lon2, $unit);
         // Return one restaurant
@@ -148,10 +150,11 @@ class dataProc {
     }
 
     private function getUser($user) {
-        // TODO CHANGE STATEMENT -- No preferences table atm
-        $statement = "select * from preferences where email = '".$user."';";
+        $statement = "select cuisine from preferences where email = '".$user."';";
         $response = $this->logindb->query($statement);
-        //TODO WRITE CODE TO GET USER -- pref etc.
+        $row = mysqli_fetch_array($response, MYSQLI_ASSOC);
+
+        return $row['cuisine'];
     }   
 
     private function chooseRest($arr, $last) {
@@ -213,12 +216,19 @@ class dataProc {
     }
 
     // Sorting functions
-    private function sortArr($res_array, $pref) {
-        $key = findKey($res_array, "cuisine", $pref);
-        $moverest = $colours[$key];
-        unset($colours[$key]);
-        array_unshift($colours, $moverest);
-        return $arr;
+    private function sortArr($res_array) {
+        if(is_null($this->pref)){
+            return $res_array;
+        }
+        $i = 0;
+        while($i < count($res_array)) {
+            $key = findKey($res_array, "cuisine", $this->pref);
+            $moverest = $res_array[$key];
+            unset($res_array[$key]);
+            array_unshift($res_array, $moverest);
+            $i++;
+        }    
+        return $res_array;
     }
 
     private function findKey($restaurants, $field, $value)
@@ -229,5 +239,36 @@ class dataProc {
              return $key;
        }
        return false;
+    }
+
+
+
+    // Preference calculator
+    public function findPref() {
+        $statement = "select email from users;";
+        // Get different emails
+        $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
+        for($x = 0; $x <= count($resp); $x++) {
+            $statement = "SELECT responses.res_id, responses.liked, restaurants.cuisine FROM responses INNER JOIN restaurants ON responses.res_id=restaurants.res_id WHERE responses.user = '".$resp[$x]['email']."';";
+            $res = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
+            $count = array();
+            foreach($res as $item) {
+                $cuisine = $item['cuisine'];
+                $cuisine = str_replace(' ','',$cuisine);
+                $cuisine = explode(",", $cuisine);
+                foreach($cuisine as $i) {
+                    if(array_key_exists($i, $count)){
+                        $count[$i]++;
+                    } else {
+                        $count[$i]=1;
+                    }
+                }
+
+            }
+            asort($count);
+            $st = "UPDATE preferences SET cuisine='".$count[0]."' WHERE email='".$resp[$x]['email']."';";
+            $this->logindb->query($st);
+        }
+        return true;
     }
 }
