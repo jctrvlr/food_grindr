@@ -167,7 +167,11 @@ class dataProc {
             var_dump($arr);
             $last_key = $this->searchForName($last, $arr);
             echo "Key: ".$last_key;
-            $chosen_rest = $arr[$last_key+1];
+            $key = $last_key+1;
+            if($key > count($arr)-1){
+                $key = 0;
+            }
+            $chosen_rest = $arr[$key];
         } else {
             $chosen_rest = $arr[0];
         }
