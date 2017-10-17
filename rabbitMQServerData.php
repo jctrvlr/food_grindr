@@ -25,9 +25,9 @@ function insertLoc($loc, $ent_type, $ent_id, $lat, $lon, $zip) {
   return $output;
 }
 
-function insertRes($res_arr) {
+function insertRes($res_arr, $ent_id) {
   $dat = new dataProc();
-  $output = $dat->insertRes($res_arr);
+  $output = $dat->insertRes($res_arr, $ent_id);
   return $output;
 }
 
@@ -48,7 +48,7 @@ function requestProcessor($request)
     case "insert_loc":
       return insertLoc($request['loc'], $request['ent_type'], $request['ent_id'], $request['lat'], $request['lon'], $request['zip']);
     case "insert_res":
-      return insertRes($request["rest_arr"]);
+      return insertRes($request["rest_arr"], $request['ent_id']);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }

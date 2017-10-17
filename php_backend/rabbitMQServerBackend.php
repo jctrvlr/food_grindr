@@ -57,6 +57,7 @@ function getRestaurants($ent_id, $ent_type) {
   $request = array();
   $request['type'] = "insert_res";
   $request['rest_arr'] = $rest_arr;
+  $request['ent_id'] = $ent_id;
   $response = $client->publish($request);
   echo "Sent request insert_res".PHP_EOL;
   return true;
