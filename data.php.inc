@@ -255,13 +255,12 @@ class dataProc {
         for($x = 0; $x <= count($resp)-1; $x++) {
             $statement = "SELECT responses.res_id, responses.liked, restaurants.cuisine FROM responses INNER JOIN restaurants ON responses.res_id=restaurants.res_id WHERE responses.user = '".$resp[$x]['email']."';";
             $res = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
-            var_dump($res);
             $count = array();
             foreach($res as $item) {
-                var_dump($item);
                 $cuisine = $item['cuisine'];
                 $cuisine = str_replace(' ','',$cuisine);
                 $cuisine = explode(",", $cuisine);
+                var_dump($cuisine);
                 foreach($cuisine as $i) {
                     if(array_key_exists($i, $count)){
                         $count[$i]++;
