@@ -32,14 +32,15 @@
         function HandleGetResResponse(response) {
             console.log('Inside handleRequest: ' + response);
             rest = JSON.parse(response);
-            rest = JSON.parse(rest);
             document.getElementById("output").innerHTML = "response: " + rest + "<p>";
         }
 
         function submitResp(like) {
-            var res_id = rest.res_id;
+            var obj = JSON.parse(rest);
+            var res_id = obj.res_id;
             console.log(rest);
-            console.log(rest["res_id"]);
+            console.debug(obj);
+            console.log(obj["res_id"]);
             sendRespRequest(res_id, like);
 
         }
