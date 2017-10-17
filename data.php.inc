@@ -41,7 +41,7 @@ class dataProc {
         // Get restaurants from zipcode
         $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
         // Get user preferences
-        $pref = $this->getUser($user);
+        //$pref = $this->getUser($user);
         var_dump($resp);
         $chosen_rest = $this->chooseRest($resp, $last); // Only input resp for now -- Later input preference
         // Set other fields here from database/restchoose function
@@ -150,9 +150,8 @@ class dataProc {
     }   
 
     private function chooseRest($arr, $last) {
-        var_dump($arr);
         //$arr = sortArr(); // Sorting function when it works
-        if(is_string($last)) {
+        if($last !== "null") {
             // Find $last (last restaurant sent) in array and give next item
             $last_key = array_search($last, $arr);
             $chosen_rest = $arr[$last_key+1];
