@@ -121,7 +121,7 @@ class dataProc {
             $request['lat'] = $lat;
             $request['lon'] = $lon;
             $response = $client->send_request($request); 
-            echo "Response from get_loc in checkLocation".$response;
+            echo "Response from get_loc in checkLocation".$response.PHP_EOL;
             if($response) {
                 return true;
             } else {
@@ -150,17 +150,17 @@ class dataProc {
     }   
 
     private function chooseRest($arr, $last) {
-        echo "Inside chooseRest";
+        echo "Inside chooseRest".PHP_EOL;
         $chosen_rest = array();
         //$arr = sortArr(); // Sorting function when it works
         if(!is_bool($last)) {
             // Find $last (last restaurant sent) in array and give next item
-            echo "Inside is_bool";
+            echo "Inside is_bool".PHP_EOL;
             $last_key = array_search($last, $arr);
             $chosen_rest = $arr[$last_key+1];
         } else {
             $chosen_rest = $arr[0];
-            echo $chosen_rest;
+            echo $chosen_rest.PHP_EOL;
         }
         return $chosen_rest; // Return one restaurant
     }

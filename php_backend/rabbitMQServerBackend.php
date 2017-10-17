@@ -31,7 +31,7 @@ function getLocations($loc, $lat, $lon) {
   $request['ent_type'] = $ent_type;
   $request['ent_id'] = $ent_id;
   $response = $client->publish($request); 
-  echo "Sent request insert_loc";
+  echo "Sent request insert_loc".PHP_EOL;
   getRestaurants($ent_id, $ent_type);
 
   return true;
@@ -57,8 +57,8 @@ function getRestaurants($ent_id, $ent_type) {
   $request['type'] = "insert_res";
   $request['rest_arr'] = $rest_arr;
   $response = $client->publish($request);
-  echo "Sent request insert_res";
-  return $response;
+  echo "Sent request insert_res".PHP_EOL;
+  return true;
   
 
 }
