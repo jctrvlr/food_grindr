@@ -158,7 +158,7 @@ class dataProc {
     private function chooseRest($arr, $last) {
         echo "Inside chooseRest".PHP_EOL;
         $chosen_rest = array();
-        $arr = sortArr($arr); // Sorting function when it works
+        $arr = $this->sortArr($arr); // Sorting function when it works
         if(is_string($last)) {
             // Find $last (last restaurant sent) in array and give next item
             $last_key = $this->searchForName($last, $arr);
