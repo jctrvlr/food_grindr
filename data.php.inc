@@ -235,7 +235,7 @@ class dataProc {
     {
        foreach($restaurants as $key => $restaurant)
        {
-          if (strpos($restaurants[$field], $value))
+          if (strpos($restaurant[$field], $value))
              return $key;
        }
        return false;
