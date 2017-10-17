@@ -34,14 +34,17 @@ switch ($request["type"])
 		$_SESSION["last"] = $json['name'];
 		break;
 	}
-	case "send_res": {
+	case "rest_response": {
 		$req = array();
-		$req['type'] = 'signup';
-		$req['email']=$request['email'];
-		$req['f_name']=$request['f_name'];
-		$req['l_name']=$request['l_name'];
-		$req['pass']=$request['pword'];
+		$req['type'] = 'rest_response';
+		$req['user']=$_SESSION['email'];
+		$req['res_id']=$request['res_id'];
+		$req['like']=$request['like'];
+		$req['zip']=$_SESSION['zipcode'];
+		$req['last']=$_SESSION['last'];
 		$response = $client->send_request($req);
+		$json = json_decode($response, true);
+		$_SESSION["last"] = $json["name"];
 		break;
 	}
 }

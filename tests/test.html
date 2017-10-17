@@ -12,10 +12,13 @@
                 <input type="email" id="user" />
                 <input type="text" id="zip" />
                 <button type="button" id="submit" onclick="submitGetRes()">Submit</button>
+                <button type="button" id="like" onclick="submitResp(true)">Like</button>
+                <button type="button" id="dislike" onclick="submitResp(false)">Dislike</button>
             </form>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script type="text/javascript">
+        var rest;
         function submitGetRes() {
             var u = document.getElementById("user").value;
             var zip = document.getElementById("zip").value;
@@ -28,8 +31,29 @@
         
         function HandleGetResResponse(response) {
             console.log('Inside handleRequest: ' + response);
-            var text = JSON.parse(response);
-            document.getElementById("output").innerHTML = "response: " + text + "<p>";
+            rest = JSON.parse(response);
+            document.getElementById("output").innerHTML = "response: " + rest + "<p>";
+        }
+
+        function submitResp(like) {
+            var res_id = rest.res_id;
+            sendRespRequest(res_id, like);
+
+        }
+
+        function sendRespRequest(res_id, like) {
+            $.ajax({
+                url: 'test.frontend.php',
+                data: {
+                    type: 'rest_response',
+                    res_id: res_id,
+                    like: like,
+                },
+                type: 'post',
+                success: function (output) {
+                    HandleGetResResponse(output);
+                }
+            })
         }
         
         function sendGetResRequest(u, zip) {
