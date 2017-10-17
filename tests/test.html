@@ -31,9 +31,6 @@
         
         function HandleGetResResponse(response) {
             console.log('Inside handleRequest: ' + response);
-            if(response === "null") {
-                submitGetRes();
-            }
             rest = JSON.parse(response);
             document.getElementById("output").innerHTML = "response: " + rest + "<p>";
         }
