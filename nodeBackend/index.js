@@ -43,7 +43,7 @@ function getLocations(loc, lat, lon, callback) {
         headers: { 'Accept': 'application/json', 'user-key': key }
     })
     .then(function (response) {
-        console.log("Response from locations: ", response);
+        //console.log("Response from locations: ", response);
         let ent_type = response.data.location_suggestions[0].entity_type;
         let ent_id = response.data.location_suggestions[0].entity_id;
         let zipcode = response.data.location_suggestions[0].zipcode;
