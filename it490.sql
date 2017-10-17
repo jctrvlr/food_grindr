@@ -25,14 +25,15 @@ DROP TABLE IF EXISTS `city`;
 CREATE TABLE `city` (
   `id` int(4) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `entity_id` int(4) NOT NULL,
+  `entity_id` varchar(12) DEFAULT NULL,
   `entity_type` varchar(255) DEFAULT NULL,
   `longitude` float(9,6) DEFAULT NULL,
   `latitude` float(9,6) DEFAULT NULL,
   `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `zip` char(5) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `entity_id` (`entity_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +42,7 @@ CREATE TABLE `city` (
 
 LOCK TABLES `city` WRITE;
 /*!40000 ALTER TABLE `city` DISABLE KEYS */;
-INSERT INTO `city` VALUES (1,'Scranton',234,'city',40.744373,-40.000000,'2017-10-12 01:27:42');
+INSERT INTO `city` VALUES (28,'NEWARK','3976','city',-74.169998,40.720001,'2017-10-17 05:13:13','07103');
 /*!40000 ALTER TABLE `city` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,7 +136,7 @@ CREATE TABLE `restaurants` (
   `res_id` varchar(255) NOT NULL,
   `name` varchar(225) NOT NULL,
   `address` varchar(255) NOT NULL,
-  `zipcode` int(11) NOT NULL,
+  `zipcode` char(5) DEFAULT NULL,
   `longitude` int(4) NOT NULL,
   `latitude` int(4) NOT NULL,
   `cuisine` varchar(255) NOT NULL,
@@ -143,7 +144,10 @@ CREATE TABLE `restaurants` (
   `thumbnail` varchar(255) DEFAULT NULL,
   `online_delivery` int(4) NOT NULL,
   `menu` varchar(255) NOT NULL,
-  PRIMARY KEY (`res_id`)
+  `entity_id` varchar(12) DEFAULT NULL,
+  PRIMARY KEY (`res_id`),
+  KEY `fk_entity_id` (`entity_id`),
+  CONSTRAINT `fk_entity_id` FOREIGN KEY (`entity_id`) REFERENCES `city` (`entity_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -153,6 +157,7 @@ CREATE TABLE `restaurants` (
 
 LOCK TABLES `restaurants` WRITE;
 /*!40000 ALTER TABLE `restaurants` DISABLE KEYS */;
+INSERT INTO `restaurants` VALUES ('17211777','Brasilia Grill','99 Monroe Street, Newark 07105','07105',-74,41,'BBQ, Brazilian',3,'https://b.zmtcdn.com/data/res_imagery/17211777_RESTAURANT_2bc8dda52b761d31e0d9827b68013c36_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17212124','Casa Vasca','141 Elm Street, Newark 07105','07105',-74,41,'Spanish',4,'https://b.zmtcdn.com/data/res_imagery/17212124_RESTAURANT_5edeaabddce33edc70926b8d96be405a_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17212750','Don Pepe Restaurant & Caterers','844 McCarter Highway, Newark 07102','07102',-74,41,'Spanish, Portuguese',4,'https://b.zmtcdn.com/data/res_imagery/17212750_RESTAURANT_facabddf113d57174955d0be3d773681_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17213353','Fernandes Steak House','158 Fleming Avenue, Newark 07105','07105',-74,41,'Spanish, Steak, Portuguese',4,'https://b.zmtcdn.com/data/res_imagery/17213353_RESTAURANT_166157ea70a6add20deef7ace38727b4_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17214159','HamburgÃ£o','288 Lafayette Street, Newark 07105','07105',-74,41,'Brazilian, Burger, Fast Food',2,'https://b.zmtcdn.com/data/res_imagery/17214159_RESTAURANT_706a15e4608456430d079856d0d2a52f_c.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17214546','Iberia Peninsula','67 Ferry Street, Newark 07105','07105',-74,41,'Spanish, Portuguese, BBQ',3,'',0,'','3976'),('17216677','Nizi Sushi','28 Central Avenue, Newark 07102','07102',-74,41,'Japanese, Sushi',4,'https://b.zmtcdn.com/data/res_imagery/17216677_RESTAURANT_62f83db969a11f60deefdb36efb00617.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17227325','Mompou Wine & Tapas Bar','77 Ferry Street, Newark 07105','07105',-74,41,'Tapas, Spanish, Portuguese',4,'https://b.zmtcdn.com/data/res_imagery/17227325_RESTAURANT_95b182a19f97a73d1ff823014a803da0_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17227551','Dinosaur Bar-B-Que','224 Market Street, Newark 07102','07102',-74,41,'BBQ',2,'https://b.zmtcdn.com/data/res_imagery/17227551_RESTAURANT_5e8bec65ddf49186594a989cab115425_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976');
 /*!40000 ALTER TABLE `restaurants` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,4 +227,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-17  0:34:26
+-- Dump completed on 2017-10-17  1:28:25
