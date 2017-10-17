@@ -159,7 +159,7 @@ class dataProc {
         if(!is_bool($last)) {
             // Find $last (last restaurant sent) in array and give next item
             echo "Inside is_bool".PHP_EOL;
-            $last_key = array_search($last, $arr);
+            $last_key = $this->searchForName($last, $arr);
             echo "Key: ".$last_key;
             $chosen_rest = $arr[$last_key+1];
         } else {
@@ -168,6 +168,16 @@ class dataProc {
         }
         return $chosen_rest; // Return one restaurant
     }
+
+    private function searchForName($name, $array) {
+        foreach ($array as $key => $val) {
+            if ($val['name'] === $name) {
+                return $key;
+            }
+        }
+        return null;
+    }
+
     // Utility Functions
     private function getCoord($zip) {
         $statement = "select * from zipcode where zipcode='".$zip."';";
