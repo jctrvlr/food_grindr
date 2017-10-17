@@ -63,6 +63,7 @@ class dataProc {
 
     public function restResp($user, $res_id, $like, $zip, $last) {
         $statement = "insert into responses (user, res_id, liked) values ('".$user."','".$res_id."','".$like."');";
+        echo $statement.PHP_EOL;
         $response = $this->logindb->query($statement);
         var_dump($response);
         if($response) {
