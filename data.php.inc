@@ -42,7 +42,7 @@ class dataProc {
         $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
         // Get user preferences
         //$pref = $this->getUser($user);
-        var_dump($resp);
+
         $chosen_rest = $this->chooseRest($resp, $last); // Only input resp for now -- Later input preference
         // Set other fields here from database/restchoose function
         // $rest_array['dist'] = distance($lat1, $lon1, $lat2, $lon2, $unit);
@@ -151,7 +151,7 @@ class dataProc {
 
     private function chooseRest($arr, $last) {
         //$arr = sortArr(); // Sorting function when it works
-        if($last !== "null") {
+        if(!is_bool($last)) {
             // Find $last (last restaurant sent) in array and give next item
             $last_key = array_search($last, $arr);
             $chosen_rest = $arr[$last_key+1];
