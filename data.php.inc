@@ -252,7 +252,7 @@ class dataProc {
         $statement = "select email from users;";
         // Get different emails
         $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
-        for($x = 0; $x <= count($resp); $x++) {
+        for($x = 0; $x <= count($resp)-1; $x++) {
             $statement = "SELECT responses.res_id, responses.liked, restaurants.cuisine FROM responses INNER JOIN restaurants ON responses.res_id=restaurants.res_id WHERE responses.user = '".$resp[$x]['email']."';";
             $res = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
             $count = array();
