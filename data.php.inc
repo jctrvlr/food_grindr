@@ -159,9 +159,9 @@ class dataProc {
         if(is_string($last)) {
             // Find $last (last restaurant sent) in array and give next item
             echo "Inside is_bool".PHP_EOL;
+            var_dump($arr);
             $last_key = $this->searchForName($last, $arr);
             echo "Key: ".$last_key;
-            var_dump($arr);
             $chosen_rest = $arr[$last_key+1];
         } else {
             $chosen_rest = $arr[0];
