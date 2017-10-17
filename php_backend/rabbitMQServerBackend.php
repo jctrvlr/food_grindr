@@ -19,7 +19,7 @@ function getLocations($loc, $lat, $lon) {
   $json = json_decode($resp, true);
   $ent_id = $json['data']['location_suggestions'][0]['entity_id'];
   $ent_type = $json['data']['location_suggestions'][0]['entity_type'];
-
+  echo $ent_id." ".$ent_type;
   $client = new rabbitMQClient("rabbitMQData.ini","testServer");
   $request = array();
   $request['type'] = "insert_loc";
