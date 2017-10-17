@@ -4,10 +4,9 @@ require_once('logger.inc');
 
 class dataProc {
     private $datadb;
-
+    private $ent_id;
     public function __construct() {
         $this->logindb = new mysqli("127.0.0.1","root","Ireland2018","it490");
-        $this->ent_id;
 
 		if ($this->logindb->connect_errno != 0)
 		{
