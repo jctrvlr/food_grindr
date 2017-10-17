@@ -18,10 +18,10 @@ function getLocations($loc, $lat, $lon) {
   $resp = curl_exec($ch);
   curl_close($ch);
   $json = json_decode($resp, true);
-  var_dump($json);
+
   $ent_id = $json['location_suggestions'][0]['entity_id'];
   $ent_type = $json['location_suggestions'][0]['entity_type'];
-  echo $ent_id." ".$ent_type;
+
   $client = new rabbitMQClient("rabbitMQData.ini","testServer");
   $request = array();
   $request['type'] = "insert_loc";
@@ -30,7 +30,7 @@ function getLocations($loc, $lat, $lon) {
   $request['lon'] = $lon;
   $request['ent_type'] = $ent_type;
   $request['ent_id'] = $ent_id;
-  $response = $client->send_request($request); 
+  $response = $client->publish($request); 
   echo "Sent request insert_loc";
   getRestaurants($ent_id, $ent_type);
 
@@ -56,7 +56,7 @@ function getRestaurants($ent_id, $ent_type) {
   $request = array();
   $request['type'] = "insert_res";
   $request['rest_arr'] = $rest_arr;
-  $response = $client->send_request($request);
+  $response = $client->publish($request);
   echo "Sent request insert_res";
   return $response;
   
