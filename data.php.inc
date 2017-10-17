@@ -121,6 +121,7 @@ class dataProc {
             $request['lat'] = $lat;
             $request['lon'] = $lon;
             $response = $client->send_request($request); 
+            echo "Response from get_loc in checkLocation: ".$response;
             if($response) {
                 return true;
             } else {
