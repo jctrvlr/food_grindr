@@ -53,7 +53,7 @@ function getLocations(loc, lat, lon, callback) {
             conn.createChannel(function (err, ch) {
                 var q = 'dataQueue';
                 ch.assertExchange('dataExchnge', 'topic', {durable: true});
-                ch.publish('dataExchnge', 'dataQueue', new Buffer(JSON.stringify(request)));
+                ch.publish('dataExchnge', '', new Buffer(JSON.stringify(request)));
                 console.log(request);
             });
         });
@@ -80,7 +80,7 @@ function getRestaurants(ent_id, ent_type, cb) {
                 conn.createChannel(function (err, ch) {
                     var q = 'dataQueue';
                     ch.assertExchange('dataExchnge', 'topic', {durable: true});
-                    ch.publish('dataExchnge', 'dataQueue', new Buffer(JSON.stringify(request)));
+                    ch.publish('dataExchnge', '', new Buffer(JSON.stringify(request)));
                 });
             });
             cb(true);
