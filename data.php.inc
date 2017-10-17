@@ -120,7 +120,7 @@ class dataProc {
             $request['lat'] = $lat;
             $request['lon'] = $lon;
             $response = $client->send_request($request); 
-            echo "Response from get_loc in checkLocation: ".$response;
+            echo "Response from get_loc in checkLocation".$response;
             if($response) {
                 return true;
             } else {
@@ -154,8 +154,7 @@ class dataProc {
         if(is_string($last)) {
             // Find $last (last restaurant sent) in array and give next item
             $last_key = array_search($last, $arr);
-            $key = $last_key + 1;
-            $chosen_rest = $arr[$key];
+            $chosen_rest = $arr[$last_key+1];
         } else {
             $chosen_rest = $arr[0];
         }
@@ -166,6 +165,7 @@ class dataProc {
         $statement = "select * from zipcode where zipcode='".$zip."';";
         $response = $this->logindb->query($statement);
         while($row = $response->fetch_assoc()) {
+            var_dump($row);
             $loc_arr = array();
             $loc_arr['name']=$row["city"];
             $loc_arr['latitude']=$row["lat"];
