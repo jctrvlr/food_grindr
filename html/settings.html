@@ -11,7 +11,7 @@
             <link rel="stylesheet" type="text/css" href="css/main.css">
     </head>
 
-    <body onload="poopValues();" >
+    <body onload="getUserInfo()" >
 
     <div class="wrapper">
     <div class="wrapper_container">
@@ -22,13 +22,13 @@
             <div class="left-nav">
                
                <a href="main.html"><i class="fa fa-dashboard"></i>Dashboard</a>
-                <a href="#"><i class="fa fa-favorites"></i>Favorites</a>
+                <a href="favorite.html"><i class="fa fa-favorites"></i>Favorites</a>
                 <a href="settings.html"><i class="fa fa-settings"></i>Settings</a>
-                <a href="#"><i class="fa fa-about"></i>About</a>
+                <a href="about.html"><i class="fa fa-about"></i>About</a>
                
             </div>
         </div>
-       <div class="site-wrapper_top-bar">
+        <div class="site-wrapper_top-bar">
             <a href="#" id="toggle"><i class="fa fa-bars"></i></a>
         </div>
         
@@ -42,13 +42,16 @@
                         </div>
                         <div class="user-item_info">
                         <!--<p id="name"></p>-->
-                        <p id="rating"></p>
-                        <p id="address"></p>
-                        <p id="phone"></p>
-                        <p id="price"></p>
-                        <p id="cuisine"></p>
-                        <p id="hours"></p>
-                        <p id="delivery">Yes</p>
+                        <label>Zipcode</label>
+                        <input id="zip" />
+                        <label>First Name</label>
+                        <input id="f_name" />
+                        <label>Last Name</label>
+                        <input id="l_name" />
+                        <label>Password</label>
+                        <input id="password" />
+                        <button type="button" onclick="updateInfo()"></button>
+
                         </div>
                         </div>
                     </div>
@@ -61,7 +64,48 @@
     </div>
     </div>
     </body>
-    <script>
-        poopValues();
+    <script type="text/javascript">
+        function getUserInfo() {
+            $.ajax({
+                url: 'login.php',
+                data: {
+                    type: 'get_settings',
+                },
+                type: 'post',
+                success: function (output) {
+                    HandleUserInfo(output);
+                }
+            });
+        }
+        
+        function handleUserInfo(res) {
+            var json = JSON.parse(res);
+            document.getElementById("zip").setAttribute("value", json.zipcode);
+            document.getElementById("f_name").setAttribute("value", json.f_name);
+            document.getElementById("l_name").setAttribute("value", json.l_name);
+            document.getElementById("password").setAttribute("value", "********");
+        }
+
+        function updateInfo() {
+            var zip = document.getElementById("zip").value;
+            var fn = document.getElementById("f_name").value;
+            var ln = document.getElementById("l_name").value;
+            var pw = document.getElementById("password").value;
+
+            $.ajax({
+                url: 'login.php',
+                data: {
+                    type: 'update_info',
+                    zip: zip,
+                    f_name: fn,
+                    l_name: ln,
+                    pass: pw
+                },
+                type: 'post',
+                success: function (output) {
+                    getUserInfo(output);
+                }
+            });
+        }
     </script>
 </html>

@@ -35,6 +35,12 @@ function doLog($level,$loc,$msg) {
   }
 }
 
+function updateInfo($zip, $fn, $ln, $em, $pw, $oe) {
+  $login = new logindb();
+  $output = $login->updateInfo($zip, $fn, $ln, $em, $pw, $oe);
+  return $output;
+}
+
 function requestProcessor($request)
 {
   echo "received request".PHP_EOL;
@@ -53,6 +59,8 @@ function requestProcessor($request)
       return doSignup($request['email'],$request['f_name'],$request['l_name'],$request['pass'],$request['zip']);
     case "validate_session":
       return doValidate($request['sessionId']);
+    case "update_info":
+      return updateInfo($request['zip'], $request['f_name'], $request['l_name'], $request['password'], $request['old_email']);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }

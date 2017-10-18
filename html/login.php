@@ -41,10 +41,32 @@ switch ($request["type"])
 		$response = $client->send_request($req);
 		break;
 	}
+	case "get_settings": {
+		$response = array();
+		$response['email'] = $_SESSION['email'];
+		$response['zipcode'] = $_SESSION['zipcode'];
+		$response['f_name'] = $_SESSION['f_name'];
+		$response['l_name'] = $_SESSION['l_name'];
+		break;
+	}
+	case "update_info": {
+		$req = array();
+		$req['type']="update_info";
+		$req['zip']=$request['zip'];
+		$req['f_name']=$request['f_name'];
+		$req['l_name']=$request['l_name'];
+		$req['old_em']=$_SESSION['email'];
+		if(isset($request['pass'])) {
+			$req['password']=$request['pass'];
+		} else {
+			$req['password']=NULL;
+		}
+		$response = $client->send_request($req);
+		break;
+	}
 }
 
 echo json_encode($response);
-echo 'test';
 exit(0);
 
 ?>
