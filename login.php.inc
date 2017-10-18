@@ -44,7 +44,7 @@ class loginDB {
 			$pass = password_hash($p, PASSWORD_DEFAULT);
 			$st = "UPDATE users SET f_name = '".$f."', l_name = '".$l."', pass = '".$pass."' WHERE email='".$oe."';";
 			$response = $this->logindb->query($statement);
-			echo "is null".PHP_EOL;
+			echo "is not null".PHP_EOL;
 			var_dump($response);
 			if(!$response) {
 				return false;	
@@ -52,6 +52,8 @@ class loginDB {
 		}
 		$st = "UPDATE preferences SET zipcode = '".$z."' WHERE email='".$oe."';";
 		$res = $this->logindb->query($st);
+		echo "insert prefs".PHP_EOL;
+		var_dump($res);
 		if(!$res) {
 			return false;
 		}
