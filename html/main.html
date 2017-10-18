@@ -98,7 +98,11 @@
             document.getElementById("address").innerHTML="Address: " + json.address;
             document.getElementById("price").innerHTML="Price Range: " + json.price_range;
             document.getElementById("cuisine").innerHTML="Cuisine: " + json.cuisine;
-            document.getElementById("res_photo").setAttribute("src", json.thumbnail);
+            if(json.thumbnail) {
+                document.getElementById("res_photo").setAttribute("src", json.thumbnail);
+            } else {
+                document.getElementById("res_photo").setAttribute("src", "http://via.placeholder.com/350x150");
+            }
         }
 
         function submitResp(like) {
