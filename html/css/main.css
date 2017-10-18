@@ -196,7 +196,6 @@ body {
   vertical-align: text-top;
 }
 .user-item_infoname {
-  padding: 30px;
   text-align: center;
 }
 .user-item_info .name {
@@ -211,6 +210,23 @@ body {
 }
 .user-item_info .controls {
   padding-top: 15px;
+}
+.user-item_info .controls img {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 25px;
+  background: #3498DB;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  line-height: 40px;
+  font-size: 16px;
+  text-align: center;
+  margin: 0 5px;
+  -webkit-transition: background .3s linear, -webkit-transform .3s ease-in-out;
+  transition: background .3s linear, -webkit-transform .3s ease-in-out;
+  transition: background .3s linear, transform .3s ease-in-out;
+  transition: background .3s linear, transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
 }
 .user-item_info .controls a {
   display: inline-block;
