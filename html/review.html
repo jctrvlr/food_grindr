@@ -37,6 +37,9 @@ function submitReview()
     var email = document.getElementById("email").value;
     var resid = document.getElementById("resid").value;
     var rating = document.getElementById("rating").value;
+    document.getElementById("output")
+    sendReviewRequest(email,resid,rating);
+    return 0;
 
 }
 
@@ -73,6 +76,13 @@ function HandleRegisterResponse(response)
 	document.getElementById("output").innerHTML = "response: "+text+"<p>";
 }
 
+function HandleReviewResponse(response)
+{
+    console.log('Inside handleReviewRequest');
+    var text = JSON.parse(response);
+    document.getElementById("output").innerHTML = "response: "+text+"<p>";
+}
+
 function sendLoginRequest(email,pass)
 {
     console.log('Inside sendLoginRequest');
@@ -91,7 +101,7 @@ function sendLoginRequest(email,pass)
 }
 function sendReviewRequest(email, resid, rating)
 {
-    console.log('Insid sendReviewRequest');
+    console.log('Inside sendReviewRequest');
     $.ajax({url: 'review.php',
             data: {type: "review",
                     email: email,
@@ -100,10 +110,11 @@ function sendReviewRequest(email, resid, rating)
             type: 'post',
             success: function(output){
                 HandleReviewResponse(output);
-                //define this function yo
                 }
     });
 }
+
+
 function sendRegisterRequest(email,f_name,l_name,pass)
 {
     console.log('Inside sendRegisterRequest');
