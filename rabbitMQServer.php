@@ -18,9 +18,9 @@ function doValidate($sessionID) {
   //TODO Start session somewhere
 }
 
-function doSignup($email, $f_name, $l_name, $pass) {
+function doSignup($email, $f_name, $l_name, $pass, $zip) {
   $login = new logindb();
-  $output = $login->signup($email, $f_name, $l_name, $pass);
+  $output = $login->signup($email, $f_name, $l_name, $pass, $zip);
   return $output;
 }
 
@@ -50,7 +50,7 @@ function requestProcessor($request)
     case "login":
       return doLogin($request['email'],$request['pass']);
     case "signup":
-      return doSignup($request['email'],$request['f_name'],$request['l_name'],$request['pass']);
+      return doSignup($request['email'],$request['f_name'],$request['l_name'],$request['pass'],$request['zip']);
     case "validate_session":
       return doValidate($request['sessionId']);
   }

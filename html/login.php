@@ -1,10 +1,9 @@
 <?php
+session_start();
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 require_once('logger.inc');
-
-session_start();
 
 if (!isset($_POST))
 {
@@ -23,6 +22,7 @@ switch ($request["type"])
 		$req['email']=$request["email"];
 		$req['pass']=$request["pword"];
 		$response = $client->send_request($req);
+		$_SESSION[]
 		break;
 	}
 	case "signup": {
@@ -32,6 +32,7 @@ switch ($request["type"])
 		$req['f_name']=$request['f_name'];
 		$req['l_name']=$request['l_name'];
 		$req['pass']=$request['pword'];
+		$req['zip']=$request["zip"];
 		$response = $client->send_request($req);
 		break;
 	}

@@ -53,11 +53,12 @@ class loginDB {
 		return false;//no users matched username
 	}
 	
-	public function signup($email, $f_name, $l_name, $pass) {
+	public function signup($email, $f_name, $l_name, $pass, $zip) {
 		$em = $this->logindb->real_escape_string($email);
 		$fn = $this->logindb->real_escape_string($f_name);
 		$ln = $this->logindb->real_escape_string($l_name);
 		$pw = password_hash($pass, PASSWORD_DEFAULT);
+		$zip = $this->logindb->real_escape_string($zip);
 
 		$statement = "insert into users (f_name, l_name, email, pass) values ('".$fn."', '".$ln."', '".$em."', '".$pw."');";
 		$response = $this->logindb->query($statement);
@@ -67,7 +68,13 @@ class loginDB {
 		$options[2] = 'Signup function '. $response;
 		sendLogs($options);
 		if ($response) {
-			return true;
+			$st = "insert into preferences (email, zipcode) values ('".$em."','".$zip."');";
+			$res = $this->logindb->query($st);
+			if($res) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
