@@ -25,6 +25,7 @@
                 <a href="favorites.html"><i class="fa fa-favorites"></i>Favorites</a>
                 <a href="settings.html"><i class="fa fa-settings"></i>Settings</a>
                 <a href="about.html"><i class="fa fa-about"></i>About</a>
+                <a href="#" onclick="logout()"><i class="fa fa-about"></i>Logout</a>
                
             </div>
         </div>
@@ -49,7 +50,23 @@
     </div>
     </div>
     </body>
-    <script>
-        poopValues();
+    <script type="text/javascript">
+         // Logout functions
+        function handleLogout() {
+            window.location.replace("login.html");
+        }
+
+        function logout() {
+            $.ajax({
+                url: 'rest.php',
+                data: {
+                    type: 'logout',
+                },
+                type: 'post',
+                success: function () {
+                    handleLogout();
+                }
+            });
+        }
     </script>
 </html>
