@@ -31,6 +31,15 @@
     $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
 });
 
+
+function submitReview()
+{
+    var email = document.getElementById("email").value;
+    var resid = document.getElementById("resid").value;
+    var rating = document.getElementById("rating").value;
+
+}
+
 function submitLogin()
 {
 	var uname = document.getElementById("email2").value;
@@ -80,7 +89,21 @@ function sendLoginRequest(email,pass)
             }
     });
 }
-
+function sendReviewRequest(email, resid, rating)
+{
+    console.log('Insid sendReviewRequest');
+    $.ajax({url: 'review.php',
+            data: {type: "review",
+                    email: email,
+                    resid: resid,
+                    rating: rating},
+            type: 'post',
+            success: function(output){
+                HandleReviewResponse(output);
+                //define this function yo
+                }
+    });
+}
 function sendRegisterRequest(email,f_name,l_name,pass)
 {
     console.log('Inside sendRegisterRequest');
