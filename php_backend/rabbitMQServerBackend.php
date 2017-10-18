@@ -6,7 +6,7 @@ require_once('rabbitMQLib.inc');
 
 
 function getLocations($loc, $lat, $lon, $zip) {
-  $url = "https://developers.zomato.com/api/v2.1/locations?query=".$loc."&lat=".$lat."&lon=".$lon;
+  $url = "https://developers.zomato.com/api/v2.1/locations?query=".$loc."&lat=".$lat."&lon=".$lon."count=1";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -19,8 +19,8 @@ function getLocations($loc, $lat, $lon, $zip) {
   curl_close($ch);
   $json = json_decode($resp, true);
 
-  $ent_id = $json['location_suggestions'][0]['entity_id'];
-  $ent_type = $json['location_suggestions'][0]['entity_type'];
+  $ent_id = $json['location_suggestions']['entity_id'];
+  $ent_type = $json['location_suggestions']['entity_type'];
 
   $client = new rabbitMQClient("rabbitMQData.ini","testServer");
   $request = array();
