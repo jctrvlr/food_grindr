@@ -44,6 +44,7 @@ switch ($request["type"])
 }
 
 echo json_encode($response);
+echo 'test';
 exit(0);
 
 ?>

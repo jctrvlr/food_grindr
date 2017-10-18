@@ -6,7 +6,6 @@ class loginDB {
 
 	public function __construct() {
 		$this->logindb = new mysqli("127.0.0.1","root","Ireland2018","it490");
-
 		if ($this->logindb->connect_errno != 0)
 		{
 			echo "Error connecting to database: ".$this->logindb->connect_error.PHP_EOL;
@@ -72,11 +71,11 @@ class loginDB {
 
 		$statement = "insert into users (f_name, l_name, email, pass) values ('".$fn."', '".$ln."', '".$em."', '".$pw."');";
 		$response = $this->logindb->query($statement);
-		$options = array();
-		$options[0] = 'debug';
-		$options[1] = 'loginServer';
-		$options[2] = 'Signup function '. $response;
-		sendLogs($options);
+		//$options = array();
+		//$options[0] = 'debug';
+		//$options[1] = 'loginServer';
+		//$options[2] = 'Signup function '. $response;
+		//sendLogs($options);
 		if ($response) {
 			$st = "insert into preferences (email, zipcode) values ('".$em."','".$zip."');";
 			$res = $this->logindb->query($st);
