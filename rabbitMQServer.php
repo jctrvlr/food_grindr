@@ -37,7 +37,7 @@ function doLog($level,$loc,$msg) {
 
 function updateInfo($zip, $fn, $ln, $pw, $oe) {
   $login = new logindb();
-  $output = $login->updateInfo($zip, $fn, $ln, $em, $pw, $oe);
+  $output = $login->updateInfo($zip, $fn, $ln, $pw, $oe);
   return $output;
 }
 
