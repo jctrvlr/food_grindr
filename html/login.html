@@ -8,18 +8,19 @@
   <div id="output"></div>
   <div class="form">
     <form class="register-form">
-      <input type="email" id="email1" required="required" placeholder="Email"/>
-      <input type="text" id="f_name" required="required" placeholder="First Name"/>
-      <input type="text" id="l_name" required="required" placeholder="Last Name"/>
-      <input type="password" id="pass1" required="required" placeholder="Password"/>
-      <input type="password" id="pass2" required="required" onkeyup="checkPass(); return false;" placeholder="Confirm Password"/>
+      <input type="email" id="email1" name="email1" required=required placeholder="Email"/>
+      <input type="text" id="f_name" name="f_name" required=required placeholder="First Name"/>
+      <input type="text" id="l_name" name="l_name" required=required placeholder="Last Name"/>
+      <input type="text" id="zip" name="zip" pattern="[0-9]{5}" required=required placeholder="Enter your ZIP code"/>
+      <input type="password" id="pass1" name="pass1" required=required placeholder="Password"/>
+      <input type="password" id="pass2" name="pass2" required=required onkeyup="checkPass(); return false;" placeholder="Confirm Password"/>
       <span id="confirmMessage" class="confirmMessage"></span>
-      <button type="submit" id="register" onclick="submitRegister()" >create</button>
+      <button type="submit" id="register" onclick="submitRegister()" onkeyup="checkFieldsR()" >create</button>
       <p class="message">Already registered? <a href="#">Sign In</a></p>
     </form>
     <form class="login-form">
-      <input type="email" id="email2" required="required" placeholder="Email"/>
-      <input type="password" id="pass" required="required" placeholder="Password"/>
+      <input type="email" id="email2" required=required placeholder="Email"/>
+      <input type="password" id="pass" required=required placeholder="Password"/>
       <button type="submit" id="login" onclick="submitLogin()" >login</button>
       <p class="message">Not registered? <a href="#">Create an account</a></p>
     </form>
@@ -45,11 +46,12 @@ function submitRegister()
 {
     console.log('Inside submitRegister');
 	var uname = document.getElementById("email1").value;
-    var f_name = document.getElementById("f_name").value;
-    var l_name = document.getElementById("l_name").value;
+        var f_name = document.getElementById("f_name").value;
+        var l_name = document.getElementById("l_name").value;
 	var pword = document.getElementById("pass2").value;
+	var zip = document.getElementById("zip").value;
 	document.getElementById("output").innerHTML = "username: " + uname + "<p>firstname: " + f_name + "<p>lastname: " + l_name + "<p>password: " + pword + "<p>";	
-	sendRegisterRequest(uname,f_name,l_name,pword);
+	sendRegisterRequest(uname,f_name,l_name,pword,zip);
 	return 0;
 }
 function HandleLoginResponse(response)
@@ -83,7 +85,7 @@ function sendLoginRequest(email,pass)
     });
 }
 
-function sendRegisterRequest(email,f_name,l_name,pass)
+function sendRegisterRequest(email,f_name,l_name,pass,zip)
 {
     console.log('Inside sendRegisterRequest');
     $.ajax({url: 'login.php',
@@ -91,7 +93,8 @@ function sendRegisterRequest(email,f_name,l_name,pass)
                    email: email,
                    f_name: f_name,
                    l_name: l_name,
-                   pword: pass},
+                   pword: pass,
+                   zip: zip},
             type: 'post', 
             success: function(output) {
                 HandleRegisterResponse(output);
@@ -127,6 +130,30 @@ function checkPass()
         message.innerHTML = "Passwords Do Not Match!"
     }
 } 
+
+function checkFieldsR()
+{
+    $(document).ready(function() {
+    $('input[type="submit"]').attr('disabled', true);
+    $('input[type="email1"],input[type="f_name"],input[type="l_name"],input[type="pass1"],input[type="pass2"]').on('keyup',function() {
+    
+    var email1 = $('input[name="email1"]').val();
+    var f_name = $('input[name="f_name"]').val();
+    var l_name = $('input[name="l_name"]').val();
+    var pass1 = $('input[name="pass1"]').val();
+    var pass2 = $('input[name="pass2"]').val();
+    if(email1 != '' && f_name != '' && l_name != '' && pass1 != '' && pass2 != '') {
+        $('input[type="submit"]').attr('disabled' , false);
+    }else{
+        $('input[type="submit"]').attr('disabled' , true);
+    }
+});
+
+});
+
+}
+
+
 
 </script>
 </html>
