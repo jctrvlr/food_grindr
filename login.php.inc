@@ -27,7 +27,7 @@ class loginDB {
 		$statement = "select * from users where email = '$em';";
 		$response = $this->logindb->query($statement);
 
-		while ($row = $response->fetch_assoc())
+		while ($row = $response->fetcsh_assoc())
 		{
 			echo "checking password for $email".PHP_EOL;
 			if (password_verify($pw, $row["pass"]))
