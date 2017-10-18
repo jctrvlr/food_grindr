@@ -43,7 +43,7 @@ class loginDB {
 			$p = $this->logindb->real_escape_string($pw);
 			$pass = password_hash($p, PASSWORD_DEFAULT);
 			$st = "UPDATE users SET f_name = '".$f."', l_name = '".$l."', pass = '".$pass."' WHERE email='".$oe."';";
-			$response = $this->logindb->query($statement);
+			$response = $this->logindb->query($st);
 			echo "is not null".PHP_EOL;
 			var_dump($response);
 			if(!$response) {
