@@ -11,7 +11,7 @@
             <link rel="stylesheet" type="text/css" href="css/main.css">
     </head>
 
-    <body onload="poopValues();" >
+    <body onload="submitGetRes()" >
 
     <div class="wrapper">
     <div class="wrapper_container">
@@ -44,8 +44,8 @@
                     <p class="sub">Front-End developer</p>
                     <div class="controls">
                     
-                        <img src="unlike.png"/>
-                        <img src="heart.png"/>
+                        <img src="unlike.png" onClick="submitResp(1)"/>
+                        <img src="heart.png" onClick="submitResp(0)"/>
                         
                         <!--
                         <a href="#"><i class="fa fa-camera"></i></a>
@@ -82,7 +82,61 @@
     </div>
     </div>
     </body>
-    <script>
-        poopValues();
+    <script type="text/javascript">
+        var rest;
+        function submitGetRes() {
+            sendGetResRequest();
+            return 0;
+        }
+
+        function HandleGetResResponse(response) {
+            console.log('Inside handleRequest: ' + response);
+            rest = JSON.parse(response);
+            console.debug(rest);
+            document.getElementById("name").innerHTML=rest.name;
+            document.getElementById("address").innerHTML=rest.address;
+            document.getElementById("price").innerHTML=rest.price_range;
+            document.getElementById("cuisine").innerHTML=rest.cuisine;
+        }
+
+        function submitResp(like) {
+            var obj = JSON.parse(rest);
+            var res_id = obj.res_id;
+            console.log(rest);
+            console.debug(obj);
+            console.log(obj["res_id"]);
+            sendRespRequest(res_id, like);
+
+        }
+
+        function sendRespRequest(res_id, like) {
+            $.ajax({
+                url: 'rest.php',
+                data: {
+                    type: 'rest_response',
+                    res_id: res_id,
+                    like: like,
+                },
+                type: 'post',
+                success: function (output) {
+                    HandleGetResResponse(output);
+                }
+            })
+        }
+
+        function sendGetResRequest() {
+            console.log('Inside sendRequest');
+            $.ajax({
+                url: 'rest.php',
+                data: {
+                    type: 'get_res',
+                },
+                type: 'post',
+                success: function (output) {
+                    HandleGetResResponse(output);
+                }
+            });
+        }
+
     </script>
 </html>
