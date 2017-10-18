@@ -39,7 +39,14 @@ class loginDB {
 				$options[1] = 'loginServer';
 				$options[2] = $email.' has logged in.';
 				sendLogs($options);
-				return true;// password match
+				$st = "select zipcode from preferences where email='".$em."';";
+				$res = $this->logindb->query($st);
+				$r = mysqli_fetch_all($this->logindb->query($st), MYSQLI_ASSOC);
+				$arr = array();
+				$arr['resp'] = $row;
+				$arr['pw'] = TRUE;
+				$arr['zipcode'] = $r['zipcode'];
+				return $arr;// password match
 			}
 			echo "passwords did not match for $email".PHP_EOL;
 		}
@@ -49,8 +56,9 @@ class loginDB {
 		$options[1] = 'loginServer';
 		$options[2] = $email.' cannot be found in database.';
 		sendLogs($options);
-		
-		return false;//no users matched username
+		$arr = array();
+		$arr['pw'] = FALSE;
+		return $arr;//no users matched username
 	}
 	
 	public function signup($email, $f_name, $l_name, $pass, $zip) {

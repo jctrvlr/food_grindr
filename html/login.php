@@ -22,7 +22,12 @@ switch ($request["type"])
 		$req['email']=$request["email"];
 		$req['pass']=$request["pword"];
 		$response = $client->send_request($req);
-		$_SESSION[]
+		$json = json_decode($response, true);
+		$_SESSION['email'] = $json['resp']['email'];
+		$_SESSION['zipcode'] = $json['zipcode'];
+		$_SESSION['f_name'] = $json['resp']['f_name'];
+		$_SESSION['l_name'] = $json['resp']['l_name'];
+		$response = $json['pw'];
 		break;
 	}
 	case "signup": {
