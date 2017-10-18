@@ -36,6 +36,7 @@
                         <p id="name"></p>
                         </div>
                         <div class="user-item_info">
+                            <span id="alert"></span>
                         <!--<p id="name"></p>-->
                         <label>Zipcode</label>
                         <input id="zip" />
@@ -81,6 +82,16 @@
             document.getElementById("l_name").setAttribute("value", json.l_name);
             document.getElementById("password").setAttribute("value", "********");
         }
+        
+        function handleUpdateInfo(res) {
+            var json = JSON.parse(res);
+            console.log(json);
+            if(json) {
+                document.getElementById("alert").innerHTML="Settings changed successfully!";
+            } else {
+                document.getElementById("alert").innerHTML = "There was a problem. Please try again.";
+            }
+        }
 
         function updateInfo() {
             var zip = document.getElementById("zip").value;
@@ -99,7 +110,7 @@
                 },
                 type: 'post',
                 success: function (output) {
-                    getUserInfo(output);
+                    handleUpdateInfo(output);
                 }
             });
         }
