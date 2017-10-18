@@ -193,9 +193,9 @@ body {
 .user-item_info {
   padding: 30px;
   text-align: left;
+  vertical-align: text-top;
 }
 .user-item_infoname {
-  padding: 30px;
   text-align: center;
 }
 .user-item_info .name {
@@ -210,6 +210,23 @@ body {
 }
 .user-item_info .controls {
   padding-top: 15px;
+}
+.user-item_info .controls img {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 25px;
+  background: #3498DB;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  line-height: 40px;
+  font-size: 16px;
+  text-align: center;
+  margin: 0 5px;
+  -webkit-transition: background .3s linear, -webkit-transform .3s ease-in-out;
+  transition: background .3s linear, -webkit-transform .3s ease-in-out;
+  transition: background .3s linear, transform .3s ease-in-out;
+  transition: background .3s linear, transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
 }
 .user-item_info .controls a {
   display: inline-block;
@@ -331,5 +348,27 @@ body {
       -ms-flex-pack: start;
           justify-content: flex-start;
 }
-
+.chat_inner-item .photo img {
+  width: 40px;
+  height: 40px;
+  display: block;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.chat_inner-item .message {
+  padding: 12px 20px;
+  background-color: #ECECEC;
+  border-radius: 5px;
+  color: #808080;
+  letter-spacing: 1px;
+}
+.chat_inner-item .message ~ .photo {
+  margin-right: 0;
+  margin-left: 10px;
+}
+.chat_inner-item.right {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
 
