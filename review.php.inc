@@ -1,20 +1,20 @@
 <?php
 require_once('logger.inc');
 
-class loginDB {
-	private $logindb;
+class reviewDB {
+	private $reviewdb;
 
 	public function __construct() {
-		$this->logindb = new mysqli("127.0.0.1","root","Ireland2018","login");
+		$this->reviewdb = new mysqli("127.0.0.1","root","koolkid20U","it490");
 
-		if ($this->logindb->connect_errno != 0)
+		if ($this->reviewdb->connect_errno != 0)
 		{
-			echo "Error connecting to database: ".$this->logindb->connect_error.PHP_EOL;
+			echo "Error connecting to database: ".$this->reviewdb->connect_error.PHP_EOL;
 			// Error logging
 			$options = array();
 			$options[0] = 'e';
 			$options[1] = 'loginServer';
-			$options[2] = 'Error connecting to database: '.$this->logindb->connect_error.PHP_EOL;
+			$options[2] = 'Error connecting to database: '.$this->reviewdb->connect_error.PHP_EOL;
 			sendLogs($options);
 			exit(1);
 		}
@@ -22,10 +22,10 @@ class loginDB {
 	}
 
 	public function validateLogin($email,$password) {
-		$em = $this->logindb->real_escape_string($email);
+		$em = $this->reviewdb->real_escape_string($email);
 		$pw = $password;
 		$statement = "select * from users where email = '$em';";
-		$response = $this->logindb->query($statement);
+		$response = $this->reviewdb->query($statement);
 
 		while ($row = $response->fetch_assoc())
 		{
@@ -52,15 +52,37 @@ class loginDB {
 		
 		return false;//no users matched username
 	}
+
+	public function review($email,$resid,$rating)
+	{
+		$em = $this->reviewdb->real_escape_string($email);
+		$ri = $this->reviewdb->real_escape_string($resid);
+		$rg = $this->reviewdb->real_escape_string($rating);
+
+		$sql = "insert into ratings (res_id, email, rating) values ('".$fn."', '".$ln."', '".$em."');";
+
+		$response = $this->reviewdb->query($statement);
+		
+		$options = array();
+		$options[0] = 'debug';
+		$options[1] = 'loginServer';
+		$options[2] = 'Review function '. $response;
+		sendLogs($options);
+		if ($response) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	public function signup($email, $f_name, $l_name, $pass) {
-		$em = $this->logindb->real_escape_string($email);
-		$fn = $this->logindb->real_escape_string($f_name);
-		$ln = $this->logindb->real_escape_string($l_name);
+		$em = $this->reviewdb->real_escape_string($email);
+		$fn = $this->reviewdb->real_escape_string($f_name);
+		$ln = $this->reviewdb->real_escape_string($l_name);
 		$pw = password_hash($pass, PASSWORD_DEFAULT);
 
 		$statement = "insert into users (f_name, l_name, email, pass) values ('".$fn."', '".$ln."', '".$em."', '".$pw."');";
-		$response = $this->logindb->query($statement);
+		$response = $this->reviewdb->query($statement);
 		$options = array();
 		$options[0] = 'debug';
 		$options[1] = 'loginServer';
