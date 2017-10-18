@@ -62,6 +62,9 @@ switch ($request["type"])
 			$req['password']=NULL;
 		}
 		$response = $client->send_request($req);
+		if($response) {
+			$_SESSION['zipcode'] = $request['zip'];
+		}
 		break;
 	}
 }
