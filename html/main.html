@@ -94,10 +94,10 @@
             rest = JSON.parse(response);
             var json = JSON.parse(rest);
             console.debug(json);
-            document.getElementById("name").innerHTML="Name: " + json.name;
+            document.getElementById("name").innerHTML=json.name;
             document.getElementById("address").innerHTML="Address: " + json.address;
             document.getElementById("price").innerHTML="Price Range: " + json.price_range;
-            document.getElementById("cuisine").innerHTML="Cuisine: " + json.cuisine;
+            document.getElementById("cuisine").innerHTML=json.cuisine;
             if(json.thumbnail) {
                 document.getElementById("res_photo").setAttribute("src", json.thumbnail);
             } else {
