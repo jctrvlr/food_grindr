@@ -20,8 +20,8 @@ function getLocations($loc, $lat, $lon, $zip) {
   $json = json_decode($resp, true);
   var_dump($json);
 
-  $ent_id = $json['location_suggestions']['entity_id'];
-  $ent_type = $json['location_suggestions']['entity_type'];
+  $ent_id = $json['location_suggestions'][0]['entity_id'];
+  $ent_type = $json['location_suggestions'][0]['entity_type'];
 
   $client = new rabbitMQClient("rabbitMQData.ini","testServer");
   $request = array();
