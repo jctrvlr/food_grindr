@@ -47,6 +47,7 @@ class loginDB {
 				$arr['resp'] = $row;
 				$arr['pw'] = TRUE;
 				$arr['zipcode'] = $r[0]['zipcode'];
+				var_dump($arr);
 				return $arr;// password match
 			}
 			echo "passwords did not match for $email".PHP_EOL;
