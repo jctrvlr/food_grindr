@@ -1,0 +1,17 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+body {margin:10%;font-family:'Montserrat',sans-serif;background:#6f94aa;color:#eee;}
+h1 {font-size:1.3em;text-transform:uppercase;}
+input {padding:6px;border:3px solid #999;background:none;font-family:'Montserrat',sans-serif;color:#000000;font-size:16px;width:260px;}
+input:focus {border-color:#00aeff;outline:0;background:#f9f9f9;}
+input[type=submit] {width:80px;background:#00aeff;border-color:#00aeff;color:#eee;cursor:pointer;}
+
+.zip{
+	position:absolute;
+    display:block;
+    height:100px;
+    width:400px;
+    left:41%;
+    top:45%;
+    margin-top:-50px;
+    margin-left:-50px;
+}
