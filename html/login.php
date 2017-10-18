@@ -56,7 +56,7 @@ switch ($request["type"])
 		$req['f_name']=$request['f_name'];
 		$req['l_name']=$request['l_name'];
 		$req['old_em']=$_SESSION['email'];
-		if($request['pass'] == "********") {
+		if($request['pass'] !== "********") {
 			$req['password']=$request['pass'];
 		} else {
 			$req['password']=NULL;
