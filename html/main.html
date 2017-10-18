@@ -42,9 +42,8 @@
                     <p id="name" class="name">Katy's Kitchen</p>
                     <p class="sub" id="cuisine">Front-End developer</p>
                     <div class="controls">
-                    
+                        <img src="heart.png" onClick="submitResp(0)" />
                         <img src="unlike.png" onClick="submitResp(1)"/>
-                        <img src="heart.png" onClick="submitResp(0)"/>
                         
                         <!--
                         <a href="#"><i class="fa fa-camera"></i></a>
@@ -100,7 +99,7 @@
             if(json.thumbnail) {
                 document.getElementById("res_photo").setAttribute("src", json.thumbnail);
             } else {
-                document.getElementById("res_photo").setAttribute("src", "http://via.placeholder.com/350x150");
+                document.getElementById("res_photo").setAttribute("src", "http://www.clker.com/cliparts/Q/3/D/I/L/u/knife-and-fork-clipart-hi.png");
             }
         }
 
