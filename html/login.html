@@ -11,6 +11,7 @@
       <input type="email" id="email1" required="required" placeholder="Email"/>
       <input type="text" id="f_name" required="required" placeholder="First Name"/>
       <input type="text" id="l_name" required="required" placeholder="Last Name"/>
+      <input type="text" id="zip" name="zip" pattern="[0-9]{5}" placeholder="Enter your ZIP code" required="required">
       <input type="password" id="pass1" required="required" placeholder="Password"/>
       <input type="password" id="pass2" required="required" onkeyup="checkPass(); return false;" placeholder="Confirm Password"/>
       <span id="confirmMessage" class="confirmMessage"></span>
@@ -31,6 +32,8 @@
     $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
 });
 
+
+
 function submitLogin()
 {
 	var uname = document.getElementById("email2").value;
@@ -46,8 +49,9 @@ function submitRegister()
     var f_name = document.getElementById("f_name").value;
     var l_name = document.getElementById("l_name").value;
 	var pword = document.getElementById("pass2").value;
+	var zip = document.getElementById("zip").value;
 	document.getElementById("output").innerHTML = "username: " + uname + "<p>firstname: " + f_name + "<p>lastname: " + l_name + "<p>password: " + pword + "<p>";	
-	sendRegisterRequest(uname,f_name,l_name,pword);
+	sendRegisterRequest(uname,f_name,l_name,pword,zip);
 	return 0;
 }
 function HandleLoginResponse(response)
@@ -81,7 +85,7 @@ function sendLoginRequest(email,pass)
     });
 }
 
-function sendRegisterRequest(email,f_name,l_name,pass)
+function sendRegisterRequest(email,f_name,l_name,pass,zip)
 {
     console.log('Inside sendRegisterRequest');
     $.ajax({url: 'login.php',
@@ -89,7 +93,8 @@ function sendRegisterRequest(email,f_name,l_name,pass)
                    email: email,
                    f_name: f_name,
                    l_name: l_name,
-                   pword: pass},
+                   pword: pass,
+                   zip: zip},
             type: 'post', 
             success: function(output) {
                 HandleRegisterResponse(output);
