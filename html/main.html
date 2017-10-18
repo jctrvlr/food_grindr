@@ -20,12 +20,11 @@
         <div class="site-wrapper_left-col">
             <a href="#" class="logo">Food Grindr</a>
             <div class="left-nav">
-               
-               <a href="#"><i class="fa fa-dashboard"></i>Dashboard</a>
+                <a href="#"><i class="fa fa-dashboard"></i>Dashboard</a>
                 <a href="#"><i class="fa fa-favorites"></i>Favorites</a>
                 <a href="#"><i class="fa fa-settings"></i>Settings</a>
                 <a href="#"><i class="fa fa-about"></i>About</a>
-               
+                <a href="#" onclick="logout()"><i class="fa fa-about"></i>Logout</a>
             </div>
         </div>
        <div class="site-wrapper_top-bar">
@@ -140,6 +139,24 @@
                 type: 'post',
                 success: function (output) {
                     HandleGetResResponse(output);
+                }
+            });
+        }
+
+        // Logout functions
+        function handleLogout(){
+            window.location.replace("login.html");
+        }
+
+        function logout() {
+            $.ajax({
+                url: 'rest.php',
+                data: {
+                    type: 'logout',
+                },
+                type: 'post',
+                success: function () {
+                    handleLogout();
                 }
             });
         }
