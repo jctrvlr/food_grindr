@@ -42,6 +42,7 @@ class loginDB {
 				$st = "select zipcode from preferences where email='".$em."';";
 				$res = $this->logindb->query($st);
 				$r = mysqli_fetch_all($this->logindb->query($st), MYSQLI_ASSOC);
+				var_dump($r);
 				$arr = array();
 				$arr['resp'] = $row;
 				$arr['pw'] = TRUE;
