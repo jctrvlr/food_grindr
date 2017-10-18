@@ -34,7 +34,9 @@ class loginDB {
 		if (is_null($pw)) {
 			$st = "UPDATE users SET f_name = '".$f."', l_name = '".$l."' WHERE email='".$oe."';";
 			$response = $this->logindb->query($st);
-			if($response) {
+			echo "is null".PHP_EOL;
+			var_dump($response);
+			if(!$response) {
 				return false;
 			} 
 		} else {
@@ -42,6 +44,8 @@ class loginDB {
 			$pass = password_hash($p, PASSWORD_DEFAULT);
 			$st = "UPDATE users SET f_name = '".$f."', l_name = '".$l."', pass = '".$pass."' WHERE email='".$oe."';";
 			$response = $this->logindb->query($statement);
+			echo "is null".PHP_EOL;
+			var_dump($response);
 			if(!$response) {
 				return false;	
 			}
