@@ -93,12 +93,12 @@
         function HandleGetResResponse(response) {
             console.log('Inside handleRequest: ' + response);
             rest = JSON.parse(response);
-            json = JSON.parse(rest);
+            var json = JSON.parse(rest);
             console.debug(json;
-            document.getElementById("name").innerHTML=rest.name;
-            document.getElementById("address").innerHTML=rest.address;
-            document.getElementById("price").innerHTML=rest.price_range;
-            document.getElementById("cuisine").innerHTML=rest.cuisine;
+            document.getElementById("name").innerHTML=json.name;
+            document.getElementById("address").innerHTML=json.address;
+            document.getElementById("price").innerHTML=json.price_range;
+            document.getElementById("cuisine").innerHTML=json.cuisine;
         }
 
         function submitResp(like) {
