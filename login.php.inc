@@ -20,20 +20,17 @@ class loginDB {
 		echo "correctly connected to database".PHP_EOL;
 	}
 
-	public function updateInfo($zip, $fn, $ln, $em, $pw, $oe) {
+	public function updateInfo($zip, $fn, $ln, $pw, $oe) {
 		if(is_null($zip)) {
 			return FALSE;
 		} else if (is_null($fn)) {
 			return FALSE;
 		} else if (is_null($ln)) {
 			return FALSE;
-		} else if (is_null($em)) {
-			return FALSE;
-		} 
+		}
 		$z = $this->logindb->real_escape_string($zip);
 		$f = $this->logindb->real_escape_string($fn);
 		$l = $this->logindb->real_escape_string($ln);
-		$e = $this->logindb->real_escape_string($em);
 		if (is_null($pw)) {
 			$st = "UPDATE users SET f_name = '".$f."', l_name = '".$l."' WHERE email='".$oe."';";
 			$response = $this->logindb->query($statement);
