@@ -60,7 +60,7 @@ function requestProcessor($request)
     case "validate_session":
       return doValidate($request['sessionId']);
     case "update_info":
-      return updateInfo($request['zip'], $request['f_name'], $request['l_name'], $request['password'], $request['old_email']);
+      return updateInfo($request['zip'], $request['f_name'], $request['l_name'], $request['password'], $request['old_em']);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
