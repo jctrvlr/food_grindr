@@ -33,7 +33,7 @@ class loginDB {
 		$l = $this->logindb->real_escape_string($ln);
 		if (is_null($pw)) {
 			$st = "UPDATE users SET f_name = '".$f."', l_name = '".$l."' WHERE email='".$oe."';";
-			$response = $this->logindb->query($statement);
+			$response = $this->logindb->query($st);
 			if($response) {
 				return false;
 			} 
@@ -47,7 +47,7 @@ class loginDB {
 			}
 		}
 		$st = "UPDATE preferences SET zipcode = '".$z."' WHERE email='".$oe."';";
-		$res = $this->logindb->query($statement);
+		$res = $this->logindb->query($st);
 		if(!$res) {
 			return false;
 		}
