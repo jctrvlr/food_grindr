@@ -37,11 +37,11 @@
                 <div class="col-1">
                 <div class="user-item">
                     <div class="user-item_photo">
-                    <img src="http://www.clker.com/cliparts/Q/3/D/I/L/u/knife-and-fork-clipart-hi.png" alt="myphoto" />
+                    <img id="res_photo" src="http://www.clker.com/cliparts/Q/3/D/I/L/u/knife-and-fork-clipart-hi.png" alt="myphoto" />
                     </div>
                     <div class="user-item_info">
                     <p id="name" class="name">Katy's Kitchen</p>
-                    <p class="sub">Front-End developer</p>
+                    <p class="sub" id="cuisine">Front-End developer</p>
                     <div class="controls">
                     
                         <img src="unlike.png" onClick="submitResp(1)"/>
@@ -67,9 +67,8 @@
                         <p id="address"></p>
                         <p id="phone"></p>
                         <p id="price"></p>
-                        <p id="cuisine"></p>
                         <p id="hours"></p>
-                        <p id="delivery">Yes</p>
+                        <p id="delivery"></p>
                         </div>
                         </div>
                     </div>
@@ -95,10 +94,11 @@
             rest = JSON.parse(response);
             var json = JSON.parse(rest);
             console.debug(json);
-            document.getElementById("name").innerHTML=json.name;
-            document.getElementById("address").innerHTML=json.address;
-            document.getElementById("price").innerHTML=json.price_range;
-            document.getElementById("cuisine").innerHTML=json.cuisine;
+            document.getElementById("name").innerHTML="Name: " + json.name;
+            document.getElementById("address").innerHTML="Address: " + json.address;
+            document.getElementById("price").innerHTML="Price Range: " + json.price_range;
+            document.getElementById("cuisine").innerHTML="Cuisine: " + json.cuisine;
+            document.getElementById("res_photo").setAttribute("src", json.thumbnail);
         }
 
         function submitResp(like) {
