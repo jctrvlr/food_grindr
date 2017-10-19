@@ -12,7 +12,7 @@
 
 </head>
 
-<body>
+<body onload="getData()">
 
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container">
@@ -58,7 +58,7 @@
    <div class="row content">
       <div class="col-md-12">
          <table class="table table-bordered no-more-tables">
-            <thead>
+            <thead id="hehe">
                <tr>
                   <th class="text-center" width="33%">Restaurant ID</th>
                   <th class="text-center" width="33%">Restaurant name</th>
@@ -107,5 +107,26 @@
 </div>
 
 </body>
+<script type="text/javascript">
+  function handleGetData() {
+    for (var i = 0; i < json.length; i++) {
+      var js = json[i];
+      document.getElementById("hehe").innerHTML += "<tr><td class='text-center'>"+ js.res_id+"</td><td class='text-center'>"+js.name+"</td><td class='text-center'>"+js.SUM+"</td></tr>";
+    }
+  }
+
+  function getData() {
+    $.ajax({
+      url: 'rest.php',
+      data: {
+        type: 'get_data',
+      },
+      type: 'post',
+      success: function (output) {
+        handleGetData(output);
+      }
+    });
+  }
+</script>
 
 </html>

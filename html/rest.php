@@ -52,6 +52,12 @@ switch ($request["type"])
 		$response = $client->send_request($req);	
 		break;	
 	}
+	case "get_data": {
+		$req = array();
+		$req['type'] = 'get_data';
+		$response = $client->send_request($req);
+		break;
+	}
 	case "logout": {
 		// Unset all of the session variables.
 		$_SESSION = array();

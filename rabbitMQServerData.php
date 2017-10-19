@@ -43,6 +43,12 @@ function insertRes($res_arr, $ent_id) {
   return $output;
 }
 
+function getData() {
+  $dat = new dataProc();
+  $output = $dat->adminGetTop();
+  return $output;
+}
+
 function requestProcessor($request)
 {
   echo "received request".PHP_EOL;
@@ -65,6 +71,8 @@ function requestProcessor($request)
       return findPref();
     case "get_favorites":
       return getFavorites($request['user']);
+    case "get_data":
+      return getData();
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
