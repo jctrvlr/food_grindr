@@ -57,9 +57,9 @@ function submitRegister()
 function HandleLoginResponse(response)
 {
     console.log("resp: " + response);
-    if(response) {
+    if(response === true) {
         console.log("resp: " + response);
-         //window.location.replace("main.html");
+        window.location.replace("main.html");
     }
     console.log('Inside handleLoginRequest: ' + response);
     var text = JSON.parse(response);
