@@ -12,12 +12,6 @@ function doReview($resid)
   return $output;
 }
 
-function doSignup($email, $f_name, $l_name, $pass) {
-  $login = new logindb();
-  $output = $login->signup($email, $f_name, $l_name, $pass);
-  return $output;
-}
-
 function doLog($level,$loc,$msg) {
   //Decide where to put logs
   file_put_contents('./logs/log_'.date("j.n.Y").'.txt', $msg, FILE_APPEND);
@@ -41,12 +35,8 @@ function requestProcessor($request)
   {
     case "log_event":
       return doLog($request['level'],$request['loc'],$request['message']);
-    case "login":
-      return doLogin($request['email'],$request['pass']);
-    case "signup":
-      return doSignup($request['email'],$request['f_name'],$request['l_name'],$request['pass']);
-    case "validate_session":
-      return doValidate($request['sessionId']);
+    case "review":
+      return doReview($request['rating']);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
