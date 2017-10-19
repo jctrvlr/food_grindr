@@ -39,7 +39,7 @@ class dataProc {
                 $sum = $sum + $row['rating'];
             }
             $rating = $sum / $count;
-            $rating = round($rating);
+            $rating = (int)round($rating);
             
             $ret[$i]['res'] = $resp[$i];
             $ret[$i]['rating'] = $rating;
