@@ -36,6 +36,15 @@ body {
   padding: 0 15px;
   float: left;
 }
+h1{
+  font-family: 'Pacifico', cursive;
+  color: #3498DB;
+}
+
+.tab {
+    margin-left: 25px;
+    margin-right: 25px;
+}
 
 .wrapper {
   display: -webkit-box;
@@ -257,8 +266,9 @@ body {
   overflow: hidden;
   border-radius: 10px;
   position: relative;
-  padding-top: 60px;
+  padding-top: 25px;
   padding-bottom: 75px;
+  padding-left: 30px;
 }
 .chat .head {
   line-height: 45px;
@@ -392,7 +402,7 @@ h1{
 .product-review-stars{
   margin: 0 50px; 
   background: #5c7e94;
-  padding: 20px 80px 20px 20px;
+  padding: 20px 50px 20px 20px;
 }
 
 .product-review-stars label{
