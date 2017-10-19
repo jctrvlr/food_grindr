@@ -53,7 +53,7 @@ class reviewDB {
 		return false;//no users matched username
 	}
 
-	public function review($email,$resid,$rating)
+	public function insertReview($email,$resid,$rating)
 	{
 		$em = $this->reviewdb->real_escape_string($email);
 		$ri = $this->reviewdb->real_escape_string($resid);
@@ -74,24 +74,19 @@ class reviewDB {
 			return false;
 		}
 	}
-	
-	public function signup($email, $f_name, $l_name, $pass) {
-		$em = $this->reviewdb->real_escape_string($email);
-		$fn = $this->reviewdb->real_escape_string($f_name);
-		$ln = $this->reviewdb->real_escape_string($l_name);
-		$pw = password_hash($pass, PASSWORD_DEFAULT);
 
-		$statement = "insert into users (f_name, l_name, email, pass) values ('".$fn."', '".$ln."', '".$em."', '".$pw."');";
-		$response = $this->reviewdb->query($statement);
-		$options = array();
-		$options[0] = 'debug';
-		$options[1] = 'loginServer';
-		$options[2] = 'Signup function '. $response;
-		sendLogs($options);
-		if ($response) {
-			return true;
-		} else {
-			return false;
+	public function getReview($resid)
+	{
+		$sql = "select * from review whee resid = ".$resid.";";
+		$response = $this->reviewdb->query($sql);
+		while($row = $response->fetch_assoc())
+		{
+			$count++;
+			$sum = $sum + $row['rating'];
+		}
+		$rating = $sum / $count;
+		return $rating;
+
 		}
 	}
 }
