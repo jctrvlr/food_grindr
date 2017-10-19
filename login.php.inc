@@ -5,7 +5,7 @@ class loginDB {
 	private $logindb;
 
 	public function __construct() {
-		$this->logindb = new mysqli("127.0.0.1","root","gary3195","login");
+		$this->logindb = new mysqli("127.0.0.1","root","Ireland2018","it490");
 		if ($this->logindb->connect_errno != 0)
 		{
 			echo "Error connecting to database: ".$this->logindb->connect_error.PHP_EOL;
@@ -43,11 +43,11 @@ class loginDB {
 			echo "passwords did not match for $email".PHP_EOL;
 		}
 		// Info logging
-		$options = array();
-		$options[0] = 'info';
-		$options[1] = 'loginServer';
-		$options[2] = $email.' cannot be found in database.';
-		sendLogs($options);
+		//$options = array();
+		//$options[0] = 'info';
+		//$options[1] = 'loginServer';
+		//$options[2] = $email.' cannot be found in database.';
+		//sendLogs($options);
 		
 		return false;//no users matched username
 	}
@@ -60,11 +60,11 @@ class loginDB {
 
 		$statement = "insert into users (f_name, l_name, email, pass) values ('".$fn."', '".$ln."', '".$em."', '".$pw."');";
 		$response = $this->logindb->query($statement);
-		$options = array();
-		$options[0] = 'debug';
-		$options[1] = 'loginServer';
-		$options[2] = 'Signup function '. $response;
-		sendLogs($options);
+		//$options = array();
+		//$options[0] = 'debug';
+		//$options[1] = 'loginServer';
+		//$options[2] = 'Signup function '. $response;
+		//sendLogs($options);
 		if ($response) {
 			return true;
 		} else {

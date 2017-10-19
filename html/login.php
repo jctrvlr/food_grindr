@@ -4,7 +4,6 @@ require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 require_once('logger.inc');
 
-
 if (!isset($_POST))
 {
 	$msg = "NO POST MESSAGE SET, POLITELY FUCK OFF";
@@ -37,6 +36,7 @@ switch ($request["type"])
 }
 
 echo json_encode($response);
+echo 'test';
 exit(0);
 
 ?>
