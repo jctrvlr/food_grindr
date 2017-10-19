@@ -18,6 +18,12 @@ function findPref(){
   return $output;
 }
 
+function getFavorites($user) {
+  $dat = new dataProc();
+  $output = $dat->getFavorites($user);
+  return $output;
+}
+
 function restResp($user, $res_id, $like, $zip, $last) {
   $dat = new dataProc();
   $output = $dat->restResp($user, $res_id, $like, $zip, $last);
@@ -57,6 +63,8 @@ function requestProcessor($request)
       return insertRes($request["rest_arr"], $request['ent_id']);
     case "find_pref":
       return findPref();
+    case "get_favorites":
+      return getFavorites($request['user']);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }

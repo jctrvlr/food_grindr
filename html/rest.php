@@ -45,6 +45,13 @@ switch ($request["type"])
 		$_SESSION["last"] = $json["name"];
 		break;
 	}
+	case "get_favorites": {
+		$req = array();
+		$req['type'] = 'get_favorites';
+		$req['user'] = $_SESSION['email'];
+		$response = $client->send_request($req);	
+		break;	
+	}
 	case "logout": {
 		// Unset all of the session variables.
 		$_SESSION = array();

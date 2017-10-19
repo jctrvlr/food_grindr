@@ -51,6 +51,22 @@
     </div>
     </body>
     <script type="text/javascript">
+        function getFavorites() {
+            $.ajax({
+                url: 'rest.php',
+                data: {
+                    type: 'get_favorites',
+                },
+                type: 'post',
+                success: function (output) {
+                    handleGetFavorites(output);
+                }
+            });
+        }
+
+        function handleGetFavorites(res) {
+            
+        }
          // Logout functions
         function handleLogout() {
             window.location.replace("login.html");

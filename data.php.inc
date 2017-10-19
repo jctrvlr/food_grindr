@@ -23,6 +23,14 @@ class dataProc {
 		}
 		echo "correctly connected to database".PHP_EOL;
     }
+
+    public function getFavorites($user) {
+        $statement = "SELECT responses.user, restaurants.name, restaurants.zipcode, restaurants.longitude, restaurants.latitude, restaurants.cuisine, restaurants.price_range, restaurants.thumbnail, restaurants.online_delivery, restaurants.menu FROM responses INNER JOIN restaurants ON responses.res_id=restaurants.res_id WHERE responses.liked=1 AND responses.user='".$user."' GROUP BY responses.res_id;";
+        $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
+        var_dump($resp);
+        return $resp;
+    }
+
     
     public function getRest($user, $zip, $last) {
         if(!isset($last)) {
