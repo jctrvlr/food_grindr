@@ -6,6 +6,7 @@ require_once('rabbitMQLib.inc');
 
 
 function getLocations($loc, $lat, $lon, $zip) {
+  $loc = str_replace(' ', '', $loc);
   $url = "https://developers.zomato.com/api/v2.1/locations?query=".$loc."&lat=".$lat."&lon=".$lon."count=1";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
