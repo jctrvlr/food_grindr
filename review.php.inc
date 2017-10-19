@@ -85,7 +85,11 @@ class reviewDB {
 			$sum = $sum + $row['rating'];
 		}
 		$rating = $sum / $count;
-		return $rating;
+		$arr = array();
+		$arr["res_id"] = $resid;
+		$arr["rating"] = $rating;
+
+		return $arr;
 
 		}
 	}

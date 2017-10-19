@@ -3,21 +3,13 @@
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
-require_once('login.php.inc');
+require_once('review.php.inc');
 
-function doLogin($email,$password)
+function doReview($resid)
 {
-  // lookup email in database
-  // check password
-  $login = new logindb();
-	$output = $login->validateLogin($email,$password);
+  $review = new reviewDB();
+  $output = $review->getReview($resid);
   return $output;
-  
-}
-
-function doValidate($sessionID) {
-  //TODO Validate Session
-  //TODO Start session somewhere
 }
 
 function doSignup($email, $f_name, $l_name, $pass) {
@@ -59,7 +51,7 @@ function requestProcessor($request)
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
 
-$server = new rabbitMQServer("testRabbitMQ.ini","testServer");
+$server = new rabbitMQServer("rabbitMQReview.ini","testServer");
 
 $server->process_requests('requestProcessor');
 exit();
