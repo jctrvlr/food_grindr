@@ -81,15 +81,16 @@
     }
 
     function handleReview(output){
-
+        console.log('review submitted');
     }
 
-    function submitReview(rating) {
+    function submitReview(rating, res_id) {
         $.ajax({
             url: 'review.php',
             data: {
                 type: 'insert_review',
-                rating: rating
+                rating: rating,
+                res_id: res_id
             },
             type: 'post',
             success: function (output) {

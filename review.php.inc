@@ -21,45 +21,13 @@ class reviewDB {
 		echo "correctly connected to database".PHP_EOL;
 	}
 
-	public function validateLogin($email,$password) {
-		$em = $this->reviewdb->real_escape_string($email);
-		$pw = $password;
-		$statement = "select * from users where email = '$em';";
-		$response = $this->reviewdb->query($statement);
-
-		while ($row = $response->fetch_assoc())
-		{
-			echo "checking password for $email".PHP_EOL;
-			if (password_verify($pw, $row["pass"]))
-			{
-				echo "passwords match for $email".PHP_EOL;
-				// Info logging
-				$options = array();
-				$options[0] = 'info';
-				$options[1] = 'loginServer';
-				$options[2] = $email.' has logged in.';
-				sendLogs($options);
-				return true;// password match
-			}
-			echo "passwords did not match for $email".PHP_EOL;
-		}
-		// Info logging
-		$options = array();
-		$options[0] = 'info';
-		$options[1] = 'loginServer';
-		$options[2] = $email.' cannot be found in database.';
-		sendLogs($options);
-		
-		return false;//no users matched username
-	}
-
 	public function insertReview($email,$resid,$rating)
 	{
 		$em = $this->reviewdb->real_escape_string($email);
 		$ri = $this->reviewdb->real_escape_string($resid);
 		$rg = $this->reviewdb->real_escape_string($rating);
 
-		$sql = "insert into ratings (res_id, email, rating) values ('".$fn."', '".$ln."', '".$em."');";
+		$sql = "insert into ratings (res_id, email, rating) values ('".$ri."', '".$em."', '".$rg."');";
 
 		$response = $this->reviewdb->query($statement);
 		

@@ -15,11 +15,11 @@ $request = $_POST;
 
 switch ($request["type"])
 {
-	case "review": {
+	case "insert_review": {
 		$req=array();
-		$req['type']="review";
-		$req['email']=$request["email"];
-		$req['resid']=$request["resid"];
+		$req['type']="insert_review";
+		$req['email']=$_SESSION["email"];
+		$req['resid']=$request["res_id"];
 		$req['rating']=$request["rating"];
 		$response = $client->send_request($req);
 		break;
