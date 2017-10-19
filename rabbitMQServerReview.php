@@ -7,7 +7,9 @@ require_once('review.php.inc');
 
 function doReview($email, $resid, $rating)
 {
+  echo "test";
   $review = new reviewDB();
+  echo "test2";
   $output = $review->getReview($email, $resid, $rating);
   echo $email;
   return $output;
