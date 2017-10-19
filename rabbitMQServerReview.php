@@ -8,7 +8,7 @@ require_once('review.php.inc');
 function doReview($email, $resid, $rating)
 {
   $review = new reviewDB();
-  $output = $review->getReview($email, $resid, $rating);
+  $output = $review->insertReview($email, $resid, $rating);
   echo $email;
   return $output;
 }
