@@ -398,13 +398,7 @@ h1{
   padding: 0px 0;
   color: #34495E;
 }
-h1:before{
-  color: 		#FFD700;
-  content: "★★★★★";
-  display: block;
-  font-size: 2em;
-  padding: 20px 0;
-}
+
 .product-review-stars{
   margin: 0 50px; 
   background: #5c7e94;
