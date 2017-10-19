@@ -74,8 +74,12 @@ function HandleLoginResponse(response)
 function HandleRegisterResponse(response)
 {
     console.log('Inside handleRegisterRequest');
-	var text = JSON.parse(response);
-	document.getElementById("output").innerHTML = "response: "+text+"<p>";
+    var text = JSON.parse(response);
+    if(text){
+        document.getElementById("output").innerHTML = "Successfully made an account! Please Login.";
+    } else {
+        document.getElementById("output").innerHTML = "Failed to make account. Duplicate email.";
+    }
 }
 
 function sendLoginRequest(email,pass)
