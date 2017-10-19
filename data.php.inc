@@ -31,6 +31,7 @@ class dataProc {
         for($i=0; $i < count($resp); $i++) {
             $resid = $resp[$i]['res_id'];
             $st = "SELECT * FROM review where resid = ".$resid.";";
+            $response = $this->logindb->query($st);
             $count = 0;
             $sum = 0;
             while($row = $response->fetch_assoc()) {
