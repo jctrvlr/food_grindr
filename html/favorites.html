@@ -64,7 +64,8 @@
     function handleGetFavorites(res) {
         json = JSON.parse(res);
         for (var i = 0; i < json.length; i++) {
-            var js = JSON.parse(json[i]);
+            console.log(json);
+            var js = json[i];
             var rating = js.rating;
             var res = JSON.parse(js.res);
             
