@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+<link href='beauty.css' rel='stylesheet' type='text/css'>
+<div class="review-page">
+  <div id="output"></div>
+  <div class="form">
+    <p class="message">Enter rating from 1 to 5 below:</p>
+    <form class="rating-form">
+      <input type="email" id="email" required="required" placeholder="Email"/>
+      <input type="resid" id="resid" required="required" placeholder="Restaurant ID"/>
+      <input type="rating" id="rating" required="required" placeholder="Rating 1 - 5"/>
+      <button type="submit" id="review" onclick="submitReview()" >submit</button>
+    </form>
+    </form>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $('.message a').click(function(){
+    $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+});
+
+function submitReview()
+{
+    var email = document.getElementById("email").value;
+    var resid = document.getElementById("resid").value;
+    var rating = document.getElementById("rating").value;
+    document.getElementById("output")
+    sendReviewRequest(email,resid,rating);
+    return 0;
+}
+
+function HandleReviewResponse(response)
+{
+    console.log('Inside handleReviewRequest');
+    var text = JSON.parse(response);
+    document.getElementById("output").innerHTML = "response: "+text+"<p>";
+}
+
+function sendReviewRequest(email, resid, rating)
+{
+    console.log('Inside sendReviewRequest');
+    $.ajax({url: 'review.php',
+            data: {type: "review",
+                    email: email,
+                    resid: resid,
+                    rating: rating},
+            type: 'post',
+            success: function(output){
+                HandleReviewResponse(output);
+                }
+    });
+}
+</script>
+</html>
