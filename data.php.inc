@@ -25,10 +25,22 @@ class dataProc {
     }
 
     public function getFavorites($user) {
-        $statement = "SELECT responses.user, restaurants.name, restaurants.zipcode, restaurants.longitude, restaurants.latitude, restaurants.cuisine, restaurants.price_range, restaurants.thumbnail, restaurants.online_delivery, restaurants.menu FROM responses INNER JOIN restaurants ON responses.res_id=restaurants.res_id WHERE responses.liked=1 AND responses.user='".$user."' GROUP BY responses.res_id;";
+        $statement = "SELECT responses.user, restaurants.res_id, restaurants.name, restaurants.zipcode, restaurants.longitude, restaurants.latitude, restaurants.cuisine, restaurants.price_range, restaurants.thumbnail, restaurants.online_delivery, restaurants.menu FROM responses INNER JOIN restaurants ON responses.res_id=restaurants.res_id WHERE responses.liked=1 AND responses.user='".$user."' GROUP BY responses.res_id;";
         $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
-        var_dump($resp);
-        return $resp;
+        $ret = array();
+        for($i=0; $i < count($resp); $i++) {
+            $resid = $resp[$i]['res_id'];
+            $st = "SELECT * FROM review where resid = ".$resid.";";
+            while($row = $response->fetch_assoc()) {
+                $count++;
+                $sum = $sum + $row['rating'];
+            }
+            $rating = $sum / $count;
+            $ret[$i]['res'] = $resp[$i];
+            $ret[$i]['rating'] = $rating;
+        }
+        var_dump($ret);
+        return $ret;
     }
 
     
