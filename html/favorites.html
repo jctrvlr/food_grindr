@@ -1,91 +1,97 @@
 <!DOCTYPE html>
+<html>
+<meta charset="utf-8" />
+<script src="js/main.js"></script>
 
-    <html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
 
-    <meta charset="utf-8"/>
-
-
-    <script src="js/main.js"></script>
-
-    <head>
-            <link rel="stylesheet" type="text/css" href="css/main.css">
-    </head>
-
-    <body onload="getFavorites()" >
-
+<body onload="getFavorites()">
     <div class="wrapper">
-    <div class="wrapper_container">
-    <!-- start content -->
-        <div class="site-wrapper active" id="target">
-        <div class="site-wrapper_left-col">
-            <a href="#" class="logo">Food Grindr</a>
-            <div class="left-nav">
-               
-               <a href="main.html"><i class="fa fa-dashboard"></i>Dashboard</a>
-                <a href="favorites.html"><i class="fa fa-favorites"></i>Favorites</a>
-                <a href="settings.html"><i class="fa fa-settings"></i>Settings</a>
-                <a href="about.html"><i class="fa fa-about"></i>About</a>
-                <a href="#" onclick="logout()"><i class="fa fa-about"></i>Logout</a>
-               
-            </div>
-        </div>
-       <div class="site-wrapper_top-bar">
-            <a href="#" id="toggle"><i class="fa fa-bars"></i></a>
-        </div>
-        
-            <!-- inner content -->
-
-                <div class="col-2">
-                    <div class="chat">
-                        
-                        </div>
-                        </div>
+        <div class="wrapper_container">
+            <!-- start content -->
+            <div class="site-wrapper active" id="target">
+                <div class="site-wrapper_left-col">
+                    <a href="#" class="logo">Food Grindr</a>
+                    <div class="left-nav">
+                        <a href="main.html">
+                            <i class="fa fa-dashboard"></i>Dashboard</a>
+                        <a href="favorites.html">
+                            <i class="fa fa-favorites"></i>Favorites</a>
+                        <a href="settings.html">
+                            <i class="fa fa-settings"></i>Settings</a>
+                        <a href="about.html">
+                            <i class="fa fa-about"></i>About</a>
+                        <a href="#" onclick="logout()">
+                            <i class="fa fa-about"></i>Logout</a>
                     </div>
                 </div>
+                <div class="site-wrapper_top-bar">
+                    <a href="#" id="toggle">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                </div>
+                <!-- inner content -->
+                <div class="col-7" id="rest">
+
+                </div>
             </div>
-           <!-- </div> -->
-            <!-- end inner content -->
-        </div>  
+        </div>
+    </div>
+    <!-- </div> -->
+    <!-- end inner content -->
+    </div>
     <!-- end content -->
     </div>
     </div>
-    </body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        function getFavorites() {
-            $.ajax({
-                url: 'rest.php',
-                data: {
-                    type: 'get_favorites',
-                },
-                type: 'post',
-                success: function (output) {
-                    handleGetFavorites(output);
-                }
-            });
-        }
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function getFavorites() {
+        $.ajax({
+            url: 'rest.php',
+            data: {
+                type: 'get_favorites',
+            },
+            type: 'post',
+            success: function (output) {
+                handleGetFavorites(output);
+            }
+        });
+    }
 
-        function handleGetFavorites(res) {
-            json = JSON.parse(res);
-            console.log(json);
+    function handleGetFavorites(res) {
+        json = JSON.parse(res);
+        for (var i = 0; i < json.length; i++) {
+            var js = JSON.parse(json[i]);
+            var rating = js.rating;
+            var res = JSON.parse(js.res);
+            
+            document.getElementById("rest").innerHTML += "<div class='row'><div class='col-1><div class='user-item'><div class='user-item_photo'><img id='res_photo' src='"+res.thumbnail+"' alt='myphoto' /></div><div class='user-item_info'><p id='name' class='name'>"+res.name+"</p><p class='sub' id='cuisine'>"+res.cuisine+"</p></div></div></div ><div class='col - 2'><div class='chat'><div class='user-item_info'><p id='rating'>"+rating+"</p><p id='address'>"+res.address+"</p><p id='price'>"+res.price_range+"</p></div></div></div>";
+        }
+        res = JSON.parse
+        console.log(json);
 
-        }
-         // Logout functions
-        function handleLogout() {
-            window.location.replace("login.html");
-        }
 
-        function logout() {
-            $.ajax({
-                url: 'rest.php',
-                data: {
-                    type: 'logout',
-                },
-                type: 'post',
-                success: function () {
-                    handleLogout();
-                }
-            });
-        }
-    </script>
+    }
+    // Logout functions
+    function handleLogout() {
+        window.location.replace("login.html");
+    }
+
+    function logout() {
+        $.ajax({
+            url: 'rest.php',
+            data: {
+                type: 'logout',
+            },
+            type: 'post',
+            success: function () {
+                handleLogout();
+            }
+        });
+    }
+</script>
+
 </html>
