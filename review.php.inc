@@ -5,7 +5,7 @@ class reviewDB {
 	private $reviewdb;
 
 	public function __construct() {
-		$this->reviewdb = new mysqli("127.0.0.1","root","koolkid20U","it490");
+		$this->reviewdb = new mysqli("127.0.0.1","root","Ireland2018","it490");
 
 		if ($this->reviewdb->connect_errno != 0)
 		{
