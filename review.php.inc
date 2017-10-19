@@ -29,8 +29,7 @@ class reviewDB {
 		$rg = $rating;
 
 		$sql = "insert into ratings (res_id, email, rating) values ('".$ri."', '".$em."', '".$rg."');";
-		echo $sql;
-		$response = $this->reviewdb->query($statement);
+		$response = $this->reviewdb->query($sql);
 		var_dump($response);
 		$options = array();
 		$options[0] = 'debug';
