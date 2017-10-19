@@ -41,7 +41,7 @@ function getLocations($loc, $lat, $lon, $zip) {
 }
 
 function getRestaurants($ent_id, $ent_type) {
-  $url = "https://developers.zomato.com/api/v2.1/location_details?entity_id=".$ent_id."&entity_type=".$ent_type;
+  $url = "https://developers.zomato.com/api/v2.1/location_details?entity_id=".$ent_id."&entity_type=".$ent_type."&count=50";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -62,8 +62,6 @@ function getRestaurants($ent_id, $ent_type) {
   $response = $client->publish($request);
   echo "Sent request insert_res".PHP_EOL;
   return true;
-  
-
 }
 
 
