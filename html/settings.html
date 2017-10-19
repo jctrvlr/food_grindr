@@ -5,6 +5,13 @@
     <head>
             <link rel="stylesheet" type="text/css" href="css/main.css">
     </head>
+    
+    <style type="text/css">
+    label{
+        display:inline-block;
+        width:100px;
+    }
+    </style>
 
     <body onload="getUserInfo()" >
 
@@ -40,15 +47,16 @@
                             <span id="alert"></span>
                         <!--<p id="name"></p>-->
                         <label>Zipcode</label>
-                        <input id="zip" />
+                        <input id="zip" /><br>
                         <label>First Name</label>
-                        <input id="f_name" />
+                        <input id="f_name" /><br>
                         <label>Last Name</label>
-                        <input id="l_name" />
+                        <input id="l_name" /><br>
                         <label>Password</label>
-                        <input type="password"id="password" />
+                        <input type="password"id="password" /><br><br>
+                        <div style="text-align:center">
                         <button type="button" onclick="updateInfo()">Submit</button>
-
+                        </div>
                         </div>
                         </div>
                     </div>
