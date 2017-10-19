@@ -59,7 +59,7 @@ function HandleLoginResponse(response)
     console.log("resp: " + response);
     var text = JSON.parse(response);
     if(text === "adminyes") {
-        window.location.href("admin.html");
+        window.location.href= "admin.html";
     }
     if(text) {
         console.log("resp: " + response);
