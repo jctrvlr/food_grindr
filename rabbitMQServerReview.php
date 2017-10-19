@@ -9,6 +9,7 @@ function doReview($email, $resid, $rating)
 {
   $review = new reviewDB();
   $output = $review->getReview($email, $resid, $rating);
+  echo $email;
   return $output;
 }
 
