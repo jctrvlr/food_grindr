@@ -50,7 +50,6 @@ class dataProc {
             $ret[$i]['res'] = $resp[$i];
             $ret[$i]['rating'] = $rating;
         }
-        var_dump($ret);
         return $ret;
     }
 
@@ -187,9 +186,7 @@ class dataProc {
     private function chooseRest($arr, $last) {
         echo "Inside chooseRest".PHP_EOL;
         $chosen_rest = array();
-        var_dump($arr);
         $arr = $this->sortArr($arr); // Sorting function when it works
-        var_dump($arr);
         if(is_string($last)) {
             // Find $last (last restaurant sent) in array and give next item
             $last_key = $this->searchForName($last, $arr);
@@ -219,7 +216,6 @@ class dataProc {
         $statement = "select * from zipcode where zipcode='".$zip."';";
         $response = $this->logindb->query($statement);
         while($row = $response->fetch_assoc()) {
-            var_dump($row);
             $loc_arr = array();
             $loc_arr['name']=$row["city"];
             $loc_arr['latitude']=$row["lat"];
