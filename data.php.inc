@@ -31,6 +31,8 @@ class dataProc {
         for($i=0; $i < count($resp); $i++) {
             $resid = $resp[$i]['res_id'];
             $st = "SELECT * FROM review where resid = ".$resid.";";
+            $count = 0;
+            $sum = 0;
             while($row = $response->fetch_assoc()) {
                 $count++;
                 $sum = $sum + $row['rating'];
