@@ -23,9 +23,10 @@ class reviewDB {
 
 	public function insertReview($email,$resid,$rating)
 	{
-		$em = $this->reviewdb->real_escape_string($email);
-		$ri = $this->reviewdb->real_escape_string($resid);
-		$rg = $this->reviewdb->real_escape_string($rating);
+
+		$em = $email;
+		$ri = $resid;
+		$rg = $rating;
 
 		$sql = "insert into ratings (res_id, email, rating) values ('".$ri."', '".$em."', '".$rg."');";
 		echo $sql;
