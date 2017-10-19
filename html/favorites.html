@@ -67,7 +67,7 @@
             console.log(json);
             var js = json[i];
             var rating = js.rating;
-            var res = JSON.parse(js.res);
+            var res =js.res;
             
             document.getElementById("rest").innerHTML += "<div class='row'><div class='col-1><div class='user-item'><div class='user-item_photo'><img id='res_photo' src='"+res.thumbnail+"' alt='myphoto' /></div><div class='user-item_info'><p id='name' class='name'>"+res.name+"</p><p class='sub' id='cuisine'>"+res.cuisine+"</p></div></div></div ><div class='col - 2'><div class='chat'><div class='user-item_info'><p id='rating'>"+rating+"</p><p id='address'>"+res.address+"</p><p id='price'>"+res.price_range+"</p></div></div></div>";
         }
