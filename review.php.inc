@@ -28,9 +28,9 @@ class reviewDB {
 		$rg = $this->reviewdb->real_escape_string($rating);
 
 		$sql = "insert into ratings (res_id, email, rating) values ('".$ri."', '".$em."', '".$rg."');";
-
+		echo $sql;
 		$response = $this->reviewdb->query($statement);
-		
+		var_dump($response);
 		$options = array();
 		$options[0] = 'debug';
 		$options[1] = 'loginServer';
