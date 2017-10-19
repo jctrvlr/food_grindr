@@ -30,7 +30,7 @@ class dataProc {
         $ret = array();
         for($i=0; $i < count($resp); $i++) {
             $resid = $resp[$i]['res_id'];
-            $st = "SELECT * FROM review where resid = ".$resid.";";
+            $st = "SELECT * FROM ratings where res_id = ".$resid.";";
             $response = $this->logindb->query($st);
             $count = 0;
             $sum = 0;
