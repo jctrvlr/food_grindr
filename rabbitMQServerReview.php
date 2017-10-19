@@ -7,9 +7,7 @@ require_once('review.php.inc');
 
 function doReview($email, $resid, $rating)
 {
-  echo "test";
   $review = new reviewDB();
-  echo "test2";
   $output = $review->getReview($email, $resid, $rating);
   echo $email;
   return $output;
@@ -25,7 +23,7 @@ function requestProcessor($request)
   }
   switch ($request['type'])
   {
-    case "review":
+    case "insert_review":
       return doReview($request['email'], $request['resid'], $request['rating']);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
