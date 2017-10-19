@@ -56,7 +56,7 @@ function submitRegister()
 }
 function HandleLoginResponse(response)
 {
-    console.log(response);
+    console.log("resp: " + response);
     if(response && response !== "null") {
          window.location.replace("main.html");
     }
