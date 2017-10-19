@@ -23,6 +23,12 @@ class dataProc {
 		}
 		echo "correctly connected to database".PHP_EOL;
     }
+    
+    public function adminGetTop() {
+        $statement = "SELECT restaurants.res_id, restaurants.name, SUM(responses.liked) AS SUM FROM restaurants INNER JOIN responses ON restaurants.res_id=responses.res_id GROUP BY restaurants.res_id ORDER BY SUM DESC;";
+        $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
+        return $resp;
+    }
 
     public function getFavorites($user) {
         $statement = "SELECT responses.user, restaurants.res_id, restaurants.name, restaurants.address, restaurants.longitude, restaurants.latitude, restaurants.cuisine, restaurants.price_range, restaurants.thumbnail, restaurants.online_delivery, restaurants.menu FROM responses INNER JOIN restaurants ON responses.res_id=restaurants.res_id WHERE responses.liked=1 AND responses.user='".$user."' GROUP BY responses.res_id;";
