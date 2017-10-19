@@ -57,12 +57,13 @@ function submitRegister()
 function HandleLoginResponse(response)
 {
     console.log("resp: " + response);
-    if(response && response !== "null") {
-         window.location.replace("main.html");
+    if(response) {
+        console.log("resp: " + response);
+         //window.location.replace("main.html");
     }
     console.log('Inside handleLoginRequest: ' + response);
     var text = JSON.parse(response);
-	//document.getElementById("output").innerHTML = "response: "+text+"<p>";
+	document.getElementById("output").innerHTML = "response: "+text+"<p>";
 }
 
 function HandleRegisterResponse(response)
