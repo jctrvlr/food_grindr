@@ -1,9 +1,17 @@
 <?php
 require_once('logger.inc');
 
+/**
+ * Class that gets reviews and inserts them into a database
+ * 
+ * @author Khari Davis-Fletcher
+ */
 class reviewDB {
 	private $reviewdb;
-
+	
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
 		$this->reviewdb = new mysqli("127.0.0.1","root","Ireland2018","it490");
 
@@ -21,6 +29,14 @@ class reviewDB {
 		echo "correctly connected to database".PHP_EOL;
 	}
 
+	/**
+	 * Inserts review into ratings db
+	 * 
+	 * @param email email of user giving review
+	 * @param resid restaurant id of restaurant being reviewd
+	 * @param rating review of restaurant
+	 * @return if there is a response
+	 */
 	public function insertReview($email,$resid,$rating)
 	{
 
@@ -41,7 +57,13 @@ class reviewDB {
 			return false;
 		}
 	}
-
+	
+	/**
+	 * Obtains review from db using resid as a unique identifier
+	 * 
+	 * @param resid used to identify restaurant
+	 * @return arr array containing the rating and resid
+	 */
 	public function getReview($resid)
 	{
 		$sql = "select * from review whee resid = ".$resid.";";
