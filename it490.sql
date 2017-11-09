@@ -33,7 +33,7 @@ CREATE TABLE `city` (
   `zip` char(5) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `entity_id` (`entity_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `city` (
 
 LOCK TABLES `city` WRITE;
 /*!40000 ALTER TABLE `city` DISABLE KEYS */;
-INSERT INTO `city` VALUES (1,'NEWARK','3976','city',-74.169998,40.720001,'2017-10-17 12:33:52','07103');
+INSERT INTO `city` VALUES (1,'NEW%20YORK','280','city',-73.989998,40.709999,'2017-10-19 06:48:44','10017'),(2,'NEWARK','3976','city',-74.169998,40.720001,'2017-10-19 06:51:08','07103');
 /*!40000 ALTER TABLE `city` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -71,7 +71,7 @@ CREATE TABLE `preferences` (
 
 LOCK TABLES `preferences` WRITE;
 /*!40000 ALTER TABLE `preferences` DISABLE KEYS */;
-INSERT INTO `preferences` VALUES ('jic6@njit.edu','07103',NULL,NULL,'8564309985');
+INSERT INTO `preferences` VALUES ('admin@admin','07103',NULL,NULL,NULL),('ah@ah','07103',NULL,NULL,NULL),('aneesh@aneesh','07103',NULL,NULL,NULL),('bro@bro','07013',NULL,NULL,NULL),('gg@g','07047',NULL,NULL,NULL),('hi@hi','10017',NULL,NULL,NULL),('khari@k','08873',NULL,NULL,NULL),('kld22@njit.edu','08873',NULL,NULL,NULL),('nyny@ny','08873',NULL,NULL,NULL),('poop@dust','07103',NULL,NULL,NULL),('qwer@qwer','10017',NULL,NULL,NULL),('rb@rb','10017',NULL,NULL,NULL),('smelly@smelly','10017',NULL,NULL,NULL),('test@test','07103',NULL,NULL,NULL),('xd@xd','07103',NULL,NULL,NULL),('yer@yer','10017',NULL,NULL,NULL),('yo@yo','10017',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `preferences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,6 +99,7 @@ CREATE TABLE `ratings` (
 
 LOCK TABLES `ratings` WRITE;
 /*!40000 ALTER TABLE `ratings` DISABLE KEYS */;
+INSERT INTO `ratings` VALUES ('16760367','test@test',2),('16761344','test@test',2),('17212124','qwer@qwer',3),('17212124','qwer@qwer',5),('17212124','qwer@qwer',1),('17212124','qwer@qwer',2),('17212124','qwer@qwer',2),('17211777','smelly@smelly',2),('17214159','smelly@smelly',4),('17213353','smelly@smelly',2),('17211777','smelly@smelly',4),('17212124','ah@ah',1),('17212124','aneesh@aneesh',1),('17212750','aneesh@aneesh',1),('17212124','poop@dust',1),('17214546','poop@dust',3),('16775039','poop@dust',1),('16760367','poop@dust',1),('16760367','poop@dust',5),('16768829','poop@dust',5),('16768829','poop@dust',5);
 /*!40000 ALTER TABLE `ratings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +120,7 @@ CREATE TABLE `responses` (
   KEY `res_id` (`res_id`),
   CONSTRAINT `responses_ibfk_1` FOREIGN KEY (`user`) REFERENCES `users` (`email`),
   CONSTRAINT `responses_ibfk_2` FOREIGN KEY (`res_id`) REFERENCES `restaurants` (`res_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +129,7 @@ CREATE TABLE `responses` (
 
 LOCK TABLES `responses` WRITE;
 /*!40000 ALTER TABLE `responses` DISABLE KEYS */;
-INSERT INTO `responses` VALUES (5,'jic6@njit.edu','17211777',1),(6,'jic6@njit.edu','17211777',1),(7,'jic6@njit.edu','17212124',1),(8,'jic6@njit.edu','17212750',0),(9,'jic6@njit.edu','17213353',0),(10,'jic6@njit.edu','17214159',1),(11,'jic6@njit.edu','17214546',1);
+INSERT INTO `responses` VALUES (1,'test@test','16760367',1),(2,'test@test','16761344',1),(3,'test@test','16765367',1),(4,'test@test','16768829',1),(5,'qwer@qwer','17211777',0),(6,'qwer@qwer','17212124',1),(7,'qwer@qwer','17212750',0),(8,'smelly@smelly','17211777',1),(9,'smelly@smelly','17212124',0),(10,'smelly@smelly','17212750',0),(11,'smelly@smelly','17213353',1),(12,'smelly@smelly','17214159',1),(13,'smelly@smelly','17214546',0),(14,'smelly@smelly','16761344',0),(15,'smelly@smelly','16765367',1),(16,'ah@ah','17211777',0),(17,'ah@ah','17212124',1),(18,'smelly@smelly','16775039',0),(19,'smelly@smelly','16781904',1),(20,'yer@yer','16760367',0),(21,'yer@yer','16761344',1),(22,'yer@yer','16765367',1),(23,'yer@yer','16765367',1),(24,'yer@yer','16765367',1),(25,'yer@yer','16768829',1),(26,'yer@yer','16781904',1),(27,'yer@yer','16781904',1),(28,'yer@yer','16760367',1),(29,'yer@yer','16761344',1),(30,'yer@yer','16761344',1),(31,'yer@yer','16765367',1),(32,'yer@yer','16781875',1),(33,'yer@yer','16781904',1),(34,'yer@yer','16781904',1),(35,'yer@yer','16781904',1),(36,'yer@yer','16760367',1),(37,'yer@yer','16760367',1),(38,'yer@yer','16761344',1),(39,'yer@yer','16781875',1),(40,'yer@yer','16781875',1),(41,'yer@yer','16781875',1),(42,'yer@yer','16781875',1),(43,'yer@yer','16781904',1),(44,'yer@yer','16760367',1),(45,'yer@yer','16761344',1),(46,'yer@yer','16765367',1),(47,'yer@yer','16765367',1),(48,'yer@yer','16775039',1),(49,'yer@yer','16781904',1),(50,'yer@yer','16760367',1),(51,'yer@yer','16760367',1),(52,'yer@yer','16761344',1),(53,'yer@yer','16765367',1),(54,'yer@yer','16781904',0),(55,'yer@yer','16781904',0),(56,'yer@yer','16781904',0),(57,'yer@yer','16760367',0),(58,'yer@yer','16761344',0),(59,'yer@yer','16765367',0),(60,'yer@yer','16765367',0),(61,'yer@yer','16781904',1),(62,'yer@yer','16781904',1),(63,'yer@yer','16760367',1),(64,'yer@yer','16761344',1),(65,'yer@yer','16768829',0),(66,'yer@yer','16768829',0),(67,'yer@yer','16768829',0),(68,'yer@yer','16781904',0),(69,'yer@yer','16781904',0),(70,'yer@yer','16760367',0),(71,'yer@yer','16761344',0),(72,'yer@yer','16765367',0),(73,'yer@yer','16775039',0),(74,'yer@yer','16775039',0),(75,'yer@yer','16781904',1),(76,'yer@yer','16760367',1),(77,'yer@yer','16760367',1),(78,'yer@yer','16761344',1),(79,'yer@yer','16761344',1),(80,'aneesh@aneesh','17213353',1),(81,'aneesh@aneesh','17214159',0),(82,'aneesh@aneesh','17214546',0),(83,'aneesh@aneesh','17216677',1),(84,'aneesh@aneesh','17227325',0),(85,'aneesh@aneesh','17227551',0),(86,'aneesh@aneesh','17211777',0),(87,'aneesh@aneesh','17212124',1),(88,'aneesh@aneesh','17212750',1),(89,'aneesh@aneesh','17213353',0),(90,'aneesh@aneesh','17214159',0),(91,'rb@rb','17216677',0),(92,'rb@rb','17227325',1),(93,'rb@rb','17227551',1),(94,'rb@rb','17211777',1),(95,'rb@rb','17212124',0),(96,'rb@rb','17212750',1),(97,'rb@rb','17213353',1),(98,'yo@yo','17211777',1),(99,'yo@yo','17212124',1),(100,'hi@hi','17211777',1),(101,'hi@hi','17212124',0),(102,'poop@dust','17212124',1),(103,'poop@dust','17212750',0),(104,'poop@dust','17213353',0),(105,'poop@dust','17214159',0),(106,'poop@dust','17214546',1),(107,'poop@dust','16761344',0),(108,'poop@dust','16765367',0),(109,'poop@dust','16768829',0),(110,'poop@dust','16775039',1),(111,'poop@dust','16768829',0),(112,'poop@dust','16775039',1),(113,'poop@dust','16760367',1),(114,'poop@dust','16761344',0),(115,'poop@dust','16765367',0),(116,'poop@dust','16768829',1),(117,'poop@dust','17212124',0),(118,'poop@dust','17212750',1);
 /*!40000 ALTER TABLE `responses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,7 +165,7 @@ CREATE TABLE `restaurants` (
 
 LOCK TABLES `restaurants` WRITE;
 /*!40000 ALTER TABLE `restaurants` DISABLE KEYS */;
-INSERT INTO `restaurants` VALUES ('17211777','Brasilia Grill','99 Monroe Street, Newark 07105','07105',-74,41,'BBQ, Brazilian',3,'https://b.zmtcdn.com/data/res_imagery/17211777_RESTAURANT_2bc8dda52b761d31e0d9827b68013c36_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17212124','Casa Vasca','141 Elm Street, Newark 07105','07105',-74,41,'Spanish',4,'https://b.zmtcdn.com/data/res_imagery/17212124_RESTAURANT_5edeaabddce33edc70926b8d96be405a_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17212750','Don Pepe Restaurant & Caterers','844 McCarter Highway, Newark 07102','07102',-74,41,'Spanish, Portuguese',4,'https://b.zmtcdn.com/data/res_imagery/17212750_RESTAURANT_facabddf113d57174955d0be3d773681_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17213353','Fernandes Steak House','158 Fleming Avenue, Newark 07105','07105',-74,41,'Spanish, Steak, Portuguese',4,'https://b.zmtcdn.com/data/res_imagery/17213353_RESTAURANT_166157ea70a6add20deef7ace38727b4_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17214159','HamburgÃ£o','288 Lafayette Street, Newark 07105','07105',-74,41,'Brazilian, Burger, Fast Food',2,'https://b.zmtcdn.com/data/res_imagery/17214159_RESTAURANT_706a15e4608456430d079856d0d2a52f_c.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17214546','Iberia Peninsula','67 Ferry Street, Newark 07105','07105',-74,41,'Spanish, Portuguese, BBQ',3,'',0,'','3976'),('17216677','Nizi Sushi','28 Central Avenue, Newark 07102','07102',-74,41,'Japanese, Sushi',4,'https://b.zmtcdn.com/data/res_imagery/17216677_RESTAURANT_62f83db969a11f60deefdb36efb00617.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17227325','Mompou Wine & Tapas Bar','77 Ferry Street, Newark 07105','07105',-74,41,'Tapas, Spanish, Portuguese',4,'https://b.zmtcdn.com/data/res_imagery/17227325_RESTAURANT_95b182a19f97a73d1ff823014a803da0_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17227551','Dinosaur Bar-B-Que','224 Market Street, Newark 07102','07102',-74,41,'BBQ',2,'https://b.zmtcdn.com/data/res_imagery/17227551_RESTAURANT_5e8bec65ddf49186594a989cab115425_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976');
+INSERT INTO `restaurants` VALUES ('16760367','Becco','355 W 46th Street, Theater District 10036','10036',-74,41,'Italian',4,'https://b.zmtcdn.com/data/res_imagery/16760367_RESTAURANT_8d0ff25f51f5f31bd4e64085821420a6.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','280'),('16761344','Buddakan','75 9th Avenue, New York 10011','10011',-74,41,'Chinese, Fusion, Asian',4,'https://b.zmtcdn.com/data/res_imagery/16761344_RESTAURANT_09252a25cb35a75a4cb8dde2eef68870.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','280'),('16765367','Eleven Madison Park','11 Madison Avenue, New York 10010','10010',-74,41,'New American',4,'https://b.zmtcdn.com/data/res_imagery/16765367_RESTAURANT_bd2d075a982733fa099b3f00c43e30e1_c.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','280'),('16768829','Jean-Georges','1 Central Park West, New York 10023','10023',-74,41,'American, French',4,'https://b.zmtcdn.com/data/res_imagery/16768829_RESTAURANT_c54a4a57a172204604a8ba6890958802_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','280'),('16775039','Peter Luger Steak House','178 Broadway, Brooklyn 11211','11211',-74,41,'Steak, American, German',4,'https://b.zmtcdn.com/data/res_imagery/16775039_RESTAURANT_18bb213a181da7fe5479eeefe2adfa66.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','280'),('16781875','Ippudo','65 4th Avenue, New York 10003','10003',-74,41,'Ramen',3,'https://b.zmtcdn.com/data/res_imagery/16781875_RESTAURANT_d0f7a0565b23d07be15d3e8326d41066.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','280'),('16781904','Momofuku Noodle Bar','171 1st Avenue, New York 10003','10003',-74,41,'Asian, Ramen',4,'https://b.zmtcdn.com/data/res_imagery/16781904_RESTAURANT_fe3097ac80f3396f383f8ba588bcf832_c.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','280'),('17211777','Brasilia Grill','99 Monroe Street, Newark 07105','07105',-74,41,'BBQ, Brazilian',3,'https://b.zmtcdn.com/data/res_imagery/17211777_RESTAURANT_2bc8dda52b761d31e0d9827b68013c36_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17212124','Casa Vasca','141 Elm Street, Newark 07105','07105',-74,41,'Spanish',4,'https://b.zmtcdn.com/data/res_imagery/17212124_RESTAURANT_5edeaabddce33edc70926b8d96be405a_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17212750','Don Pepe Restaurant & Caterers','844 McCarter Highway, Newark 07102','07102',-74,41,'Spanish, Portuguese',4,'https://b.zmtcdn.com/data/res_imagery/17212750_RESTAURANT_facabddf113d57174955d0be3d773681_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17213353','Fernandes Steak House','158 Fleming Avenue, Newark 07105','07105',-74,41,'Spanish, Steak, Portuguese',4,'https://b.zmtcdn.com/data/res_imagery/17213353_RESTAURANT_166157ea70a6add20deef7ace38727b4_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17214159','HamburgÃ£o','288 Lafayette Street, Newark 07105','07105',-74,41,'Brazilian, Burger, Fast Food',2,'https://b.zmtcdn.com/data/res_imagery/17214159_RESTAURANT_706a15e4608456430d079856d0d2a52f_c.jpg?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17214546','Iberia Peninsula','67 Ferry Street, Newark 07105','07105',-74,41,'Spanish, Portuguese, BBQ',3,'',0,'','3976'),('17216677','Nizi Sushi','28 Central Avenue, Newark 07102','07102',-74,41,'Japanese, Sushi',4,'https://b.zmtcdn.com/data/res_imagery/17216677_RESTAURANT_62f83db969a11f60deefdb36efb00617.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17227325','Mompou Wine & Tapas Bar','77 Ferry Street, Newark 07105','07105',-74,41,'Tapas, Spanish, Portuguese',4,'https://b.zmtcdn.com/data/res_imagery/17227325_RESTAURANT_95b182a19f97a73d1ff823014a803da0_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976'),('17227551','Dinosaur Bar-B-Que','224 Market Street, Newark 07102','07102',-74,41,'BBQ',2,'https://b.zmtcdn.com/data/res_imagery/17227551_RESTAURANT_5e8bec65ddf49186594a989cab115425_c.png?fit=around%7C200%3A200&crop=200%3A200%3B%2A%2C%2A',0,'','3976');
 /*!40000 ALTER TABLE `restaurants` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,7 +185,7 @@ CREATE TABLE `users` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -193,7 +194,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (3,'Jack','Cummings','cummingsJack@email.com','jack123','2017-09-29 03:07:34'),(4,'Khari','Davis','daviskhari@email.com','khari123','2017-09-29 03:31:57'),(5,'john','cummings','jic6@njit.edu','password','2017-10-17 17:40:54');
+INSERT INTO `users` VALUES (1,'admin','admin','admin@admin','$2y$10$DjGkdsEQzXZ36MQkMYZohuuyWEJz3FcyE/Xte2UfN21SE8WMXk1Q2','2017-10-19 06:48:16'),(2,'test','test','test@test','$2y$10$dShUvA.gUNOfGdXQmyj0IenLGPD7RSXTQiiJyahoCSJuygy4Iuh4y','2017-10-19 06:48:34'),(3,'john','cummings','qwer@qwer','$2y$10$h23/.tpvomBnsS5gF3FdzuGxS.qro0azsfUsFkv5uFgpIPewnp4sy','2017-10-19 14:32:43'),(4,'ny','ny','nyny@ny','$2y$10$TZkRY4lJI2YzVXKIERAOrOd9IMKaua9611nB1rqALlIa4CcuA5qQW','2017-10-19 14:38:38'),(5,'DJ','mcsmeller','smelly@smelly','$2y$10$M3a51TNG6Q7vE/w.3QDJJuUMQODUZbH9P/iZPJi72xtf1YydFb3MW','2017-10-19 14:53:20'),(6,'Khari','Davis','kld22@njit.edu','$2y$10$7AT8Fu/UsGwqOzDnQSdIjO14kI8Az3YQ/NFwK4RjbVrgEWZ94gn7K','2017-10-19 14:50:44'),(7,'aah','ahhhhhhh','ah@ah','$2y$10$EOGayU2njsXCZAinl.B9/OSIPIVzA9vZ/aV.tQwwKZ2kHdTIebsl2','2017-10-19 14:52:44'),(8,'khari','davis','khari@k','$2y$10$EUB2iHODuzB0pOae52jnEOWxiXWXqDSKVuf2Ln2n8AE3w0SMi5/ji','2017-10-19 14:55:23'),(9,'xd','xd','xd@xd','$2y$10$.ZoS.T3qYrS7ZejuFoi4keDdxhsAp4ElUZjDPkepEnM4a.LH6xBxe','2017-10-19 14:56:20'),(10,'G','Gg','gg@g','$2y$10$7yDq.3XVjmq6PYH2On5vNe7eAOdo/BKW/zS0Ueod/bWw1A4wnt4i2','2017-10-19 14:59:15'),(11,'Bro','Bro','bro@bro','$2y$10$hpTxuYjxZAVpXKOWrJQEieZZbsll9lp9oPd8mRynX53qb/IHr7SAK','2017-10-19 14:59:42'),(12,'yer','yer','yer@yer','$2y$10$NOU1ZZNJI2MZzKch2YcOtuDkEzTKwBswY7oIczl85eMHXUsCAx5XO','2017-10-19 15:04:16'),(13,'aneesh','aneesh','aneesh@aneesh','$2y$10$.bDLNIsfapvEHPhogJY0DeLVT0Si6OmtQd6aL54WKDF33Y4JRkroW','2017-10-19 15:20:52'),(14,'jo','jo','rb@rb','$2y$10$g4/XLZR/7XOE9qCOwKvxGuanSL9gsMgJgRYNBk9mnfe2EfWbcKAO6','2017-10-24 14:17:40'),(15,'yo','oy','yo@yo','$2y$10$2VOhTT57DP/sDD9rMltuB.UN1l/QWLuXfqf3FIGwU/9mCenJSUfkC','2017-10-24 14:21:01'),(16,'hi','ih','hi@hi','$2y$10$8Rvk5QACFu1SOiWfpFkKB.upPf3/YhBoTKLjyndRzHe3DcefaDHmW','2017-10-24 14:27:34'),(17,'Katy','Dust','poop@dust','$2y$10$9mWaGTWwaiTnAnyaSgjeB.nAJR2lG.3vOh/DQqG70pRV8xIUQNoGu','2017-10-24 14:43:18');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,4 +235,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-17 14:47:45
+-- Dump completed on 2017-11-09 17:57:02
