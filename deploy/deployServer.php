@@ -17,10 +17,25 @@ function doLog($level,$loc,$msg) {
 
 function createVersion($filename, $target, $name) {
     // SCP file from temp on client computer
+    //filename = folder
+    //name = bundle name
+    //target = origin computer
+    
+    //Figure out is bundle exists on deploy
+    //Find version #
+    //Version # is a part of filename
+    //Find latest version
+
+    //If version doesn't exist
+    //Create new version
 }
 
 function deployVersion($name, $version, $target) {
     // SCP bundle to temp folder on client computer and send command to deployClient to run scripts on client computer
+    // If doen't exist send error message
+    // Names of bundles are folders
+    // Get the folder with the name and the version and target is computer (Dev, qa)
+    
 }
 
 function deprecateVersion($name, $version) {
