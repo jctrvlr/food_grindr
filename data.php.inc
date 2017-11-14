@@ -2,11 +2,21 @@
 require_once('rabbitMQLib.inc');
 require_once('logger.inc');
 
+/**
+ * Data class that is defined to get and process information from database that is required on the frontend.
+ * This is also called to store data that is required for the backend.
+ * 
+ * @author John Cummings
+ * @version 0.1.0
+ */
 class dataProc {
     private $datadb;
     private $ent_id;
     private $pref;
 
+    /**
+     * Constructor
+     */
     public function __construct() {
         $this->logindb = new mysqli("127.0.0.1","root","Ireland2018","it490");
 
@@ -23,13 +33,25 @@ class dataProc {
 		}
 		echo "correctly connected to database".PHP_EOL;
     }
-    
+    /**
+     * This method is called from the frontend to retrieve
+     * a list of the top liked restaurants which are then displayed
+     * in a table on the admin page.
+     * 
+     * @return resp - Associated array of restaurant ID, restaurant name, and sum of likes for said restaurant ordered from most likes to least likes.
+     */
     public function adminGetTop() {
         $statement = "SELECT restaurants.res_id, restaurants.name, SUM(responses.liked) AS SUM FROM restaurants INNER JOIN responses ON restaurants.res_id=responses.res_id GROUP BY restaurants.res_id ORDER BY SUM DESC;";
         $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
         return $resp;
     }
-
+    /**
+     * This method is called by the frontend to retrieve the favorites for a specified user. These favorite restaurants
+     * are then parsed, and displayed on the users favorites page.
+     * 
+     * @param user - Username of the user that is provided by the frontend through stored session variables that load when the user logs in
+     * @return ret - Associative array containing favorites for provided user with restaurant name and rating.
+     */
     public function getFavorites($user) {
         $statement = "SELECT responses.user, restaurants.res_id, restaurants.name, restaurants.address, restaurants.longitude, restaurants.latitude, restaurants.cuisine, restaurants.price_range, restaurants.thumbnail, restaurants.online_delivery, restaurants.menu FROM responses INNER JOIN restaurants ON responses.res_id=restaurants.res_id WHERE responses.liked=1 AND responses.user='".$user."' GROUP BY responses.res_id;";
         $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
@@ -53,7 +75,14 @@ class dataProc {
         return $ret;
     }
 
-    
+    /**
+     * This method is used to retrieve one restaurant and return it to the frontend to be displayed on the main page.
+     * 
+     * @param user - Username of the user that is provided by the frontend through stored session variables that are loaded when the user logs in.
+     * @param zip - Zipcode of the user that is provided by the frontend through stored session variables that are loaded when the user logs in. 
+     * @param last - Name of the last restaurant that was returned by this function to the frontend. The frontend provides this by saving the last restaurant name that was returned to it in a session variable. 
+     * @return - Returns json encoded array which contains all of the different information that is stored in the database about the restaurant.
+     */
     public function getRest($user, $zip, $last) {
         if(!isset($last)) {
             // Get zipcode to send to check location
@@ -84,6 +113,12 @@ class dataProc {
         return json_encode($chosen_rest);
     }
 
+    /**
+     * Retrieves entity code for existing location by using zipcode and returns the entity code
+     * 
+     * @param zipcode - zipcode of city
+     * @return entityid - Entity ID of the zipcode that is stored in the database. 
+     */
     private function getEnt($zipcode) {
         $statement = "select * from city where zip=".$zipcode.";";
         $resp = $this->logindb->query($statement);
@@ -91,8 +126,9 @@ class dataProc {
         return $row['entity_id'];
     }
 
-    
-
+    /**
+     * 
+     */
     public function restResp($user, $res_id, $like, $zip, $last) {
         $statement = "insert into responses (user, res_id, liked) values ('".$user."','".$res_id."',".$like.");";
         $response = $this->logindb->query($statement);
