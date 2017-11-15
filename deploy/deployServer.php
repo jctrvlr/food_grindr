@@ -63,7 +63,13 @@ function deprecateVersion($name, $version) {
 }
 
 function rollback($name, $version, $target) {
-    // Rollback 1 version
+    //  Rollback 1 version
+    //  Take the name and version
+    //  Find it and go back one version
+    //  If not found send error
+    //  Go back on version if found 
+    //  SCP to target's temp folder
+    //  Send runScript command to target with rollback version
 }
 
 function requestProcessor($request)
