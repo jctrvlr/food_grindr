@@ -15,9 +15,8 @@ function doLog($level,$loc,$msg) {
   }
 }
 
-function createVersion($filename, $target, $name) {
+function createVersion($target, $name) {
     //  SCP file from temp on client computer
-    //  filename = folder
     //  name = bundle name
     //  target = origin computer
     
@@ -28,6 +27,8 @@ function createVersion($filename, $target, $name) {
 
     //  If version doesn't exist
     //  Create new version
+    //  Ensure that copied correctly
+    //  Return True/False
 }
 function runScript() {
 
