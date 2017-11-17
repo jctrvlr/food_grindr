@@ -15,13 +15,48 @@ function doLog($level,$loc,$msg) {
   }
 }
 
-function createVersion($filename, $target, $name) {
-    // SCP bundle with filename from temp on client computer 
-    // Figure out if name exists already
+function createVersion($target, $name) {
+    //  SCP file from temp on client computer
+    //  name = bundle name
+    //  target = origin computer
+    
+    //  Figure out is bundle exists on deploy
+    //  Find version #
+    //  Version # is a part of filename
+    //  Find latest version
+
+    //  If version doesn't exist
+    //  Create new version
+    //  Ensure that copied correctly
+    //  Return True/False
+}
+function runScript() {
+
 }
 
 function deployVersion($name, $version, $target) {
-    // SCP bundle to temp folder on client computer and send command to deployClient to run scripts on client computer
+    
+    //  SCP bundle to temp folder on client computer and send command to deployClient to run scripts on client computer
+    //  If doen't exist send error message
+    //  Names of bundles are folders
+    //  Get the folder with the name and the version and target is computer (Dev, qa)
+    
+    //  Find the bundle with the name and version
+    //  Use exec
+    //  Copy the bundle from deploy server to temp folder of client
+    //  Send command to deploy client to run the scripts (runScript)
+    //  Make a new client RMQ 
+    
+    /*
+    
+        $client = new rabbitMQClient("rabbitMQData.ini","testServer");
+        $request = array();
+        $request['name'] = $name;
+        $request['version'] = $version;
+        $request['target'] = $target;
+        $response = $client->publish($request);
+
+    */
 }
 
 function deprecateVersion($name, $version) {
@@ -29,7 +64,13 @@ function deprecateVersion($name, $version) {
 }
 
 function rollback($name, $version, $target) {
-    // Rollback 1 version
+    //  Rollback 1 version
+    //  Take the name and version
+    //  Find it and go back one version
+    //  If not found send error
+    //  Go back on version if found 
+    //  SCP to target's temp folder
+    //  Send runScript command to target with rollback version
 }
 
 function requestProcessor($request)
