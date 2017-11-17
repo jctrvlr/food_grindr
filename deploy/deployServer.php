@@ -14,7 +14,7 @@ function doLog($level,$loc,$msg) {
     mail($to, $subj, $msg);
   }
 }
-    
+
     //  name = bundle name
     //  target = origin computer
 function createVersion($target, $name) {
@@ -65,9 +65,6 @@ function createVersion($target, $name) {
     } else {
         return false;
     }
-}
-function runScript() {
-
 }
 
 function deployVersion($name, $version, $target) {
