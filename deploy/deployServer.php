@@ -16,7 +16,8 @@ function doLog($level,$loc,$msg) {
 }
 
 function createVersion($filename, $target, $name) {
-    // SCP file from temp on client computer
+    // SCP bundle with filename from temp on client computer 
+    // Figure out if name exists already
 }
 
 function deployVersion($name, $version, $target) {
@@ -42,7 +43,7 @@ function requestProcessor($request)
   switch ($request['type'])
   {
     case "create_version":
-        return createVersion($request['filename'], $request['target'], $request['name']);
+        return createVersion($request['target'], $request['name']);
     case "deploy_version":
         return deployVersion($request['name'], $request['version'], $request['target']);
     case "deprecate_version":
@@ -50,12 +51,12 @@ function requestProcessor($request)
     case "rollback":
         return rollback($request['name'], $request['version'], $request['target']);
     case "log_event":
-      return doLog($request['level'],$request['loc'],$request['message']);
+        return doLog($request['level'],$request['loc'],$request['message']);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
 
-$server = new rabbitMQServer("testRabbitMQ.ini","testServer");
+$server = new rabbitMQServer("deployRabbit.ini","testServer");
 
 $server->process_requests('requestProcessor');
 exit();
