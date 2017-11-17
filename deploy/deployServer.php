@@ -14,21 +14,57 @@ function doLog($level,$loc,$msg) {
     mail($to, $subj, $msg);
   }
 }
-
-function createVersion($target, $name) {
-    //  SCP file from temp on client computer
+    
     //  name = bundle name
     //  target = origin computer
+function createVersion($target, $name) {
     
-    //  Figure out is bundle exists on deploy
-    //  Find version #
-    //  Version # is a part of filename
-    //  Find latest version
+    $connect = new mysqli("127.0.0.1","root","monkey2017","bundle");
 
-    //  If version doesn't exist
-    //  Create new version
-    //  Ensure that copied correctly
-    //  Return True/False
+    // Find ip of target computer
+    $sql = "select ip from hostname where host = '".$target."';";
+    $response = $connect->query($sql);
+
+    while($row = $response->fetch_assoc())
+    {
+        $ip = $row["ip"];
+    }
+
+    $sql = "select version from version where bundle = '".$name."';";
+    $response = $connect->query($sql);
+       
+    //  Figure out is bundle exists on deploy
+    if ($response->num_rows > 0) 
+    {
+        //  Find version #
+        while($row = $response->fetch_assoc()) 
+        {
+            $version = $row["version"];
+        }
+        
+        $version = $version + 1;
+
+        $sql = "insert into version (bundle, version) values ('".$name."', '".$version."');";
+        $response = $connect->query($sql);
+    } 
+    else 
+    {
+        $version = 1;
+        echo "0 results";
+        $sql = "insert into version (bundle, version) values ('".$name."', '".$version."');";
+        $response = $connect->query($sql);
+    }
+    
+    //  SCP file from temp on client computer
+    $scp = 'scp -rv root@' . $ip . ':/tmp/' . $name . '.bundle /var/bundles/' . $name . '-' . $version;
+    exec($scp, $output, $return);
+    
+    // Return will return non-zero upon an error
+    if (!$return) {
+        return true;
+    } else {
+        return false;
+    }
 }
 function runScript() {
 
@@ -84,7 +120,7 @@ function requestProcessor($request)
   switch ($request['type'])
   {
     case "create_version":
-        return createVersion($request['target'], $request['name']);
+        return createVersion($request['filename'], $request['target'], $request['name']);
     case "deploy_version":
         return deployVersion($request['name'], $request['version'], $request['target']);
     case "deprecate_version":
@@ -92,12 +128,12 @@ function requestProcessor($request)
     case "rollback":
         return rollback($request['name'], $request['version'], $request['target']);
     case "log_event":
-        return doLog($request['level'],$request['loc'],$request['message']);
+      return doLog($request['level'],$request['loc'],$request['message']);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
 
-$server = new rabbitMQServer("deployRabbit.ini","testServer");
+$server = new rabbitMQServer("testRabbitMQ.ini","testServer");
 
 $server->process_requests('requestProcessor');
 exit();
