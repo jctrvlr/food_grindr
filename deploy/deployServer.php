@@ -70,13 +70,56 @@ function createVersion($target, $name) {
 function deployVersion($name, $version, $target) {
     
     //  SCP bundle to temp folder on client computer and send command to deployClient to run scripts on client computer
+    //  scp /var/bundles/bundlename.bundle /tmp/bundlename
+    $connect = new mysqli("127.0.0.1","root","monkey2017","bundle");
+    
+    // Find ip of target computer
+    $sql = "select ip from hostname where host = '".$target."';";
+    $response = $connect->query($sql);
+
+    while($row = $response->fetch_assoc())
+    {
+        $ip = $row["ip"];
+    }
+   
+    //  Does the bundle-version exist?
+    $sql = "select * from version where bundle = '".$name."';";
+    $response = $connect->query($sql);
+    while($row = $response->fetch_assoc())
+    {
+        $ver[] = $row['version'];
+    }
+
+    $currentVersion = max($ver);
+    if($currentVersion == $version)
+    {
+        //  Copy the bundle from deploy server to temp folder of client
+        $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' root@'.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
+        exec($scp, $output, $return);
+        
+        if ($return)
+        {
+            // Send Error
+        }
+    }
+    elseif($currentVersion > $version)
+    {
+        // send error saying that version is out of date 
+    }
+    else
+    {
+        // send error saying that version does not exist
+    }
+
+    
+
     //  If doen't exist send error message
     //  Names of bundles are folders
     //  Get the folder with the name and the version and target is computer (Dev, qa)
     
     //  Find the bundle with the name and version
     //  Use exec
-    //  Copy the bundle from deploy server to temp folder of client
+    
     //  Send command to deploy client to run the scripts (runScript)
     //  Make a new client RMQ 
     
