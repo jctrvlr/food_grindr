@@ -4,6 +4,8 @@ require_once('../path.inc');
 require_once('../get_host_info.inc');
 require_once('../rabbitMQLib.inc');
 
+global $connect = new mysqli("127.0.0.1","root","monkey2017","bundle");
+
 function doLog($level,$loc,$msg) {
   //Decide where to put logs
   file_put_contents('./logs/log_'.date("j.n.Y").'.txt', $msg, FILE_APPEND);
@@ -18,9 +20,6 @@ function doLog($level,$loc,$msg) {
     //  name = bundle name
     //  target = origin computer
 function createVersion($target, $name) {
-    
-    $connect = new mysqli("127.0.0.1","root","monkey2017","bundle");
-
     // Find ip of target computer
     $sql = "select ip from hostname where host = '".$target."';";
     $response = $connect->query($sql);
@@ -39,8 +38,10 @@ function createVersion($target, $name) {
         //  Find version #
         while($row = $response->fetch_assoc()) 
         {
-            $version = $row["version"];
+            $ver[] = $row["version"];
         }
+        
+        $version = max($ver);
         
         $version = $version + 1;
 
@@ -71,8 +72,6 @@ function deployVersion($name, $version, $target) {
     
     //  SCP bundle to temp folder on client computer and send command to deployClient to run scripts on client computer
     //  scp /var/bundles/bundlename.bundle /tmp/bundlename
-    $connect = new mysqli("127.0.0.1","root","monkey2017","bundle");
-    
     // Find ip of target computer
     $sql = "select ip from hostname where host = '".$target."';";
     $response = $connect->query($sql);
@@ -137,6 +136,11 @@ function deployVersion($name, $version, $target) {
 
 function deprecateVersion($name, $version) {
     // move the name/version combination bundle to cold storage?
+    //  Find out if version exists
+    $sql = "select * from version where "
+    //  move bundle to deprecated folder
+    //  add deprecated tag in version db
+    //  return true
 }
 
 function rollback($name, $version, $target) {
