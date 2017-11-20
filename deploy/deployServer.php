@@ -22,21 +22,21 @@ function doLog($level,$loc,$msg) {
 function createVersion($target, $name) {
     // Find ip of target computer
     $sql = "select ip from hostname where host = '".$target."';";
-    $response = $connect->query($sql);
+    $result = $connect->query($sql);
 
-    while($row = $response->fetch_assoc())
+    while($row = $result->fetch_assoc())
     {
         $ip = $row["ip"];
     }
 
     $sql = "select version from version where bundle = '".$name."';";
-    $response = $connect->query($sql);
+    $result = $connect->query($sql);
        
     //  Figure out is bundle exists on deploy
-    if ($response->num_rows > 0) 
+    if ($result->num_rows > 0) 
     {
         //  Find version #
-        while($row = $response->fetch_assoc()) 
+        while($row = $result->fetch_assoc()) 
         {
             $ver[] = $row["version"];
         }
@@ -46,14 +46,14 @@ function createVersion($target, $name) {
         $version = $version + 1;
 
         $sql = "insert into version (bundle, version) values ('".$name."', '".$version."');";
-        $response = $connect->query($sql);
+        $result = $connect->query($sql);
     } 
     else 
     {
         $version = 1;
         echo "0 results";
         $sql = "insert into version (bundle, version) values ('".$name."', '".$version."');";
-        $response = $connect->query($sql);
+        $result = $connect->query($sql);
     }
     
     //  SCP file from temp on client computer
@@ -74,17 +74,17 @@ function deployVersion($name, $version, $target) {
     //  scp /var/bundles/bundlename.bundle /tmp/bundlename
     // Find ip of target computer
     $sql = "select ip from hostname where host = '".$target."';";
-    $response = $connect->query($sql);
+    $result = $connect->query($sql);
 
-    while($row = $response->fetch_assoc())
+    while($row = $result->fetch_assoc())
     {
         $ip = $row["ip"];
     }
    
     //  Does the bundle-version exist?
     $sql = "select * from version where bundle = '".$name."';";
-    $response = $connect->query($sql);
-    while($row = $response->fetch_assoc())
+    $result = $connect->query($sql);
+    while($row = $result->fetch_assoc())
     {
         $ver[] = $row['version'];
     }
@@ -99,6 +99,7 @@ function deployVersion($name, $version, $target) {
         if ($return)
         {
             // Send Error
+            return "false";
         }
     }
     elseif($currentVersion > $version)
@@ -137,7 +138,25 @@ function deployVersion($name, $version, $target) {
 function deprecateVersion($name, $version) {
     // move the name/version combination bundle to cold storage?
     //  Find out if version exists
-    $sql = "select * from version where "
+    $sql = "select * from version where bundle = '".$name."' and version = '".$version."';";
+    $result = $connect->query($sql);
+
+    if ($result->numt_rows > 0)
+    {
+        
+        $sql = "update version set deprecated = 'Yes' where bundle = '".$name."' and version = '".$version."';";
+        $connect->query($sql);
+
+        $mv = 'sudo mv -f /var/bundles/'.$name.'.bundle /var/deprecated/'.$name.'.bundle';
+        exec($scp, $output, $return);
+
+        if (!$return) {
+            return true;
+        } else {
+            return false;
+        }
+
+
     //  move bundle to deprecated folder
     //  add deprecated tag in version db
     //  return true
