@@ -6,7 +6,8 @@ require_once('../rabbitMQLib.inc');
 
 global $connect = new mysqli("127.0.0.1","root","monkey2017","bundle");
 
-function doLog($level,$loc,$msg) {
+function doLog($level,$loc,$msg) 
+{
   //Decide where to put logs
   file_put_contents('./logs/log_'.date("j.n.Y").'.txt', $msg, FILE_APPEND);
   //If ERROR send to ADMINS
@@ -17,10 +18,10 @@ function doLog($level,$loc,$msg) {
   }
 }
 
-    //  name = bundle name
-    //  target = origin computer
-function createVersion($target, $name) {
-    // Find ip of target computer
+    
+function createVersion($target, $name) 
+{
+    // find ip of target computer
     $sql = "select ip from hostname where host = '".$target."';";
     $result = $connect->query($sql);
 
@@ -32,26 +33,31 @@ function createVersion($target, $name) {
     $sql = "select version from version where bundle = '".$name."';";
     $result = $connect->query($sql);
        
-    //  Figure out is bundle exists on deploy
+    //  figure out is bundle exists on deploy
     if ($result->num_rows > 0) 
     {
-        //  Find version #
+        //  find version #
         while($row = $result->fetch_assoc()) 
         {
             $ver[] = $row["version"];
         }
         
+        //  finding the latest version which is the maximum version 
         $version = max($ver);
         
+        //  creating the next version
         $version = $version + 1;
 
+        //  log version in db
         $sql = "insert into version (bundle, version) values ('".$name."', '".$version."');";
         $result = $connect->query($sql);
     } 
     else 
     {
+        //  creating first version
         $version = 1;
-        echo "0 results";
+
+        //  log version in db
         $sql = "insert into version (bundle, version) values ('".$name."', '".$version."');";
         $result = $connect->query($sql);
     }
@@ -68,10 +74,8 @@ function createVersion($target, $name) {
     }
 }
 
-function deployVersion($name, $version, $target) {
-    
-    //  SCP bundle to temp folder on client computer and send command to deployClient to run scripts on client computer
-    //  scp /var/bundles/bundlename.bundle /tmp/bundlename
+function deployVersion($name, $version, $target) 
+{
     // Find ip of target computer
     $sql = "select ip from hostname where host = '".$target."';";
     $result = $connect->query($sql);
@@ -82,15 +86,10 @@ function deployVersion($name, $version, $target) {
     }
    
     //  Does the bundle-version exist?
-    $sql = "select * from version where bundle = '".$name."';";
+    $sql = "select * from version where bundle = '".$name."' and version = '".$version."';";
     $result = $connect->query($sql);
-    while($row = $result->fetch_assoc())
-    {
-        $ver[] = $row['version'];
-    }
-
-    $currentVersion = max($ver);
-    if($currentVersion == $version)
+    
+    if ($result->num_rows > 0)
     {
         //  Copy the bundle from deploy server to temp folder of client
         $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' root@'.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
@@ -99,30 +98,15 @@ function deployVersion($name, $version, $target) {
         if ($return)
         {
             // Send Error
-            return "false";
+            return false;
         }
-    }
-    elseif($currentVersion > $version)
-    {
-        // send error saying that version is out of date 
     }
     else
     {
         // send error saying that version does not exist
+        return false;
     }
-
-    
-
-    //  If doen't exist send error message
-    //  Names of bundles are folders
-    //  Get the folder with the name and the version and target is computer (Dev, qa)
-    
-    //  Find the bundle with the name and version
-    //  Use exec
-    
-    //  Send command to deploy client to run the scripts (runScript)
-    //  Make a new client RMQ 
-    
+    //  Make a new client RMQ  
     /*
     
         $client = new rabbitMQClient("rabbitMQData.ini","testServer");
@@ -135,35 +119,37 @@ function deployVersion($name, $version, $target) {
     */
 }
 
-function deprecateVersion($name, $version) {
-    // move the name/version combination bundle to cold storage?
+function deprecateVersion($name, $version) 
+{
+    //  move the name-version bundle to cold storage (deprecated folder)
+    
     //  Find out if version exists
     $sql = "select * from version where bundle = '".$name."' and version = '".$version."';";
     $result = $connect->query($sql);
 
     if ($result->num_rows > 0)
     {
-        
+        //  enable deprecated flag
         $sql = "update version set deprecated = 'Yes' where bundle = '".$name."' and version = '".$version."';";
         $connect->query($sql);
 
+        //  move from bundles to deprecated folder
         $mv = 'sudo mv -f /var/bundles/'.$name.'.bundle /var/deprecated/'.$name.'.bundle';
         exec($scp, $output, $return);
 
-        if (!$return) {
+        if (!$return)
+        {
             return true;
-        } else {
+        } 
+        else 
+        {
             return false;
         }
-    //  move bundle to deprecated folder
-    //  add deprecated tag in version db
-    //  return true
 }
 
 function rollback($name, $version, $target) {
     //  Rollback 1 version
-    //  Take the name and version
-    //  If version = 1 send error
+    //  check if version 1
     if ($version == 1)
     {
         return false;
@@ -171,7 +157,6 @@ function rollback($name, $version, $target) {
     else 
     {
         // find out if version exists
-
         $sql = "select * from version where bundle = '".$name."' and version = '".$version."';";
         $result = $connect->query($sql);
 
@@ -186,7 +171,10 @@ function rollback($name, $version, $target) {
                 $ip = $row["ip"];
             }
             
+            //  using previous version
             $version = $version - 1;
+
+            //  moving to tmp
             $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' root@'.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
             exec($scp, $output, $return);
 
@@ -197,11 +185,6 @@ function rollback($name, $version, $target) {
             }
         }
     }
-    //  Find it and go back one version
-    //  If not found send error
-    //  Go back on version if found 
-    //  SCP to target's temp folder
-    //  Send runScript command to target with rollback version
 }
 
 function requestProcessor($request)
