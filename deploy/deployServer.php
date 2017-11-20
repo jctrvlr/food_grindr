@@ -141,7 +141,7 @@ function deprecateVersion($name, $version) {
     $sql = "select * from version where bundle = '".$name."' and version = '".$version."';";
     $result = $connect->query($sql);
 
-    if ($result->numt_rows > 0)
+    if ($result->num_rows > 0)
     {
         
         $sql = "update version set deprecated = 'Yes' where bundle = '".$name."' and version = '".$version."';";
@@ -155,8 +155,6 @@ function deprecateVersion($name, $version) {
         } else {
             return false;
         }
-
-
     //  move bundle to deprecated folder
     //  add deprecated tag in version db
     //  return true
@@ -165,6 +163,40 @@ function deprecateVersion($name, $version) {
 function rollback($name, $version, $target) {
     //  Rollback 1 version
     //  Take the name and version
+    //  If version = 1 send error
+    if ($version == 1)
+    {
+        return false;
+    }
+    else 
+    {
+        // find out if version exists
+
+        $sql = "select * from version where bundle = '".$name."' and version = '".$version."';";
+        $result = $connect->query($sql);
+
+        if ($result->num_rows > 0)
+        {
+            //find ip of client
+            $sql = "select ip from hostname where host = '".$target."';";
+            $result = $connect->query($sql);
+        
+            while($row = $result->fetch_assoc())
+            {
+                $ip = $row["ip"];
+            }
+            
+            $version = $version - 1;
+            $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' root@'.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
+            exec($scp, $output, $return);
+
+            if ($return)
+            {
+                // Send Error
+                return "false";
+            }
+        }
+    }
     //  Find it and go back one version
     //  If not found send error
     //  Go back on version if found 
