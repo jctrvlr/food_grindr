@@ -26,7 +26,7 @@ function runScript($v, $n, $target) {
             break;
         }
         case("dmz"): {
-            $date = date('m/d/Y h:i:s a', time());
+            $date = date('mdYhisa', time());
             exec("sudo cp -r /tmp/".$fname."/ /var/git/");
             exec("sudo nohup php /var/git/".$fname."/php_backend/rabbitMQServerBackend.php >> /var/log/".$date.".log &");
             echo "Successfully deployed dmz files.";
