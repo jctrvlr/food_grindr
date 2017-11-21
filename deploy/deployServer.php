@@ -4,14 +4,15 @@ require_once('../path.inc');
 require_once('../get_host_info.inc');
 require_once('../rabbitMQLib.inc');
 
-global $connect = new mysqli("127.0.0.1","root","monkey2017","bundle");
+$connect = new mysqli("127.0.0.1","root","monkey2017","bundle");
 
 function doLog($level,$loc,$msg) 
 {
   //Decide where to put logs
   file_put_contents('./logs/log_'.date("j.n.Y").'.txt', $msg, FILE_APPEND);
   //If ERROR send to ADMINS
-  if($level === 'ERROR') {
+  if($level === 'ERROR') 
+  {
     $to = 'jic6@njit.edu,kn96@njit.edu,kld22@njit.edu,ga68@njit.edu';
     $subj = "ERROR - ".$loc;
     mail($to, $subj, $msg);
