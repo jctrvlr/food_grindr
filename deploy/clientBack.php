@@ -6,8 +6,8 @@ require_once('../rabbitMQLib.inc');
 
 function runScript($v, $n, $target) {
     $fname = $n."-".$v;
-    list($type, $location) = split('[/.-]', $target);
-    switch($type) {
+    $key = preg_split('[/.-]', $target);
+    switch($key[1]) {
         case("fe"): {
             exec("sudo cp -r /tmp/".$fname."/ /var/git/");
             exec("sudo ln -sf /var/git/".$fname." /var/www/html/");
