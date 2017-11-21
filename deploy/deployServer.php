@@ -22,6 +22,7 @@ function doLog($level,$loc,$msg)
     
 function createVersion($target, $name) 
 {
+    global $connect;
     // find ip of target computer
     $sql = "select ip from hostname where host = '".$target."';";
     $result = $connect->query($sql);
@@ -77,6 +78,7 @@ function createVersion($target, $name)
 
 function deployVersion($name, $version, $target) 
 {
+    global $connect;
     // Find ip of target computer
     $sql = "select ip from hostname where host = '".$target."';";
     $result = $connect->query($sql);
@@ -122,6 +124,7 @@ function deployVersion($name, $version, $target)
 
 function deprecateVersion($name, $version) 
 {
+    global $connect;
     //  move the name-version bundle to cold storage (deprecated folder)
     
     //  Find out if version exists
@@ -149,7 +152,9 @@ function deprecateVersion($name, $version)
 }
 }
 
-function rollback($name, $version, $target) {
+function rollback($name, $version, $target) 
+{
+    global $connect;
     //  Rollback 1 version
     //  check if version 1
     if ($version == 1)
