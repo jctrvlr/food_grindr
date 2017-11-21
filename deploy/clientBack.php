@@ -16,7 +16,7 @@ function runScript($v, $n, $target) {
             break;
         }
         case("be"): {
-            $date = date('m/d/Y h:i:s a', time());
+            $date = date('m-d-Y-h:i:s-a', time());
             exec("sudo cp -r /tmp/".$fname."/ /var/git/");
             exec("sudo nohup php /var/git/".$fname."/rabbitMQServer.php >> /var/logs/".$date." &");
             exec("sudo nohup php /var/git/".$fname."/rabbitMQServerData.php >> /var/logs/".$date." &");
