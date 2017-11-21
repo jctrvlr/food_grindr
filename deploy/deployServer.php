@@ -121,9 +121,9 @@ function deployVersion($name, $version, $target)
     }
     $client = new rabbitMQClient("deployClient.ini","testServer");
     $req=array();
-    $req['type'] = "create_version";
+    $req['type'] = "run_script";
     $req['name'] = $name;
-    $req['ver'] = $ver;
+    $req['ver'] = $verison;
     $req['target'] = $target;
     $response = $client->send_request($req);
 
@@ -204,9 +204,9 @@ function rollback($name, $version, $target)
             }
             $client = new rabbitMQClient("deployClient.ini","testServer");
             $req=array();
-            $req['type'] = "create_version";
+            $req['type'] = "run_script";
             $req['name'] = $name;
-            $req['ver'] = $ver;
+            $req['ver'] = $version;
             $req['target'] = $target;
             $response = $client->send_request($req);
         }
