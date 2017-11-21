@@ -147,6 +147,7 @@ function deprecateVersion($name, $version)
             return false;
         }
 }
+}
 
 function rollback($name, $version, $target) {
     //  Rollback 1 version
