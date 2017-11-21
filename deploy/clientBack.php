@@ -6,7 +6,7 @@ require_once('../rabbitMQLib.inc');
 
 function runScript($v, $n, $target) {
     $fname = $n."-".$v;
-    $key = preg_split('[/.-]', $target);
+    $key = preg_split('[-]', $target);
     var_dump($key);
     switch($key[1]) {
         case("fe"): {
