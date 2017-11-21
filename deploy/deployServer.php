@@ -123,7 +123,7 @@ function deployVersion($name, $version, $target)
     $req=array();
     $req['type'] = "run_script";
     $req['name'] = $name;
-    $req['ver'] = $verison;
+    $req['ver'] = $version;
     $req['target'] = $target;
     $response = $client->send_request($req);
 
