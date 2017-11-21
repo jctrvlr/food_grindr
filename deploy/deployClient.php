@@ -56,7 +56,7 @@ function create($args) {
     if(strpos($tar, "be") !== false) {
         exec("sudo mysqldump -u root -pIreland2018 it490 > it490.sql");
     }
-    exec("sudo cp -r ".$cwd." /tmp/".$genname);
+    exec("sudo cp -r ../".$cwd." /tmp/".$genname);
     $client = new rabbitMQClient("deployRabbit.ini","testServer");
     $req=array();
     $req['type'] = "create_version";
