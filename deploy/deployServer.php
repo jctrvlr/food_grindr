@@ -118,7 +118,7 @@ function deployVersion($name, $version, $target)
         return false;
         echo "version does not exist";
     }
-    $client = new rabbitMQClient("deployRabbit.ini","testServer");
+    $client = new rabbitMQClient("deployClient.ini","testServer");
     $req=array();
     $req['type'] = "create_version";
     $req['name'] = $name;
@@ -201,6 +201,13 @@ function rollback($name, $version, $target)
                 // Send Error
                 return "false";
             }
+            $client = new rabbitMQClient("deployClient.ini","testServer");
+            $req=array();
+            $req['type'] = "create_version";
+            $req['name'] = $name;
+            $req['ver'] = $ver;
+            $req['target'] = $target;
+            $response = $client->send_request($req);
         }
     }
     echo "rolling back";
