@@ -22,6 +22,7 @@ function doLog($level,$loc,$msg)
     
 function createVersion($target, $name) 
 {
+    echo "Creating version";
     global $connect;
     // find ip of target computer
     $sql = "select ip from hostname where host = '".$target."';";
@@ -67,6 +68,9 @@ function createVersion($target, $name)
     //  SCP file from temp on client computer
     $scp = 'scp -rv dj@' . $ip . ':/tmp/' . $name . '.bundle /var/bundles/' . $name . '-' . $version;
     exec($scp, $output, $return);
+
+    echo "SCP engaged";
+
     echo $return;
     // Return will return non-zero upon an error
     if ($return) {
@@ -74,10 +78,12 @@ function createVersion($target, $name)
     } else {
         return false;
     }
+    echo "Created version";
 }
 
 function deployVersion($name, $version, $target) 
 {
+    echo "Deploying version";
     global $connect;
     // Find ip of target computer
     $sql = "select ip from hostname where host = '".$target."';";
@@ -97,6 +103,8 @@ function deployVersion($name, $version, $target)
         //  Copy the bundle from deploy server to temp folder of client
         $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' dj@'.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
         exec($scp, $output, $return);
+
+        echo "SCP engaged.";
         
         if ($return)
         {
@@ -108,6 +116,7 @@ function deployVersion($name, $version, $target)
     {
         // send error saying that version does not exist
         return false;
+        echo "version does not exist";
     }
     $client = new rabbitMQClient("deployRabbit.ini","testServer");
     $req=array();
@@ -116,10 +125,13 @@ function deployVersion($name, $version, $target)
     $req['ver'] = $ver;
     $req['target'] = $target;
     $response = $client->send_request($req);
+
+    echo "deployed version";
 }
 
 function deprecateVersion($name, $version) 
 {
+    echo "deprecating version";
     global $connect;
     //  move the name-version bundle to cold storage (deprecated folder)
     
@@ -145,11 +157,13 @@ function deprecateVersion($name, $version)
         {
             return false;
         }
-}
+    }
+    echo "deprecated version";
 }
 
 function rollback($name, $version, $target) 
 {
+    echo "rolling back";
     global $connect;
     //  Rollback 1 version
     //  check if version 1
@@ -180,6 +194,7 @@ function rollback($name, $version, $target)
             //  moving to tmp
             $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' dj@'.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
             exec($scp, $output, $return);
+            echo "SCP engaging";
 
             if ($return)
             {
@@ -188,6 +203,7 @@ function rollback($name, $version, $target)
             }
         }
     }
+    echo "rolling back";
 }
 
 function requestProcessor($request)
