@@ -69,7 +69,7 @@ function createVersion($target, $name)
     exec($scp, $output, $return);
     echo $return;
     // Return will return non-zero upon an error
-    if (!$return) {
+    if ($return) {
         return true;
     } else {
         return false;
