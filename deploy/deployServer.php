@@ -22,6 +22,7 @@ function doLog($level,$loc,$msg)
     
 function createVersion($target, $name) 
 {
+    global $connect;
     // find ip of target computer
     $sql = "select ip from hostname where host = '".$target."';";
     $result = $connect->query($sql);
@@ -64,7 +65,7 @@ function createVersion($target, $name)
     }
     
     //  SCP file from temp on client computer
-    $scp = 'scp -rv root@' . $ip . ':/tmp/' . $name . '.bundle /var/bundles/' . $name . '-' . $version;
+    $scp = 'scp -rv ' . $ip . ':/tmp/' . $name . '.bundle /var/bundles/' . $name . '-' . $version;
     exec($scp, $output, $return);
     
     // Return will return non-zero upon an error
@@ -77,6 +78,7 @@ function createVersion($target, $name)
 
 function deployVersion($name, $version, $target) 
 {
+    global $connect;
     // Find ip of target computer
     $sql = "select ip from hostname where host = '".$target."';";
     $result = $connect->query($sql);
@@ -93,7 +95,7 @@ function deployVersion($name, $version, $target)
     if ($result->num_rows > 0)
     {
         //  Copy the bundle from deploy server to temp folder of client
-        $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' root@'.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
+        $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' '.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
         exec($scp, $output, $return);
         
         if ($return)
@@ -122,6 +124,7 @@ function deployVersion($name, $version, $target)
 
 function deprecateVersion($name, $version) 
 {
+    global $connect;
     //  move the name-version bundle to cold storage (deprecated folder)
     
     //  Find out if version exists
@@ -149,7 +152,9 @@ function deprecateVersion($name, $version)
 }
 }
 
-function rollback($name, $version, $target) {
+function rollback($name, $version, $target) 
+{
+    global $connect;
     //  Rollback 1 version
     //  check if version 1
     if ($version == 1)
@@ -200,7 +205,7 @@ function requestProcessor($request)
   switch ($request['type'])
   {
     case "create_version":
-        return createVersion($request['filename'], $request['target'], $request['name']);
+        return createVersion($request['target'], $request['name']);
     case "deploy_version":
         return deployVersion($request['name'], $request['version'], $request['target']);
     case "deprecate_version":
