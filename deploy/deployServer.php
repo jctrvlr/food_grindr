@@ -67,13 +67,14 @@ function createVersion($target, $name)
     
     //  SCP file from temp on client computer
     $scp = 'scp -rv dj@' . $ip . ':/tmp/' . $name . '.bundle /var/bundles/' . $name . '-' . $version;
+    echo "SCP engaged".PHP_EOL;
     exec($scp, $output, $return);
-
-    echo "SCP engaged";
+    echo "SCP finished".PHP_EOL;
+    
 
     echo $return;
     // Return will return non-zero upon an error
-    if ($return) {
+    if (!$return) {
         return true;
     } else {
         return false;
