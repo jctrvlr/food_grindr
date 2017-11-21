@@ -14,7 +14,7 @@ function runScript($v, $n, $target) {
     switch($key[1]) {
         case("fe"): {
             exec("sudo cp -r /tmp/".$fname."/ /var/git/");
-            exec("sudo ln -sf /var/git/".$fname." /var/www/html/");
+            exec("sudo ln -sf /var/git/".$fname."/html* /var/www/html/");
             echo "Successfully deployed front-end files.";
             break;
         }
