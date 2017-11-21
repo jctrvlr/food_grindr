@@ -109,17 +109,13 @@ function deployVersion($name, $version, $target)
         // send error saying that version does not exist
         return false;
     }
-    //  Make a new client RMQ  
-    /*
-    
-        $client = new rabbitMQClient("rabbitMQData.ini","testServer");
-        $request = array();
-        $request['name'] = $name;
-        $request['version'] = $version;
-        $request['target'] = $target;
-        $response = $client->publish($request);
-
-    */
+    $client = new rabbitMQClient("deployRabbit.ini","testServer");
+    $req=array();
+    $req['type'] = "create_version";
+    $req['name'] = $name;
+    $req['ver'] = $ver;
+    $req['target'] = $target;
+    $response = $client->send_request($req);
 }
 
 function deprecateVersion($name, $version) 

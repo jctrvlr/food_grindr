@@ -74,7 +74,6 @@ function deploy($args) {
     $name = $args[1];
     $version = $args[2];
     $target = $args[3];
-    $fname = $name."-".$version;
 
     $client = new rabbitMQClient("deployRabbit.ini","testServer");
     $req=array();
@@ -84,7 +83,8 @@ function deploy($args) {
 	$req['target'] = $target;
     $response = $client->send_request($req);
     if($response) {
-        runScript($target, $fname);
+        echo "Deployed.";
+        //runScript($target, $fname);
     }
 }
 
@@ -116,7 +116,8 @@ function rollback($args) {
 	$req['target'] = $target;
     $response = $client->send_request($req);
     if($response) {
-        runScript($target, $fname);
+        echo "rollbacked";
+        //runScript($target, $fname);
     }
 }
 
