@@ -102,7 +102,7 @@ function deployVersion($name, $version, $target)
     if ($result->num_rows > 0)
     {
         //  Copy the bundle from deploy server to temp folder of client
-        $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' dj@'.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
+        $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' dj@'.$ip.':/tmp/'.$name.'-'.$version;
         exec($scp, $output, $return);
 
         echo "SCP engaged.".PHP_EOL;
@@ -194,7 +194,7 @@ function rollback($name, $version, $target)
             $version = $version - 1;
 
             //  moving to tmp
-            $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' dj@'.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
+            $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' dj@'.$ip.':/tmp/'.$name.'-'.$version;
             exec($scp, $output, $return);
             echo "SCP engaging".PHP_EOL;
 
