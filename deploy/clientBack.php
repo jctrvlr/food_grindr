@@ -16,11 +16,11 @@ function runScript($v, $n, $target) {
             break;
         }
         case("be"): {
-            $date = date('m-d-Y-h:i:s-a', time());
+            $date = date('mdYhisa', time());
             exec("sudo cp -r /tmp/".$fname."/ /var/git/");
-            exec("sudo nohup php /var/git/".$fname."/rabbitMQServer.php >> /var/logs/".$date." &");
-            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerData.php >> /var/logs/".$date." &");
-            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerReview.php >> /var/logs/".$date." &");
+            exec("sudo nohup php /var/git/".$fname."/rabbitMQServer.php >> /var/logs/".$date.".log &");
+            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerData.php >> /var/logs/".$date.".log &");
+            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerReview.php >> /var/logs/".$date.".log &");
             exec("sudo mysql -u root -pIreland2018 it490 < it490.sql >> /var/logs/".$date." &");
             echo "Successfully deployed back-end files.";
             break;
@@ -28,7 +28,7 @@ function runScript($v, $n, $target) {
         case("dmz"): {
             $date = date('m/d/Y h:i:s a', time());
             exec("sudo cp -r /tmp/".$fname."/ /var/git/");
-            exec("sudo nohup php /var/git/".$fname."/php_backend/rabbitMQServerBackend.php >> /var/logs/".$date." &");
+            exec("sudo nohup php /var/git/".$fname."/php_backend/rabbitMQServerBackend.php >> /var/logs/".$date.".log &");
             echo "Successfully deployed dmz files.";
             break;
         }
