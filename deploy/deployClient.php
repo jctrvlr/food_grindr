@@ -64,6 +64,7 @@ function create($args) {
     $req['name'] = $name;
 	$req['target'] = $tar;
     $response = $client->send_request($req);
+    var_dump($response);
     if($response) {
         echo "Package ".$name." has been saved for deployment.";
     }
