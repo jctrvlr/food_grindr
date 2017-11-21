@@ -5,6 +5,9 @@ require_once('../get_host_info.inc');
 require_once('../rabbitMQLib.inc');
 
 function runScript($v, $n, $target) {
+    if($target !== gethostname()) {
+        return;
+    }
     $fname = $n."-".$v;
     $key = preg_split('[-]', $target);
     var_dump($key);
