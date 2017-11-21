@@ -65,7 +65,7 @@ function createVersion($target, $name)
     }
     
     //  SCP file from temp on client computer
-    $scp = 'scp -rv ' . $ip . ':/tmp/' . $name . '.bundle /var/bundles/' . $name . '-' . $version;
+    $scp = 'scp -rv @dj' . $ip . ':/tmp/' . $name . '.bundle /var/bundles/' . $name . '-' . $version;
     exec($scp, $output, $return);
     
     // Return will return non-zero upon an error
@@ -95,7 +95,7 @@ function deployVersion($name, $version, $target)
     if ($result->num_rows > 0)
     {
         //  Copy the bundle from deploy server to temp folder of client
-        $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' '.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
+        $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' dj@'.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
         exec($scp, $output, $return);
         
         if ($return)
@@ -182,7 +182,7 @@ function rollback($name, $version, $target)
             $version = $version - 1;
 
             //  moving to tmp
-            $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' root@'.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
+            $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' dj@'.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
             exec($scp, $output, $return);
 
             if ($return)
