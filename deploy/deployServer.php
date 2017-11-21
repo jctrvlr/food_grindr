@@ -200,7 +200,7 @@ function requestProcessor($request)
   switch ($request['type'])
   {
     case "create_version":
-        return createVersion($request['filename'], $request['target'], $request['name']);
+        return createVersion($request['target'], $request['name']);
     case "deploy_version":
         return deployVersion($request['name'], $request['version'], $request['target']);
     case "deprecate_version":
