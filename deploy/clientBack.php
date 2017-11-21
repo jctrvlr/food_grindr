@@ -24,7 +24,7 @@ function runScript($v, $n, $target) {
             exec("sudo nohup php /var/git/".$fname."/rabbitMQServer.php >> /var/log/".$date.".log &");
             exec("sudo nohup php /var/git/".$fname."/rabbitMQServerData.php >> /var/log/".$date.".log &");
             exec("sudo nohup php /var/git/".$fname."/rabbitMQServerReview.php >> /var/log/".$date.".log &");
-            exec("sudo mysql -u root -pIreland2018 it490 < it490.sql >> /var/logs/".$date." &");
+            exec("sudo mysql -u root -pIreland2018 it490 < /var/git/".$fname."/it490.sql >> /var/logs/".$date." &");
             echo "Successfully deployed back-end files.";
             break;
         }
