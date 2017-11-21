@@ -13,22 +13,28 @@ function runScript($v, $n, $target) {
             exec("sudo cp -r /tmp/".$fname."/ /var/git/");
             exec("sudo ln -sf /var/git/".$fname." /var/www/html/");
             echo "Successfully deployed front-end files.";
+            break;
         }
         case("be"): {
+            $date = date('m/d/Y h:i:s a', time());
             exec("sudo cp -r /tmp/".$fname."/ /var/git/");
-            exec("sudo nohup php /var/git/".$fname."/rabbitMQServer.php >> /dev/null &");
-            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerData.php >> /dev/null &");
-            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerReview.php >> /dev/null &");
-            exec("sudo mysql -u root -pIreland2018 it490 < it490.sql >> /dev/null &");
+            exec("sudo nohup php /var/git/".$fname."/rabbitMQServer.php >> /var/logs/".$date." &");
+            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerData.php >> /var/logs/".$date." &");
+            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerReview.php >> /var/logs/".$date." &");
+            exec("sudo mysql -u root -pIreland2018 it490 < it490.sql >> /var/logs/".$date." &");
             echo "Successfully deployed back-end files.";
+            break;
         }
         case("dmz"): {
+            $date = date('m/d/Y h:i:s a', time());
             exec("sudo cp -r /tmp/".$fname."/ /var/git/");
-            exec("sudo nohup php /var/git/".$fname."/php_backend/rabbitMQServerBackend.php >> /dev/null &");
+            exec("sudo nohup php /var/git/".$fname."/php_backend/rabbitMQServerBackend.php >> /var/logs/".$date." &");
             echo "Successfully deployed dmz files.";
+            break;
         }
         default: {
             echo "Error invalid type";
+            break;
         }
     }
     // run script. depnding on target type
