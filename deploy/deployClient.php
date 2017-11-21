@@ -51,12 +51,13 @@ switch($args[0]) {
 function create($args) {
     $name = $args[1];
     $cwd = getcwd();
+    $cwd = str_replace("/deploy", "", $cwd);
     $tar = gethostname();
     $genname = $name . ".bundle";
     if(strpos($tar, "be") !== false) {
         exec("sudo mysqldump -u root -pIreland2018 it490 > it490.sql");
     }
-    exec("sudo cp -r ..".$cwd." /tmp/".$genname);
+    exec("sudo cp -r ".$cwd." /tmp/".$genname);
     $client = new rabbitMQClient("deployRabbit.ini","testServer");
     $req=array();
     $req['type'] = "create_version";
