@@ -106,8 +106,16 @@ function deployVersion($name, $version, $target)
         exec($scp, $output, $return);
 
         echo "SCP engaged.".PHP_EOL;
+
+        $client = new rabbitMQClient("deployClient.ini","testServer");
+        $req=array();
+        $req['type'] = "run_script";
+        $req['name'] = $name;
+        $req['ver'] = $version;
+        $req['target'] = $target;
+        $response = $client->send_request($req);
         
-        if ($return)
+        if(!$return)
         {
             // Send Error
             return false;
@@ -119,13 +127,6 @@ function deployVersion($name, $version, $target)
         return false;
         echo "version does not exist".PHP_EOL;
     }
-    $client = new rabbitMQClient("deployClient.ini","testServer");
-    $req=array();
-    $req['type'] = "run_script";
-    $req['name'] = $name;
-    $req['ver'] = $version;
-    $req['target'] = $target;
-    $response = $client->send_request($req);
 
     echo "deployed version".PHP_EOL;
 }
