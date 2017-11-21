@@ -51,14 +51,17 @@ switch($args[0]) {
 function create($args) {
     $name = $args[1];
     $cwd = getcwd();
+    $tar = gethostname();
     $genname = $name . ".bundle";
-    exec("sudo mysqldump -u root -pIreland2018 it490 > it490.sql");
+    if(strpos($tar, "be") !== false) {
+        exec("sudo mysqldump -u root -pIreland2018 it490 > it490.sql");
+    }
     exec("sudo cp -r ".$cwd." /tmp/".$genname);
     $client = new rabbitMQClient("deployRabbit.ini","testServer");
     $req=array();
     $req['type'] = "create_version";
     $req['name'] = $name;
-	$req['target'] = gethostname();
+	$req['target'] = $tar;
     $response = $client->send_request($req);
     if($response) {
         echo "Package ".$name." has been saved for deployment.";
