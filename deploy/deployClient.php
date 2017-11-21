@@ -52,7 +52,8 @@ function create($args) {
     $name = $args[1];
     $cwd = getcwd();
     $genname = $name . ".bundle";
-    exec("cp -r ".$cwd." /tmp/".$genname);
+    exec("sudo mysqldump -u root -pIreland2018 it490 > it490.sql");
+    exec("sudo cp -r ".$cwd." /tmp/".$genname);
     $client = new rabbitMQClient("deployRabbit.ini","testServer");
     $req=array();
     $req['type'] = "create_version";
@@ -120,21 +121,23 @@ function runScript($target, $n) {
         case("fe"): {
             exec("sudo cp -r /tmp/".$n."/ /var/git/");
             exec("sudo ln -sf /var/git/".$n." /var/www/html/");
+            echo "Successfully deployed front-end files.";
         }
         case("be"): {
             exec("sudo cp -r /tmp/".$n."/ /var/git/");
             exec("sudo nohup php /var/git/".$n."/rabbitMQServer.php");
             exec("sudo nohup php /var/git/".$n."/rabbitMQServerData.php");
             exec("sudo nohup php /var/git/".$n."/rabbitMQServerReview.php");
-
-
+            exec("sudo mysql -u root -pIreland2018 it490 < it490.sql");
+            echo "Successfully deployed back-end files.";
         }
         case("dmz"): {
             exec("sudo cp -r /tmp/".$n."/ /var/git/");
             exec("sudo nohup php /var/git/".$n."/php_backend/rabbitMQServerBackend.php");
+            echo "Successfully deployed dmz files.";
         }
         default: {
-
+            echo "Error invalid type";
         }
     }
     // run script. depnding on target type
