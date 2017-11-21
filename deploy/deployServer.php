@@ -4,7 +4,7 @@ require_once('../path.inc');
 require_once('../get_host_info.inc');
 require_once('../rabbitMQLib.inc');
 
-$connect = new mysqli("127.0.0.1","root","monkey2017","bundle");
+$connect = new mysqli("127.0.0.1","root","monkey2017","deploy");
 
 function doLog($level,$loc,$msg) 
 {
@@ -213,7 +213,7 @@ function requestProcessor($request)
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
 
-$server = new rabbitMQServer("deployRabbitMQ.ini","testServer");
+$server = new rabbitMQServer("deployRabbit.ini","testServer");
 
 $server->process_requests('requestProcessor');
 exit();
