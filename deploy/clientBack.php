@@ -16,15 +16,15 @@ function runScript($v, $n, $target) {
         }
         case("be"): {
             exec("sudo cp -r /tmp/".$fname."/ /var/git/");
-            exec("sudo nohup php /var/git/".$fname."/rabbitMQServer.php");
-            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerData.php");
-            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerReview.php");
-            exec("sudo mysql -u root -pIreland2018 it490 < it490.sql");
+            exec("sudo nohup php /var/git/".$fname."/rabbitMQServer.php >> /dev/null &");
+            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerData.php >> /dev/null &");
+            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerReview.php >> /dev/null &");
+            exec("sudo mysql -u root -pIreland2018 it490 < it490.sql >> /dev/null &");
             echo "Successfully deployed back-end files.";
         }
         case("dmz"): {
             exec("sudo cp -r /tmp/".$fname."/ /var/git/");
-            exec("sudo nohup php /var/git/".$fname."/php_backend/rabbitMQServerBackend.php");
+            exec("sudo nohup php /var/git/".$fname."/php_backend/rabbitMQServerBackend.php >> /dev/null &");
             echo "Successfully deployed dmz files.";
         }
         default: {
