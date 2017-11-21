@@ -79,12 +79,12 @@ function createVersion($target, $name)
     } else {
         return false;
     }
-    echo "Created version";
+    echo "Created version".PHP_EOL;
 }
 
 function deployVersion($name, $version, $target) 
 {
-    echo "Deploying version";
+    echo "Deploying version".PHP_EOL;
     global $connect;
     // Find ip of target computer
     $sql = "select ip from hostname where host = '".$target."';";
@@ -105,7 +105,7 @@ function deployVersion($name, $version, $target)
         $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' dj@'.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
         exec($scp, $output, $return);
 
-        echo "SCP engaged.";
+        echo "SCP engaged.".PHP_EOL;
         
         if ($return)
         {
@@ -117,7 +117,7 @@ function deployVersion($name, $version, $target)
     {
         // send error saying that version does not exist
         return false;
-        echo "version does not exist";
+        echo "version does not exist".PHP_EOL;
     }
     $client = new rabbitMQClient("deployClient.ini","testServer");
     $req=array();
@@ -127,12 +127,12 @@ function deployVersion($name, $version, $target)
     $req['target'] = $target;
     $response = $client->send_request($req);
 
-    echo "deployed version";
+    echo "deployed version".PHP_EOL;
 }
 
 function deprecateVersion($name, $version) 
 {
-    echo "deprecating version";
+    echo "deprecating version".PHP_EOL;
     global $connect;
     //  move the name-version bundle to cold storage (deprecated folder)
     
@@ -159,12 +159,12 @@ function deprecateVersion($name, $version)
             return false;
         }
     }
-    echo "deprecated version";
+    echo "deprecated version".PHP_EOL;
 }
 
 function rollback($name, $version, $target) 
 {
-    echo "rolling back";
+    echo "rolling back".PHP_EOL;
     global $connect;
     //  Rollback 1 version
     //  check if version 1
@@ -195,7 +195,7 @@ function rollback($name, $version, $target)
             //  moving to tmp
             $scp = 'scp -rv /var/bundles/'.$name.'-'.$version . ' dj@'.$ip.':/tmp/'.$name.'-'.$version.'.bundle';
             exec($scp, $output, $return);
-            echo "SCP engaging";
+            echo "SCP engaging".PHP_EOL;
 
             if ($return)
             {
@@ -211,7 +211,7 @@ function rollback($name, $version, $target)
             $response = $client->send_request($req);
         }
     }
-    echo "rolling back";
+    echo "rolling back".PHP_EOL;
 }
 
 function requestProcessor($request)
