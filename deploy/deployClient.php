@@ -39,7 +39,7 @@ switch($args[0]) {
     }
     case("help"): {
         $helpmess = "To create a new bundle type './deployClient.php create <name>'";
-        echo 
+        echo $helpmess;
         break;
     }
     default: {
