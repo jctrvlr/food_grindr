@@ -2,7 +2,7 @@
 <?php
 require_once('../path.inc');
 require_once('../get_host_info.inc');
-require_once('../rabbitMQLib.inc');
+require_once('rabbitMQLib.inc');
 
 /** PHP arguments - 
 *   Command type, 
@@ -119,35 +119,6 @@ function rollback($args) {
         echo "rollbacked";
         //runScript($target, $fname);
     }
-}
-
-function runScript($target, $n) {
-    list($type, $location) = split('[/.-]', $target);
-    switch($type) {
-        case("fe"): {
-            exec("sudo cp -r /tmp/".$n."/ /var/git/");
-            exec("sudo ln -sf /var/git/".$n." /var/www/html/");
-            echo "Successfully deployed front-end files.";
-        }
-        case("be"): {
-            exec("sudo cp -r /tmp/".$n."/ /var/git/");
-            exec("sudo nohup php /var/git/".$n."/rabbitMQServer.php");
-            exec("sudo nohup php /var/git/".$n."/rabbitMQServerData.php");
-            exec("sudo nohup php /var/git/".$n."/rabbitMQServerReview.php");
-            exec("sudo mysql -u root -pIreland2018 it490 < it490.sql");
-            echo "Successfully deployed back-end files.";
-        }
-        case("dmz"): {
-            exec("sudo cp -r /tmp/".$n."/ /var/git/");
-            exec("sudo nohup php /var/git/".$n."/php_backend/rabbitMQServerBackend.php");
-            echo "Successfully deployed dmz files.";
-        }
-        default: {
-            echo "Error invalid type";
-        }
-    }
-    // run script. depnding on target type
-    // if backend, frontend, dmz
 }
 
 function parseArgs($argv){

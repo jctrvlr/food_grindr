@@ -2,7 +2,7 @@
 <?php
 require_once('../path.inc');
 require_once('../get_host_info.inc');
-require_once('../rabbitMQLib.inc');
+require_once('rabbitMQLib.inc');
 
 $connect = new mysqli("127.0.0.1","root","monkey2017","deploy");
 
@@ -107,7 +107,7 @@ function deployVersion($name, $version, $target)
 
         echo "SCP engaged.".PHP_EOL;
 
-        $client = new rabbitMQClient("deployClient.ini","testServer");
+        $client = new rabbitMQClient("deployRabbit.ini","testServer");
         $req=array();
         $req['type'] = "run_script";
         $req['name'] = $name;
@@ -203,7 +203,7 @@ function rollback($name, $version, $target)
                 // Send Error
                 return "false";
             }
-            $client = new rabbitMQClient("deployClient.ini","testServer");
+            $client = new rabbitMQClient("deployRabbit.ini","testServer");
             $req=array();
             $req['type'] = "run_script";
             $req['name'] = $name;

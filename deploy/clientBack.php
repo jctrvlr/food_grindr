@@ -2,7 +2,7 @@
 <?php
 require_once('../path.inc');
 require_once('../get_host_info.inc');
-require_once('../rabbitMQLib.inc');
+require_once('rabbitMQLib.inc');
 
 function runScript($v, $n, $target) {
     if($target !== gethostname()) {
@@ -21,17 +21,17 @@ function runScript($v, $n, $target) {
         case("be"): {
             $date = date('mdYhisa', time());
             exec("sudo cp -r /tmp/".$fname."/ /var/git/");
-            exec("sudo nohup php /var/git/".$fname."/rabbitMQServer.php >> /var/log/".$date.".log &");
-            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerData.php >> /var/log/".$date.".log &");
-            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerReview.php >> /var/log/".$date.".log &");
-            exec("sudo mysql -u root -pIreland2018 it490 < /var/git/".$fname."/it490.sql >> /var/logs/".$date." &");
+            exec("sudo nohup php /var/git/".$fname."/rabbitMQServer.php > /var/log/".$date.".log &");
+            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerData.php > /var/log/".$date.".log &");
+            exec("sudo nohup php /var/git/".$fname."/rabbitMQServerReview.php > /var/log/".$date.".log &");
+            exec("sudo mysql -u root -pIreland2018 it490 < /var/git/".$fname."/it490.sql > /var/logs/".$date." &");
             echo "Successfully deployed back-end files.";
             break;
         }
         case("dmz"): {
             $date = date('mdYhisa', time());
             exec("sudo cp -r /tmp/".$fname."/ /var/git/");
-            exec("sudo nohup php /var/git/".$fname."/php_backend/rabbitMQServerBackend.php >> /var/log/".$date.".log &");
+            exec("sudo nohup php /var/git/".$fname."/php_backend/rabbitMQServerBackend.php > /var/log/".$date.".log &");
             echo "Successfully deployed dmz files.";
             break;
         }
