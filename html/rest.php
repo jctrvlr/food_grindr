@@ -37,9 +37,9 @@ switch ($request["type"])
 		$req['l_name'] = $request['l_name'];
 		$req['email'] = $request['email'];
 		if($request['pass'] !== "*******") {
-			$req['password']=$request['pass'];
+			$req['pass']=$request['pass'];
 		} else {
-			$req['password']=NULL;
+			$req['pass']=NULL;
 		}
 		$response = $client->send_request($req);
 		break;
