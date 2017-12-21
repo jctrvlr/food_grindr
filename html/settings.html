@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 
 <html>
-
     <meta charset="utf-8"/>
-
-
-    <script src="settings.js"></script>
-
     <head>
             <link rel="stylesheet" type="text/css" href="css/main.css">
     </head>
+    
+    <style type="text/css">
+    label{
+        display:inline-block;
+        width:100px;
+    }
+    </style>
 
-    <body onload="poopValues();" >
+    <body onload="getUserInfo()" >
 
     <div class="wrapper">
     <div class="wrapper_container">
@@ -22,15 +24,26 @@
             <div class="left-nav">
                
                <a href="main.html"><i class="fa fa-dashboard"></i>Dashboard</a>
-                <a href="#"><i class="fa fa-favorites"></i>Favorites</a>
+                <a href="favorites.html"><i class="fa fa-favorites"></i>Favorites</a>
                 <a href="settings.html"><i class="fa fa-settings"></i>Settings</a>
-                <a href="#"><i class="fa fa-about"></i>About</a>
+                <a href="about.html"><i class="fa fa-about"></i>About</a>
+                <a href="#" onclick="logout()"><i class="fa fa-about"></i>Logout</a>
                
             </div>
         </div>
-       <div class="site-wrapper_top-bar">
-            <a href="#" id="toggle"><i class="fa fa-bars"></i></a>
-        </div>
+        <div class="site-wrapper_top-bar">
+            <ul id="menu-header-menu-left" class="nav navbar-nav navbar-left">
+               <li id="submenu">
+                <a href="#" id="toggle"><img src="bellwhite.png" alt="bell"></a>  
+                  <ul class="dropdown-menu">
+                     <li><a href="">BLEACHING</a></li>
+                     <li><a href="">BONE GRAFT</a></li>
+                     <li><a href="">CHILDREN DENTISTRY</a></li>
+                     <li><a href="">CLEANING</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
         
             <!-- inner content -->
             <div class="row">
@@ -41,14 +54,19 @@
                         <p id="name"></p>
                         </div>
                         <div class="user-item_info">
+                            <span id="alert"></span>
                         <!--<p id="name"></p>-->
-                        <p id="rating"></p>
-                        <p id="address"></p>
-                        <p id="phone"></p>
-                        <p id="price"></p>
-                        <p id="cuisine"></p>
-                        <p id="hours"></p>
-                        <p id="delivery">Yes</p>
+                        <label>Zipcode</label>
+                        <input id="zip" /><br>
+                        <label>First Name</label>
+                        <input id="f_name" /><br>
+                        <label>Last Name</label>
+                        <input id="l_name" /><br>
+                        <label>Password</label>
+                        <input type="password"id="password" /><br><br>
+                        <div style="text-align:center">
+                        <button type="button" onclick="updateInfo()">Submit</button>
+                        </div>
                         </div>
                         </div>
                     </div>
@@ -61,7 +79,73 @@
     </div>
     </div>
     </body>
-    <script>
-        poopValues();
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function getUserInfo() {
+            $.ajax({
+                url: 'login.php',
+                data: {
+                    type: 'get_settings',
+                },
+                type: 'post',
+                success: function (output) {
+                    handleUserInfo(output);
+                }
+            });
+        }
+        
+        function handleUserInfo(res) {
+            var json = JSON.parse(res);
+            document.getElementById("zip").setAttribute("value", json.zipcode);
+            document.getElementById("f_name").setAttribute("value", json.f_name);
+            document.getElementById("l_name").setAttribute("value", json.l_name);
+            document.getElementById("password").setAttribute("value", "********");
+        }
+        
+        function handleUpdateInfo(res) {
+            var json = JSON.parse(res);
+            console.log(json);
+            if(json) {
+                document.getElementById("alert").innerHTML="Settings changed successfully!";
+            } else {
+                document.getElementById("alert").innerHTML = "There was a problem. Please try again.";
+            }
+        }
+        function updateInfo() {
+            var zip = document.getElementById("zip").value;
+            var fn = document.getElementById("f_name").value;
+            var ln = document.getElementById("l_name").value;
+            var pw = document.getElementById("password").value;
+            $.ajax({
+                url: 'login.php',
+                data: {
+                    type: 'update_info',
+                    zip: zip,
+                    f_name: fn,
+                    l_name: ln,
+                    pass: pw
+                },
+                type: 'post',
+                success: function (output) {
+                    handleUpdateInfo(output);
+                }
+            });
+        }
+         // Logout functions
+        function handleLogout() {
+            window.location.replace("login.html");
+        }
+        function logout() {
+            $.ajax({
+                url: 'rest.php',
+                data: {
+                    type: 'logout',
+                },
+                type: 'post',
+                success: function () {
+                    handleLogout();
+                }
+            });
+        }
     </script>
 </html>

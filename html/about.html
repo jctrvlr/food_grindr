@@ -25,17 +25,49 @@
                 <a href="favorites.html"><i class="fa fa-favorites"></i>Favorites</a>
                 <a href="settings.html"><i class="fa fa-settings"></i>Settings</a>
                 <a href="about.html"><i class="fa fa-about"></i>About</a>
+                <a href="login.html" onclick="logout()"><i class="fa fa-about"></i>Logout</a>
                
             </div>
         </div>
        <div class="site-wrapper_top-bar">
-            <a href="#" id="toggle"><i class="fa fa-bars"></i></a>
-        </div>
+            <ul id="menu-header-menu-left" class="nav navbar-nav navbar-left">
+               <li id="submenu">
+                <a href="#" id="toggle"><img src="bellwhite.png" alt="bell"></a>  
+                  <ul class="dropdown-menu">
+                     <li><a href="">BLEACHING</a></li>
+                     <li><a href="">BONE GRAFT</a></li>
+                     <li><a href="">CHILDREN DENTISTRY</a></li>
+                     <li><a href="">CLEANING</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
         
             <!-- inner content -->
 
                 <div class="col-2">
                     <div class="chat">
+                        <h1>Food Grindr</h1>
+
+                            <p class="tab">Food Grindr is a web appliction that gathers location of user, and outputs nearby restaurants' information such as name, location, type of cuisine, hours of operation, phone number, and if it delivers. The user also has the option of reviewing the restaurant and to see other user's ratings. It uses the Zomato API and pull info from there.
+                            </p>
+                            
+                            <h2>Team Members</h2>
+
+                            <p><i><b>John Cummings </i></b><br></p>
+                            <p class="tab">Email: jic6@njit.edu</p>
+                        
+                            <p><i><b>Khari Davis-Fletcher</i></b><br></p>
+                            <p class="tab">Email: kld22@njit.edu</p>
+                                
+                            <p><i><b>Katy Nyby </i></b><br></p> 
+                            <p class="tab">Email: kn96@njit.edu</p>
+                            
+                            <p><i><b>Gary Avendano </i></b><br></p>
+                            <p class="tab">Email: ga68@njit.edu</p>
+                        
+                            <p><i><b>Joe Palella </i></b><br></p>
+                            <p class="tab">Email: jp465@njit.edu </p>
                         
                         </div>
                         </div>
@@ -51,5 +83,22 @@
     </body>
     <script>
         poopValues();
+        
+        // Logout functions
+        function handleLogout(){
+            window.location.replace("login.html");
+        }
+        function logout() {
+            $.ajax({
+                url: 'rest.php',
+                data: {
+                    type: 'logout',
+                },
+                type: 'post',
+                success: function () {
+                    handleLogout();
+                }
+            });
+        }
     </script>
 </html>

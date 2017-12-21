@@ -11,7 +11,7 @@
             <link rel="stylesheet" type="text/css" href="css/main.css">
     </head>
 
-    <body onload="poopValues();" >
+    <body onload="submitGetRes()" >
 
     <div class="wrapper">
     <div class="wrapper_container">
@@ -20,41 +20,49 @@
         <div class="site-wrapper_left-col">
             <a href="#" class="logo">Food Grindr</a>
             <div class="left-nav">
-               
-               <a href="main.html"><i class="fa fa-dashboard"></i>Dashboard</a>
+                <a href="main.html"><i class="fa fa-dashboard"></i>Dashboard</a>
                 <a href="favorites.html"><i class="fa fa-favorites"></i>Favorites</a>
                 <a href="settings.html"><i class="fa fa-settings"></i>Settings</a>
                 <a href="about.html"><i class="fa fa-about"></i>About</a>
-               
+                <a href="#" onclick="logout()"><i class="fa fa-about"></i>Logout</a>
             </div>
         </div>
        <div class="site-wrapper_top-bar">
-            <a href="#" id="toggle"><i class="fa fa-bars"></i></a>
-        </div>
+          <ul id="menu-header-menu-left" class="nav navbar-nav navbar-left">
+             <li id="submenu">
+              <a href="#" id="toggle"><img src="bellwhite.png" alt="bell"></a>  
+                <ul class="dropdown-menu">
+                   <li><a href="">BLEACHING</a></li>
+                   <li><a href="">BONE GRAFT</a></li>
+                   <li><a href="">CHILDREN DENTISTRY</a></li>
+                   <li><a href="">CLEANING</a></li>
+                </ul>
+             </li>
+          </ul>
+       </div>
         
             <!-- inner content -->
             <div class="row">
                 <div class="col-1">
-                <div class="user-item">
-                    <div class="user-item_photo">
-                    <img src="http://www.clker.com/cliparts/Q/3/D/I/L/u/knife-and-fork-clipart-hi.png" alt="myphoto" />
+                    <div class="user-item">
+                        <div class="user-item_photo">
+                            <img id="res_photo" src="http://www.clker.com/cliparts/Q/3/D/I/L/u/knife-and-fork-clipart-hi.png" alt="myphoto" />
+                        </div>
+                        <div class="user-item_info">
+                            <p id="name" class="name">Katy's Kitchen</p>
+                            <p class="sub" id="cuisine">Front-End developer</p>
+                            <div class="controls">
+                                <img src="heart.PNG" onClick="submitResp(1)" />
+                                <img src="unlike.PNG" onClick="submitResp(0)" />
+                                
+                                <!--
+                                <a href="#"><i class="fa fa-camera"></i></a>
+                                <a href="#"><i class="fa fa-pencil"></i></a>
+                                -->
+            
+                            </div>
+                        </div>
                     </div>
-                    <div class="user-item_info">
-                    <p id="name" class="name">Katy's Kitchen</p>
-                    <p class="sub">Front-End developer</p>
-                    <div class="controls">
-                    
-                        <img src="unlike.png"/>
-                        <img src="heart.png"/>
-                        
-                        <!--
-                        <a href="#"><i class="fa fa-camera"></i></a>
-                        <a href="#"><i class="fa fa-pencil"></i></a>
-                        -->
-                        
-                    </div>
-                    </div>
-                </div>
                 </div>
                 <div class="col-2">
                     <div class="chat">
@@ -62,16 +70,15 @@
                         <p id="name"></p>
                         </div>
                         <div class="user-item_info">
-                        <!--<p id="name"></p>-->
-                        <p id="rating"></p>
-                        <p id="address"></p>
-                        <p id="phone"></p>
-                        <p id="price"></p>
-                        <p id="cuisine"></p>
-                        <p id="hours"></p>
-                        <p id="delivery">Yes</p>
+                            <!--<p id="name"></p>-->
+                            <p id="rating"></p>
+                            <p id="address"></p>
+                            <p id="phone"></p>
+                            <p id="price"></p>
+                            <p id="hours"></p>
+                            <p id="delivery"></p>
                         </div>
-                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -82,7 +89,78 @@
     </div>
     </div>
     </body>
-    <script>
-        poopValues();
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        var rest;
+        function submitGetRes() {
+            sendGetResRequest();
+            return 0;
+        }
+        function HandleGetResResponse(response) {
+            console.log('Inside handleRequest: ' + response);
+            rest = JSON.parse(response);
+            var json = JSON.parse(rest);
+            console.debug(json);
+            document.getElementById("name").innerHTML=json.name;
+            document.getElementById("address").innerHTML="Address: " + json.address;
+            document.getElementById("price").innerHTML="Price Range: " + json.price_range;
+            document.getElementById("cuisine").innerHTML=json.cuisine;
+            if(json.thumbnail) {
+                document.getElementById("res_photo").setAttribute("src", json.thumbnail);
+            } else {
+                document.getElementById("res_photo").setAttribute("src", "http://www.clker.com/cliparts/Q/3/D/I/L/u/knife-and-fork-clipart-hi.png");
+            }
+        }
+        function submitResp(like) {
+            var obj = JSON.parse(rest);
+            var res_id = obj.res_id;
+            console.log(rest);
+            console.debug(obj);
+            console.log(obj["res_id"]);
+            sendRespRequest(res_id, like);
+        }
+        function sendRespRequest(res_id, like) {
+            $.ajax({
+                url: 'rest.php',
+                data: {
+                    type: 'rest_response',
+                    res_id: res_id,
+                    like: like,
+                },
+                type: 'post',
+                success: function (output) {
+                    HandleGetResResponse(output);
+                }
+            })
+        }
+        function sendGetResRequest() {
+            console.log('Inside sendRequest');
+            $.ajax({
+                url: 'rest.php',
+                data: {
+                    type: 'get_res',
+                },
+                type: 'post',
+                success: function (output) {
+                    HandleGetResResponse(output);
+                }
+            });
+        }
+        // Logout functions
+        function handleLogout(){
+            window.location.replace("login.html");
+        }
+        function logout() {
+            $.ajax({
+                url: 'rest.php',
+                data: {
+                    type: 'logout',
+                },
+                type: 'post',
+                success: function () {
+                    handleLogout();
+                }
+            });
+        }
     </script>
 </html>
