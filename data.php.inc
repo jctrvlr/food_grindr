@@ -85,20 +85,20 @@ class dataProc {
         return $resp;
     }
     public function getRestUsers($restid) {
-        $statement = "SELECT users.id, users.f_name, users.l_name, users.email FROM responses INNER JOIN users ON responses.user = users.email WHERE responses.res_id = "+$restid+";";
+        $statement = "SELECT users.id, users.f_name, users.l_name, users.email FROM responses INNER JOIN users ON responses.user = users.email WHERE responses.res_id = ".$restid.";";
         echo $statement.PHP_EOL;
         $resp = mysqli_fetch_all($this->datadb->query($statement), MYSQLI_ASSOC);
         return $resp;
     }
     public function deleteUser($userid) {
-        $statement = "DELETE FROM users WHERE `id` = "+$userid+";";
+        $statement = "DELETE FROM users WHERE `id` = ".$userid.";";
         $resp = $this->datadb->query($statement);
         if($resp) {
             return true;
         }
     }
     public function lockUser($userid) {
-        $statement = "UPDATE users SET `lock` = 1 WHERE `id`="+$userid+";";
+        $statement = "UPDATE users SET `lock` = 1 WHERE `id`=".$userid.";";
         $resp = $this->datadb->query($statement);
         echo "locking user ".$userid.PHP_EOL;
         echo $resp.PHP_EOL;
@@ -107,7 +107,7 @@ class dataProc {
         }
     }
     public function unlockUser($userid) {
-        $statement = "UPDATE users SET `lock` = 0 WHERE `id`="+$userid+";";
+        $statement = "UPDATE users SET `lock` = 0 WHERE `id`=".$userid.";";
         $resp = $this->datadb->query($statement);
         echo $resp.PHP_EOL;
         if($resp) {
