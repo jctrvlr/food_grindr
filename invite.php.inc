@@ -109,7 +109,7 @@ class inviteProc {
         }
     }
     private function checkUser($recip) {
-        $statement = "SELECT * FROM users WHERE email = '"+$recip+"';";
+        $statement = "SELECT * FROM users WHERE email = '".$recip."';";
         $response = mysqli_fetch_all($this->db->query($statement), MYSQLI_ASSOC);
         if(mysqli_num_rows($response) == 0) {
             return false;
