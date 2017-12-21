@@ -80,7 +80,7 @@ function getData() {
 }
 
 function updateInfo($em, $fn, $ln, $pw) {
-  $data = new datadb();
+  $data = new dataProc();
   $output = $data->updateInfo($em, $fn, $ln, $pw);
   return $output;
 }
