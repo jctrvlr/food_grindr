@@ -127,7 +127,7 @@ tr:nth-child(even) {
     var json = JSON.parse(res);
     for (var i = 0; i < json.length; i++) {
       var js = json[i];
-      document.getElementById("hehe").innerHTML += "<tr><td class='text-center'>"+ js.id+"</td><td class='text-center'>"+js.f_name+" "+l_name+"</td><td class='text-center'>"+js.email+"</td></tr>";
+      document.getElementById("hehe").innerHTML += "<tr><td class='text-center'>"+ js.id+"</td><td class='text-center'>"+js.f_name+" "+js.l_name+"</td><td class='text-center'>"+js.email+"</td></tr>";
     }
   }
 
