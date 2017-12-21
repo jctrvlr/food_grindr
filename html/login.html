@@ -59,7 +59,7 @@ function HandleLoginResponse(response)
     console.log("resp: " + response);
     var text = JSON.parse(response);
     if(text === "adminyes") {
-        window.location.replace("admin.html");
+        window.location.replace("adcontrol.html");
     } else {
         if(text) {
             console.log("resp: " + response);
