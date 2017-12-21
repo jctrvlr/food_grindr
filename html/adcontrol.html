@@ -136,10 +136,11 @@
     var json = JSON.parse(res);
     for (var i = 0; i < json.length; i++) {
       var js = json[i];
-      document.getElementById("hehe").innerHTML += "<tr><td contenteditable='false' id='"+js.user_id+"-userid' class='text - center'>"+ js.user_id+"</td><td contenteditable='true' id='"+ js.user_id +"-f_name' class='text - center'>"+js.f_name+"</td><td contenteditable='true' id='"+ js.user_id +"-l_name' class='text - center'>"+js.l_name+"</td><td contenteditable='true' id='"+ js.user_id +"-email' class='text - center'>"+js.email+"</td><td contenteditable='true' id='"+ js.user_id +"-pass' class='text - center'>*******</td><td><div class='btn-group' style='width:100%'><button type='button' style='width:22%' class='btn btn-success' onClick='updateInfo("+js.user_id+")'>Edit</button><button type='button' style='width:28%' class='btn btn-danger' onClick='deleteUser("+js.user_id+")>Delete</button><button type='button' style='width:22%' class='btn btn-warning' onClick='lockUser("+js.user_id+")'>Lock</button><button type='button' style='width:28%' class='btn btn-primary' onClick='unlockUser(" + js.user_id +")'>Unlock</button></div></td ></tr>";
+      console.log(js);
+      document.getElementById("hehe").innerHTML += "<tr><td contenteditable='false' id='"+js.user_id+"-userid' class='text - center'>"+ js.user_id+"</td><td contenteditable='true' id='"+ js.user_id +"-f_name' class='text - center'>"+js.f_name+"</td><td contenteditable='true' id='"+ js.user_id +"-l_name' class='text - center'>"+js.l_name+"</td><td contenteditable='true' id='"+ js.user_id +"-email' class='text - center'>"+js.email+"</td><td contenteditable='true' id='"+ js.user_id +"-pass' class='text - center'>*******</td><td><div class='btn-group' style='width:100%'><button type='button' style='width:22%' class='btn btn-success' onClick='updateInfo("+js.user_id+")'>Edit</button><button type='button' style='width:28%' class='btn btn-danger' onClick='deleteUser("+js.user_id+")'>Delete</button><button type='button' style='width:22%' class='btn btn-warning' onClick='lockUser("+js.user_id+")'>Lock</button><button type='button' style='width:28%' class='btn btn-primary' onClick='unlockUser(" + js.user_id +")'>Unlock</button></div></td ></tr>";
     }
   }
-  
+
   function handleUpdateInfo(res) {
     var json = JSON.parse(res);
     console.log(json);

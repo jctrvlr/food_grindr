@@ -25,7 +25,7 @@ tr:nth-child(even) {
 }
 </style>
 </head>
-<body onload="getData()">
+<body onload="getRestUsers()">
 
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
         <div class="container">
@@ -121,7 +121,7 @@ tr:nth-child(even) {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
-  function handleGetData(res) {
+  function handleGetRestData(res) {
     var json = JSON.parse(res);
     for (var i = 0; i < json.length; i++) {
       var js = json[i];
@@ -129,15 +129,18 @@ tr:nth-child(even) {
     }
   }
 
-  function getData() {
+  function getRestData() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var rest = urlParams.get('rest');
     $.ajax({
       url: 'rest.php',
       data: {
-        type: 'get_data',
+        type: 'get_rest_users',
+        rest_id: rest
       },
       type: 'post',
       success: function (output) {
-        handleGetData(output);
+        handleGetRestData(output);
       }
     });
   }
