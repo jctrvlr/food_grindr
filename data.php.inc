@@ -86,7 +86,7 @@ class dataProc {
     }
     public function getRestUsers($restid) {
         $statement = "SELECT users.id, users.f_name, users.l_name, users.email FROM responses INNER JOIN users ON responses.user = users.email WHERE responses.res_id = "+$restid+";";
-        //echo $statement.PHP_EOL;
+        echo $statement.PHP_EOL;
         $resp = mysqli_fetch_all($this->datadb->query($statement), MYSQLI_ASSOC);
         return $resp;
     }
