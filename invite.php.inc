@@ -77,12 +77,7 @@ class inviteProc {
     public function getNotif($user) {
         $statement = "SELECT * FROM notif WHERE usr_email = '".$user."';";
         $response = mysqli_fetch_all($this->db->query($statement), MYSQLI_ASSOC);
-        if(mysqli_num_rows($response) == 0) {
-            // no Notifications
-            return false;
-        } else {
-            return $response;
-        }
+        return $response;
     }
     public function updateNotif($notif_id, $status) {
         $statement = "UPDATE notif SET notif_status = '".$status."' WHERE notif_id = '".$notif_id."';";
