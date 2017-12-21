@@ -27,7 +27,6 @@
                             <i class="fa fa-about"></i>Logout</a>
                     </div>
                 </div>
-<<<<<<< HEAD
               <!--Notification Bar-->
                 <div class="site-wrapper_top-bar">
                   <ul id="menu-header-menu-left" class="nav navbar-nav navbar-left">
@@ -42,13 +41,6 @@
                      </li>
                   </ul>
                </div>
-=======
-                <div class="site-wrapper_top-bar">
-                    <a href="#" id="toggle">
-                        <i class="fa fa-bars"></i>
-                    </a>
-                </div>
->>>>>>> dade92f156ff2c9e15746068a3d1b0fb559877db
                 <!-- inner content -->
                 <div class="col-7" id="rest">
 
@@ -77,10 +69,7 @@
             }
         });
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> dade92f156ff2c9e15746068a3d1b0fb559877db
     function handleGetFavorites(res) {
         json = JSON.parse(res);
         for (var i = 0; i < json.length; i++) {
@@ -92,7 +81,6 @@
                 res.thumbnail = "http://www.clker.com/cliparts/Q/3/D/I/L/u/knife-and-fork-clipart-hi.png";
             }
             
-<<<<<<< HEAD
             document.getElementById("rest").innerHTML += "<div class='row'><div class='col-1'><div class='user-item'><div class='user-item_photo'><img id='res_photo' src='"+res.thumbnail+"' alt='myphoto' /></div><div class='user-item_info'><p id='name' class='name'>"+res.name+"</p><p class='sub' id='cuisine'>"+res.cuisine+"</p></div></div></div ><div class='col - 2'><div class='chat'><div class='user-item_info'><p id='rating'>Rating: "+rating+"</p><p id='address'>Address: "+res.address+"</p><p id='price'>Price: "+res.price_range+"</p></div><link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'><h1> Send a review:</h1><div class='product-review-stars'><input type='radio' id='star5' name='rating' value='5' class='visuallyhidden' onclick='submitReview(5, " + res.res_id +")' /><label for='star5' title='Pretty damn good'>?</label><input type='radio' id='star4' name='rating' value='4' class='visuallyhidden' onclick='submitReview(4, " + res.res_id +")' /><label for='star4' title='Pretty good'>?</label><input type='radio' id='star3' name='rating' value='3' class='visuallyhidden' onclick='submitReview(3, " + res.res_id +")' /><label for='star3' title='Okay'>?</label><input type='radio' id='star2' name='rating' value='2' class='visuallyhidden' onclick='submitReview(2, " + res.res_id +")' /><label for='star2' title='Kinda bad'>?</label><input type='radio' id='star1' name='rating' value='1' class='visuallyhidden' onclick='submitReview(1, "+res.res_id+")' /><label for='star1' title='Really bad'>?</label></div></div></div>";
         }
         res = JSON.parse
@@ -101,20 +89,6 @@
     function handleReview(output){
         console.log('review submitted');
     }
-=======
-            document.getElementById("rest").innerHTML += "<div class='row'><div class='col-1'><div class='user-item'><div class='user-item_photo'><img id='res_photo' src='"+res.thumbnail+"' alt='myphoto' /></div><div class='user-item_info'><p id='name' class='name'>"+res.name+"</p><p class='sub' id='cuisine'>"+res.cuisine+"</p></div></div></div ><div class='col - 2'><div class='chat'><div class='user-item_info'><p id='rating'>Rating: "+rating+"</p><p id='address'>Address: "+res.address+"</p><p id='price'>Price: "+res.price_range+"</p></div><link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'><h1> Send a review:</h1><div class='product-review-stars'><input type='radio' id='star5' name='rating' value='5' class='visuallyhidden' onclick='submitReview(5, " + res.res_id +")' /><label for='star5' title='Pretty damn good'>★</label><input type='radio' id='star4' name='rating' value='4' class='visuallyhidden' onclick='submitReview(4, " + res.res_id +")' /><label for='star4' title='Pretty good'>★</label><input type='radio' id='star3' name='rating' value='3' class='visuallyhidden' onclick='submitReview(3, " + res.res_id +")' /><label for='star3' title='Okay'>★</label><input type='radio' id='star2' name='rating' value='2' class='visuallyhidden' onclick='submitReview(2, " + res.res_id +")' /><label for='star2' title='Kinda bad'>★</label><input type='radio' id='star1' name='rating' value='1' class='visuallyhidden' onclick='submitReview(1, "+res.res_id+")' /><label for='star1' title='Really bad'>★</label></div></div></div>";
-        }
-        res = JSON.parse
-        console.log(json);
-
-
-    }
-
-    function handleReview(output){
-        console.log('review submitted');
-    }
-
->>>>>>> dade92f156ff2c9e15746068a3d1b0fb559877db
     function submitReview(rating, res_id) {
         $.ajax({
             url: 'review.php',
@@ -129,18 +103,10 @@
             }
         });
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> dade92f156ff2c9e15746068a3d1b0fb559877db
     // Logout functions
     function handleLogout() {
         window.location.replace("login.html");
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> dade92f156ff2c9e15746068a3d1b0fb559877db
     function logout() {
         $.ajax({
             url: 'rest.php',
@@ -154,10 +120,4 @@
         });
     }
 </script>
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> dade92f156ff2c9e15746068a3d1b0fb559877db
 </html>
