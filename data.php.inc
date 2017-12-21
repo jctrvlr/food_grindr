@@ -101,14 +101,15 @@ class dataProc {
         }
     }
     public function lockUser($userid) {
-        $statement = "UPDATE users SET lock = 1 WHERE id='"+$userid+"';";
+        $statement = "UPDATE users SET `lock` = 1 WHERE `id`='"+$userid+"';";
+        echo "locking user".PHP_EOL;
         $resp = $this->datadb->query($statement);
         if($resp) {
             return true;
         }
     }
     public function unlockUser($userid) {
-        $statement = "UPDATE users SET lock = 0 WHERE id='"+$userid+"';";
+        $statement = "UPDATE users SET `lock` = 0 WHERE `id`='"+$userid+"';";
         $resp = $this->datadb->query($statement);
         if($resp) {
             return true;
