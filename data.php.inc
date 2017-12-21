@@ -34,6 +34,86 @@ class dataProc {
 		echo "correctly connected to database".PHP_EOL;
     }
     /**
+     * This method is called by the frontend to retrieve the favorites for a specified user. These favorite restaurants
+     * are then parsed, and displayed on the users favorites page.
+     * 
+     * @param user - Username of the user that is provided by the frontend through stored session variables that load when the user logs in
+     * @return ret - Associative array containing favorites for provided user with restaurant name and rating.
+     */
+    public function getFavorites($user) {
+        $statement = "SELECT responses.user, restaurants.res_id, restaurants.name, restaurants.address, restaurants.longitude, restaurants.latitude, restaurants.cuisine, restaurants.price_range, restaurants.thumbnail, restaurants.online_delivery, restaurants.menu FROM responses INNER JOIN restaurants ON responses.res_id=restaurants.res_id WHERE responses.liked=1 AND responses.user='".$user."' GROUP BY responses.res_id;";
+        $resp = mysqli_fetch_all($this->datadb->query($statement), MYSQLI_ASSOC);
+        $ret = array();
+        for($i=0; $i < count($resp); $i++) {
+            $resid = $resp[$i]['res_id'];
+            $st = "SELECT * FROM ratings where res_id = ".$resid.";";
+            $response = $this->datadb->query($st);
+            $count = 0;
+            $sum = 0;
+            while($row = $response->fetch_assoc()) {
+                $count++;
+                $sum = $sum + $row['rating'];
+            }
+            $rating = $sum / $count;
+            $rating = (int)round($rating);
+            
+            $ret[$i]['res'] = $resp[$i];
+            $ret[$i]['rating'] = $rating;
+        }
+        return $ret;
+    }
+
+    /**
+     * This method is used to retrieve one restaurant and return it to the frontend to be displayed on the main page.
+     * 
+     * @param user - Username of the user that is provided by the frontend through stored session variables that are loaded when the user logs in.
+     * @param zip - Zipcode of the user that is provided by the frontend through stored session variables that are loaded when the user logs in. 
+     * @param last - Name of the last restaurant that was returned by this function to the frontend. The frontend provides this by saving the last restaurant name that was returned to it in a session variable. 
+     * @return - Returns json encoded array which contains all of the different information that is stored in the database about the restaurant.
+     */
+    public function getRest($user, $zip, $last) {
+        if(!isset($last)) {
+            // Get zipcode to send to check location
+            $loc_arr = $this->getCoord($zip);
+            $check_loc = $this->checkLocation($loc_arr['name'], $zip, $loc_arr['latitude'], $loc_arr['longitude']);
+            if($check_loc) {
+                $this->ent_id = $this->getEnt($zip);
+                $this->getRest($user, $zip, TRUE);
+            } else {
+                $options = array();
+                $options[0] = 'error';
+                $options[1] = 'dataServer - getRest';
+                $options[2] = 'checkLocation returned false and/or error code';
+                sendLogs($options);
+            }
+        }
+        $this->ent_id = $this->getEnt($zip);
+        $statement = "select * from restaurants where entity_id = '".$this->ent_id."';";
+        // Get restaurants from zipcode
+        $resp = mysqli_fetch_all($this->datadb->query($statement), MYSQLI_ASSOC);
+        // Get user preferences
+        $this->pref = $this->getUser($user);
+
+        $chosen_rest = $this->chooseRest($resp, $last); 
+        // Set other fields here from database/restchoose function
+        // $rest_array['dist'] = distance($lat1, $lon1, $lat2, $lon2, $unit);
+        // Return one restaurant
+        return json_encode($chosen_rest);
+    }
+
+    /**
+     * Retrieves entity code for existing location by using zipcode and returns the entity code
+     * 
+     * @param zipcode - zipcode of city
+     * @return entityid - Entity ID of the zipcode that is stored in the database. 
+     */
+    private function getEnt($zipcode) {
+        $statement = "select * from city where zip=".$zipcode.";";
+        $resp = $this->datadb->query($statement);
+        $row = mysqli_fetch_array($resp, MYSQLI_ASSOC);
+        return $row['entity_id'];
+    }
+    /**
      * ADMIN FUNCTIONS
      */
     
@@ -117,86 +197,6 @@ class dataProc {
     /**
      * END ADMIN FUNCTIONS
      */
-    /**
-     * This method is called by the frontend to retrieve the favorites for a specified user. These favorite restaurants
-     * are then parsed, and displayed on the users favorites page.
-     * 
-     * @param user - Username of the user that is provided by the frontend through stored session variables that load when the user logs in
-     * @return ret - Associative array containing favorites for provided user with restaurant name and rating.
-     */
-    public function getFavorites($user) {
-        $statement = "SELECT responses.user, restaurants.res_id, restaurants.name, restaurants.address, restaurants.longitude, restaurants.latitude, restaurants.cuisine, restaurants.price_range, restaurants.thumbnail, restaurants.online_delivery, restaurants.menu FROM responses INNER JOIN restaurants ON responses.res_id=restaurants.res_id WHERE responses.liked=1 AND responses.user='".$user."' GROUP BY responses.res_id;";
-        $resp = mysqli_fetch_all($this->datadb->query($statement), MYSQLI_ASSOC);
-        $ret = array();
-        for($i=0; $i < count($resp); $i++) {
-            $resid = $resp[$i]['res_id'];
-            $st = "SELECT * FROM ratings where res_id = ".$resid.";";
-            $response = $this->datadb->query($st);
-            $count = 0;
-            $sum = 0;
-            while($row = $response->fetch_assoc()) {
-                $count++;
-                $sum = $sum + $row['rating'];
-            }
-            $rating = $sum / $count;
-            $rating = (int)round($rating);
-            
-            $ret[$i]['res'] = $resp[$i];
-            $ret[$i]['rating'] = $rating;
-        }
-        return $ret;
-    }
-
-    /**
-     * This method is used to retrieve one restaurant and return it to the frontend to be displayed on the main page.
-     * 
-     * @param user - Username of the user that is provided by the frontend through stored session variables that are loaded when the user logs in.
-     * @param zip - Zipcode of the user that is provided by the frontend through stored session variables that are loaded when the user logs in. 
-     * @param last - Name of the last restaurant that was returned by this function to the frontend. The frontend provides this by saving the last restaurant name that was returned to it in a session variable. 
-     * @return - Returns json encoded array which contains all of the different information that is stored in the database about the restaurant.
-     */
-    public function getRest($user, $zip, $last) {
-        if(!isset($last)) {
-            // Get zipcode to send to check location
-            $loc_arr = $this->getCoord($zip);
-            $check_loc = $this->checkLocation($loc_arr['name'], $zip, $loc_arr['latitude'], $loc_arr['longitude']);
-            if($check_loc) {
-                $this->ent_id = $this->getEnt($zip);
-                $this->getRest($user, $zip, TRUE);
-            } else {
-                $options = array();
-                $options[0] = 'error';
-                $options[1] = 'dataServer - getRest';
-                $options[2] = 'checkLocation returned false and/or error code';
-                sendLogs($options);
-            }
-        }
-        $this->ent_id = $this->getEnt($zip);
-        $statement = "select * from restaurants where entity_id = '".$this->ent_id."';";
-        // Get restaurants from zipcode
-        $resp = mysqli_fetch_all($this->datadb->query($statement), MYSQLI_ASSOC);
-        // Get user preferences
-        $this->pref = $this->getUser($user);
-
-        $chosen_rest = $this->chooseRest($resp, $last); 
-        // Set other fields here from database/restchoose function
-        // $rest_array['dist'] = distance($lat1, $lon1, $lat2, $lon2, $unit);
-        // Return one restaurant
-        return json_encode($chosen_rest);
-    }
-
-    /**
-     * Retrieves entity code for existing location by using zipcode and returns the entity code
-     * 
-     * @param zipcode - zipcode of city
-     * @return entityid - Entity ID of the zipcode that is stored in the database. 
-     */
-    private function getEnt($zipcode) {
-        $statement = "select * from city where zip=".$zipcode.";";
-        $resp = $this->datadb->query($statement);
-        $row = mysqli_fetch_array($resp, MYSQLI_ASSOC);
-        return $row['entity_id'];
-    }
 
     /**
      * 
