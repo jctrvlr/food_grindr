@@ -95,7 +95,7 @@ class inviteProc {
         return true;
     }
     private function createNotif($recip, $rest, $date, $time, $user) {
-        $statement = "INSERT INTO notif (notif_type, usr_email, notif_rest, notif_date, notif_time, notif_inviter, notif_status) VALUES ('invite', '"+ $recip + "', '"+$rest+"', '"+$date+"', '"+$time+"', '"+$user+"', 'pending');";
+        $statement = "INSERT INTO notif (notif_type, usr_email, notif_rest, notif_date, notif_time, notif_inviter, notif_status) VALUES ('invite', '". $recip . "', '".$rest."', '".$date."', '".$time."', '".$user."', 'pending');";
         $resp = $this->db->query($statement);
         if($resp) {
             return true;
