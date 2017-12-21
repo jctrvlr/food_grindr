@@ -119,16 +119,16 @@ class inviteProc {
     }
     private function sendEmail($recip, $type, $rest, $date, $time, $user) {
         if($type === "curr_user") {
-            $msg = $user + " has invited you to join him/her at " + $rest + " on " + $date + " at " + $time;
+            $msg = $user . " has invited you to join him/her at " . $rest . " on " . $date . " at " . $time;
             $msg = wordwrap($msg, 70);
-            $sbjt = "Invite to " + $rest + " from " + $user;
+            $sbjt = "Invite to " . $rest . " from " . $user;
             mail($recip, $sbjt, $msg);
             return;
         } else if ($type === "non_user") {
-            $msg = $user + " has invited you to join him/her at " + $rest + " on " + $date + " at " + $time;
+            $msg = $user . " has invited you to join him/her at " . $rest . " on " . $date . " at " . $time;
             $msg .= "To accept this invite you must signup for Food Grindr! Sign up now and you will be able to accept the invite and view other restaurants in your area.";
             $msg = wordwrap($msg, 70);
-            $sbjt = "Invite to Food Grindr and " + $rest + " from " + $user;
+            $sbjt = "Invite to Food Grindr and " . $rest . " from " . $user;
             mail($recip, $sbjt, $msg);
             return;
         } else {
