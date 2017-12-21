@@ -2,8 +2,7 @@
 
 <html>
 
-    <meta charset="utf-8"/>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8"/>
 
     <script src="js/main.js"></script>
 
@@ -11,7 +10,7 @@
             <link rel="stylesheet" type="text/css" href="css/main.css">
     </head>
 
-    <body onload="submitGetRes()" >
+    <body onload="submitGetRes(); getNotif();" >
 
     <div class="wrapper">
     <div class="wrapper_container">
@@ -91,6 +90,36 @@
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
+    function handleGetNotif(res) {
+            json = JSON.parse(res);
+            for (var i = 0; i < json.length; i++) {
+                var js = json[i];
+                var email = js.notif_inviter;
+                var res = js.notif_rest;
+                var date = js.notif_date;
+                var time = js.notif_time;
+                if (js.notif_status === "pending") {
+                    document.getElementById("notifs").innerHTML += "<li style='background: blue'><a href=''>" + email + " has invited you to " + res + " on " + date + " at " + time + "</a></li>";
+                } else {
+                    document.getElementById("notifs").innerHTML += "<li style='background: cyan'><a href=''>" + email + " has invited you to " + res + " on " + date + " at " + time + "</a></li>";
+                }
+
+            }
+            res = JSON.parse
+            console.log(json);
+        }
+        function getNotif() {
+            $.ajax({
+                url: 'invite.php',
+                data: {
+                    type: 'get_notif',
+                },
+                type: 'post',
+                success: function (output) {
+                    handleGetNotif(output);
+                }
+            });
+        }
         var rest;
         function submitGetRes() {
             sendGetResRequest();

@@ -29,7 +29,6 @@ switch ($request["type"])
 		$_SESSION['f_name'] = $json['resp']['f_name'];
 		$_SESSION['l_name'] = $json['resp']['l_name'];
 		$response = $json['pw'];
-		$response = var_dump($_SESSION);
 		if($req['email']=== "admin@admin" && $json['pw']) {
 			$response = "adminyes";
 		}
