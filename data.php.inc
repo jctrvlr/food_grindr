@@ -98,8 +98,8 @@ class dataProc {
     }
     public function lockUser($userid) {
         $statement = "UPDATE users SET `lock` = 1 WHERE `id`="+$userid+";";
-        echo "locking user ".$userid.PHP_EOL;
         $resp = $this->datadb->query($statement);
+        echo "locking user ".$userid.PHP_EOL;
         echo $resp.PHP_EOL;
         if($resp) {
             return true;
