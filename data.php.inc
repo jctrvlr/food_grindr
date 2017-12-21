@@ -77,10 +77,6 @@ class dataProc {
 			}
 		}
 		echo "insert prefs".PHP_EOL;
-		var_dump($res);
-		if(!$res) {
-			return false;
-		}
 		return true;
 	}
     public function getAllUsers() {
