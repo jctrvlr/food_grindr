@@ -156,7 +156,7 @@
     var fn = document.getElementById(userid+"-f_name").value;
     var ln = document.getElementById(userid+"-l_name").value;
     var pw = document.getElementById(userid+"-pass").value;
-
+    console.log(em + fn + ln + pw);
     $.ajax({
       url: 'rest.php',
       data: {
