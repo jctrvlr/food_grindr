@@ -28,8 +28,8 @@ switch ($request["type"])
 		$_SESSION['zipcode'] = $json['zipcode'];
 		$_SESSION['f_name'] = $json['resp']['f_name'];
 		$_SESSION['l_name'] = $json['resp']['l_name'];
-		var_dump($_SESSION);
 		$response = $json['pw'];
+		$response = var_dump($_SESSION);
 		if($req['email']=== "admin@admin" && $json['pw']) {
 			$response = "adminyes";
 		}
