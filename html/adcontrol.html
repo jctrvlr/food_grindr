@@ -152,12 +152,10 @@
   }
 
   function updateInfo(userid) {
-    var test = document.getElementById("3-email").value;
-    var em = document.getElementById(userid+"-email").value;
-    var fn = document.getElementById(userid+"-f_name").value;
-    var ln = document.getElementById(userid+"-l_name").value;
-    var pw = document.getElementById(userid+"-pass").value;
-    console.log(test);
+    var em = document.getElementById(userid+"-email").innerText;
+    var fn = document.getElementById(userid+"-f_name").innerText;
+    var ln = document.getElementById(userid+"-l_name").innerText;
+    var pw = document.getElementById(userid+"-pass").innerText;
     $.ajax({
       url: 'rest.php',
       data: {
