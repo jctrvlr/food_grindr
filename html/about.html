@@ -30,8 +30,18 @@
             </div>
         </div>
        <div class="site-wrapper_top-bar">
-            <a href="#" id="toggle"><i class="fa fa-bars"></i></a>
-        </div>
+            <ul id="menu-header-menu-left" class="nav navbar-nav navbar-left">
+               <li id="submenu">
+                <a href="#" id="toggle"><img src="bellwhite.png" alt="bell"></a>  
+                  <ul class="dropdown-menu">
+                     <li><a href="">BLEACHING</a></li>
+                     <li><a href="">BONE GRAFT</a></li>
+                     <li><a href="">CHILDREN DENTISTRY</a></li>
+                     <li><a href="">CLEANING</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
         
             <!-- inner content -->
 
@@ -78,7 +88,10 @@
         function handleLogout(){
             window.location.replace("login.html");
         }
+<<<<<<< HEAD
+=======
 
+>>>>>>> dade92f156ff2c9e15746068a3d1b0fb559877db
         function logout() {
             $.ajax({
                 url: 'rest.php',

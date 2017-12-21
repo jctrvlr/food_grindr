@@ -1,14 +1,24 @@
 @import url(https://fonts.googleapis.com/css?family=Pacifico);
 @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700,300);
-* {
+{
   box-sizing: border-box;
+}
+
+.dropdown-menu {
+  position: relative;
+  display: none;
+}
+#submenu:hover > ul {
+  display: block;
+ }
+site-wrapper_top-bar a:hover {
+  display:block;
 }
 
 body {
   background: lightgray;
   font-family: 'Yanone Kaffeesatz', sans-serif;
 }
-
 .row {
   margin: 0 -15px;
 }
@@ -134,7 +144,7 @@ h1{
   border-left-width: 5px;
 }
 .site-wrapper_top-bar {
-  height: 54px;
+  height: 72px;
   position: absolute;
   top: 0;
   left: 0;
@@ -144,16 +154,26 @@ h1{
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
   text-align: right;
 }
+
 .site-wrapper_top-bar a {
   display: inline-block;
   vertical-align: middle;
   width: 55px;
   height: 55px;
   line-height: 55px;
-  text-align: center;
+  text-align: left;
   -webkit-transition: all .2s linear;
   transition: all .2s linear;
   color: #3498DB;
+  
+}
+.site-wrapper_top-bar img {
+   width: 45px;
+   height: 45px;
+   z-index: 10;
+   vertical-align: middle;
+   padding-right: 10px;
+   margin: 0;
 }
 .site-wrapper_top-bar a:hover, .site-wrapper_top-bar a.active {
   background: #3498DB;
