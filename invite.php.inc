@@ -75,7 +75,7 @@ class inviteProc {
         }
     }
     public function getNotif($user) {
-        $statement = "SELECT * FROM notifications WHERE usr_email = '"+$user+"';";
+        $statement = "SELECT * FROM notif WHERE usr_email = '"+$user+"';";
         $response = mysqli_fetch_all($this->db->query($statement), MYSQLI_ASSOC);
         if(mysqli_num_rows($response) == 0) {
             // no Notifications
@@ -85,7 +85,7 @@ class inviteProc {
         }
     }
     public function updateNotif($notif_id, $status) {
-        $statement = "UPDATE notifications SET notif_status = '"+$status+"' WHERE notif_id = '"+$notif_id+"';";
+        $statement = "UPDATE notif SET notif_status = '"+$status+"' WHERE notif_id = '"+$notif_id+"';";
         $resp = $this->db->query($statement);
         return true;
     }
@@ -95,7 +95,7 @@ class inviteProc {
         return true;
     }
     private function createNotif($recip, $rest, $date, $time, $user) {
-        $statement = "INSERT INTO notifications (notif_type, usr_email, notif_rest, notif_date, notif_time, notif_inviter, notif_status) VALUES ('invite', '"+ $recip + "', '"+$rest+"', '"+$date+"', '"+$time+"', '"+$user+"', 'pending');";
+        $statement = "INSERT INTO notif (notif_type, usr_email, notif_rest, notif_date, notif_time, notif_inviter, notif_status) VALUES ('invite', '"+ $recip + "', '"+$rest+"', '"+$date+"', '"+$time+"', '"+$user+"', 'pending');";
         $resp = $this->db->query($statement);
         if($resp) {
             return true;

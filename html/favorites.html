@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 
-<body onload="getFavorites()">
+<body onload="getFavorites(); getNotif();">
     <div class="wrapper">
         <div class="wrapper_container">
             <!-- start content -->
@@ -32,11 +32,7 @@
                   <ul id="menu-header-menu-left" class="nav navbar-nav navbar-left">
                      <li id="submenu">
                       <a href="#" id="toggle"><img src="bellwhite.png" alt="bell"></a>  
-                        <ul class="dropdown-menu">
-                           <li><a href="">BLEACHING</a></li>
-                           <li><a href="">BONE GRAFT</a></li>
-                           <li><a href="">CHILDREN DENTISTRY</a></li>
-                           <li><a href="">CLEANING</a></li>
+                        <ul class="dropdown-menu" id="notifs">
                         </ul>
                      </li>
                   </ul>
@@ -57,6 +53,37 @@
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
+    function handleGetNotif(res) {
+        json = JSON.parse(res);
+        for (var i = 0; i < json.length; i++) {
+            console.log(json);
+            var js = json[i];
+            var email = js.notif_inviter;
+            var res = js.notif_rest;
+            var date = js.notif_date;
+            var time = js.notif_time;
+            if(js.notif_status === "pending") {
+                document.getElementById("notifs").innerHTML += "<li style='background: blue'><a href=''>" + email + " has invited you to " + res + " on " + date + " at " + time + "</a></li>";
+            } else {
+                document.getElementById("notifs").innerHTML += "<li style='background: cyan'><a href=''>" + email + " has invited you to " + res + " on " + date + " at " + time + "</a></li>";
+            }
+
+        }
+        res = JSON.parse
+        console.log(json);
+    }
+    function getNotif() {
+        $.ajax({
+            url: 'invite.php',
+            data: {
+                type: 'get_notif',
+            },
+            type: 'post',
+            success: function (output) {
+                handleGetNotif(output);
+            }
+        });
+    }
     function getFavorites() {
         $.ajax({
             url: 'rest.php',
@@ -81,13 +108,32 @@
                 res.thumbnail = "http://www.clker.com/cliparts/Q/3/D/I/L/u/knife-and-fork-clipart-hi.png";
             }
             
-            document.getElementById("rest").innerHTML += "<div class='row'><div class='col-1'><div class='user-item'><div class='user-item_photo'><img id='res_photo' src='"+res.thumbnail+"' alt='myphoto' /></div><div class='user-item_info'><p id='name' class='name'>"+res.name+"</p><p class='sub' id='cuisine'>"+res.cuisine+"</p></div></div></div ><div class='col - 2'><div class='chat'><div class='user-item_info'><p id='rating'>Rating: "+rating+"</p><p id='address'>Address: "+res.address+"</p><p id='price'>Price: "+res.price_range+"</p></div><link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'><h1> Send a review:</h1><div class='product-review-stars'><input type='radio' id='star5' name='rating' value='5' class='visuallyhidden' onclick='submitReview(5, " + res.res_id +")' /><label for='star5' title='Pretty damn good'>?</label><input type='radio' id='star4' name='rating' value='4' class='visuallyhidden' onclick='submitReview(4, " + res.res_id +")' /><label for='star4' title='Pretty good'>?</label><input type='radio' id='star3' name='rating' value='3' class='visuallyhidden' onclick='submitReview(3, " + res.res_id +")' /><label for='star3' title='Okay'>?</label><input type='radio' id='star2' name='rating' value='2' class='visuallyhidden' onclick='submitReview(2, " + res.res_id +")' /><label for='star2' title='Kinda bad'>?</label><input type='radio' id='star1' name='rating' value='1' class='visuallyhidden' onclick='submitReview(1, "+res.res_id+")' /><label for='star1' title='Really bad'>?</label></div></div></div>";
+            document.getElementById("rest").innerHTML += "<div class='row'><div class='col-1'><div class='user-item'><div class='user-item_photo'><img id='res_photo' src='"+res.thumbnail+"' alt='myphoto' /></div><div class='user-item_info'><p id='name' class='name'>"+res.name+"</p><p class='sub' id='cuisine'>"+res.cuisine+"</p></div></div></div ><div class='col - 2'><div class='chat'><div class='user-item_info'><p id='rating'>Rating: "+rating+"</p><p id='address'>Address: "+res.address+"</p><p id='price'>Price: "+res.price_range+"</p></div><div id='invite'><form><input type='text' id='"+res.res_id+"-recip_email'><br><input type='text' id='" + res.res_id +"-date'><br><input type='text' id='" + res.res_id +"-time'><br><button onClick='invite("+res.res_id+")'></form><link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'><h1> Send a review:</h1><div class='product-review-stars'><input type='radio' id='star5' name='rating' value='5' class='visuallyhidden' onclick='submitReview(5, " + res.res_id +")' /><label for='star5' title='Pretty damn good'>?</label><input type='radio' id='star4' name='rating' value='4' class='visuallyhidden' onclick='submitReview(4, " + res.res_id +")' /><label for='star4' title='Pretty good'>?</label><input type='radio' id='star3' name='rating' value='3' class='visuallyhidden' onclick='submitReview(3, " + res.res_id +")' /><label for='star3' title='Okay'>?</label><input type='radio' id='star2' name='rating' value='2' class='visuallyhidden' onclick='submitReview(2, " + res.res_id +")' /><label for='star2' title='Kinda bad'>?</label><input type='radio' id='star1' name='rating' value='1' class='visuallyhidden' onclick='submitReview(1, "+res.res_id+")' /><label for='star1' title='Really bad'>?</label></div></div></div>";
         }
         res = JSON.parse
         console.log(json);
     }
     function handleReview(output){
         console.log('review submitted');
+    }
+    function invite(res_id) {
+        var date = document.getElementById(res_id + "-date").value;
+        var time = document.getElementById(res_id + "-time").value;
+        var recip = document.getElementById(res_id + "-recip_email").value;
+        $.ajax({
+            url: 'invite.php',
+            data: {
+                type: 'create_invite',
+                rest: res_id,
+                date: date,
+                time: time,
+                recip: recip
+            },
+            type: 'post',
+            success: function(output) {
+                handleInvite(output);
+            }
+        })
     }
     function submitReview(rating, res_id) {
         $.ajax({
