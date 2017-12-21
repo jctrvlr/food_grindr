@@ -1,0 +1,159 @@
+<html>
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>Admin for Dumpster Fire Group</title>
+
+  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+
+    <link rel="stylesheet" href="rank.css" media="screen" type="text/css" />
+
+</head>
+
+<body onload="getData()">
+
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+   
+   <div class="row bottom-nav">
+      <div class="col-md-12">
+         <div class="nav-con">
+            <ul>
+               <li onClick="location.href='adcontrol.html';">
+                  <i class="fa fa-users"></i>
+                  <h4>Users</h4>
+               </li>
+               
+               <li>
+                  <li onClick="location.href='stats.html';">
+                  <i class="fa fa-home" ></i>
+                  <h4>Restaurants</h4>
+               </li>
+               </li>
+               <li>
+        
+               </li>
+               <li>
+                  <i class="fa fa-gears" ></i>
+                  <h4>Logout</h4>
+               </li>
+            </ul>
+         </div>
+      </div>
+   </div>
+  <div class="row quick-bar">
+    <thead>
+    <tr>
+        <th class="text-center" width="100%"></th>
+        <h3><center>Admin Portal<center></h3>
+    </tr>
+    </thead>
+     <div class="col-md-2">
+      
+    </div> 
+  </div>
+
+  
+   <div class="row content">
+      <div class="col-md-12">
+          
+         <table class="table table-hover">
+            <thead id="hehe">
+                
+               <tr>
+                  <th class="text-center" width="10%">User ID</th>
+                  <th class="text-center" width="16%">First Name</th>
+                  <th class="text-center" width="16%">Last Name</th>
+                  <th class="text-center" width="16%">Email</th>
+                  <th class="text-center" width="16%">Password</th>
+                  <th class="text-center" width="22%">Action</th>
+            
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td contenteditable="false" class="text-center">456823</td>
+                  <td contenteditable="true" class="text-center">Khari</td>
+                  <td contenteditable="true" class="text-center">Davis</td>
+                  <td contenteditable="true" class="text-center">davis@gmail.com</td>
+                  <td contenteditable="true" class="text-center">***</td>
+                  <td>
+                      <div class="btn-group" style="width:100%">
+                        <button type="button" style="width:22%" class="btn btn-success">Edit</button>
+                        <button type="button" style="width:28%" class="btn btn-danger">Delete</button>
+                        <button type="button" style="width:22%" class="btn btn-warning">Lock</button>
+                        <button type="button" style="width:28%" class="btn btn-primary">Unlock</button>
+                      </div>
+                  </td>
+              
+               </tr>
+               <tr>
+                  <td contenteditable="false" class="text-center">3184</td>
+                  <td contenteditable="true" class="text-center">Charles</td>
+                  <td contenteditable="true" class="text-center">Smith</td>
+                  <td contenteditable="true" class="text-center">smith@gmail.com</td>
+                  <td contenteditable="true" class="text-center">*********</td>
+                  <td>
+                    <div class="btn-group" style="width:100%">
+                        <button type="button" style="width:22%" class="btn btn-success">Edit</button>
+                        <button type="button" style="width:28%" class="btn btn-danger">Delete</button>
+                        <button type="button" style="width:22%" class="btn btn-warning">Lock</button>
+                        <button type="button" style="width:28%" class="btn btn-primary">Unlock</button>
+                    </div>
+                </td>
+                  
+                      
+               </tr>
+               
+               <tr>
+                  <td contenteditable="false" class="text-center">32321</td>
+                  <td contenteditable="true" class="text-center">Daniel</td>
+                  <td contenteditable="true" class="text-center">Sams</td>
+                  <td contenteditable="true" class="text-center">sams@gmail.com</td>
+                  <td contenteditable="true" class="text-center">********</td>
+                  <td>
+                    <div class="btn-group" style="width:100%">
+                      <button type="button" style="width:22%" class="btn btn-success">Edit</button>
+                      <button type="button" style="width:28%" class="btn btn-danger">Delete</button>
+                      <button type="button" style="width:22%" class="btn btn-warning">Lock</button>
+                      <button type="button" style="width:28%" class="btn btn-primary">Unlock</button>
+                    </div>
+                </td>
+              
+               </tr>
+              
+              
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+  function handleGetData(res) {
+    var json = JSON.parse(res);
+    for (var i = 0; i < json.length; i++) {
+      var js = json[i];
+      document.getElementById("hehe").innerHTML += "<tr><td class='text-center'>"+ js.res_id+"</td><td class='text-center'>"+js.name+"</td><td class='text-center'>"+js.SUM+"</td></tr>";
+    }
+  }
+
+  function getData() {
+    $.ajax({
+      url: 'rest.php',
+      data: {
+        type: 'get_data',
+      },
+      type: 'post',
+      success: function (output) {
+        handleGetData(output);
+      }
+    });
+  }
+</script>
+
+</html>

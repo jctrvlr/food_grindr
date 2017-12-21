@@ -7,17 +7,20 @@ require_once('login.php.inc');
 
 function doLogin($email,$password)
 {
-  // lookup email in database
-  // check password
   $login = new logindb();
 	$output = $login->validateLogin($email,$password);
   return $output;
   
 }
 
-function doSignup($email, $f_name, $l_name, $pass) {
+function doValidate($sessionID) {
+  //TODO Validate Session
+  //TODO Start session somewhere
+}
+
+function doSignup($email, $f_name, $l_name, $pass, $zip) {
   $login = new logindb();
-  $output = $login->signup($email, $f_name, $l_name, $pass);
+  $output = $login->signup($email, $f_name, $l_name, $pass, $zip);
   return $output;
 }
 
@@ -30,6 +33,12 @@ function doLog($level,$loc,$msg) {
     $subj = "ERROR - ".$loc;
     mail($to, $subj, $msg);
   }
+}
+
+function updateInfo($zip, $fn, $ln, $pw, $oe) {
+  $login = new logindb();
+  $output = $login->updateInfo($zip, $fn, $ln, $pw, $oe);
+  return $output;
 }
 
 function requestProcessor($request)
@@ -47,9 +56,11 @@ function requestProcessor($request)
     case "login":
       return doLogin($request['email'],$request['pass']);
     case "signup":
-      return doSignup($request['email'],$request['f_name'],$request['l_name'],$request['pass']);
+      return doSignup($request['email'],$request['f_name'],$request['l_name'],$request['pass'],$request['zip']);
     case "validate_session":
       return doValidate($request['sessionId']);
+    case "update_info":
+      return updateInfo($request['zip'], $request['f_name'], $request['l_name'], $request['password'], $request['old_em']);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }

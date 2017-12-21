@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
@@ -22,6 +23,15 @@ switch ($request["type"])
 		$req['email']=$request["email"];
 		$req['pass']=$request["pword"];
 		$response = $client->send_request($req);
+		$json = json_decode($response, true);
+		$_SESSION['email'] = $json['resp']['email'];
+		$_SESSION['zipcode'] = $json['zipcode'];
+		$_SESSION['f_name'] = $json['resp']['f_name'];
+		$_SESSION['l_name'] = $json['resp']['l_name'];
+		$response = $json['pw'];
+		if($req['email']=== "admin@admin" && $json['pw']) {
+			$response = "adminyes";
+		}
 		break;
 	}
 	case "signup": {
@@ -31,7 +41,34 @@ switch ($request["type"])
 		$req['f_name']=$request['f_name'];
 		$req['l_name']=$request['l_name'];
 		$req['pass']=$request['pword'];
+		$req['zip']=$request["zip"];
 		$response = $client->send_request($req);
+		break;
+	}
+	case "get_settings": {
+		$response = array();
+		$response['email'] = $_SESSION['email'];
+		$response['zipcode'] = $_SESSION['zipcode'];
+		$response['f_name'] = $_SESSION['f_name'];
+		$response['l_name'] = $_SESSION['l_name'];
+		break;
+	}
+	case "update_info": {
+		$req = array();
+		$req['type']="update_info";
+		$req['zip']=$request['zip'];
+		$req['f_name']=$request['f_name'];
+		$req['l_name']=$request['l_name'];
+		$req['old_em']=$_SESSION['email'];
+		if($request['pass'] !== "********") {
+			$req['password']=$request['pass'];
+		} else {
+			$req['password']=NULL;
+		}
+		$response = $client->send_request($req);
+		if($response) {
+			$_SESSION['zipcode'] = $request['zip'];
+		}
 		break;
 	}
 }

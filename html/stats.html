@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="UTF-8">
+        
+          <title>Admin for Dumpster Fire Group</title>
+        
+          <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+        
+            <link rel="stylesheet" href="rank.css" media="screen" type="text/css" />
+<style>
+table {
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 16px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+</style>
+</head>
+<body onload="getData()">
+
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <div class="container">
+
+
+
+
+<div class="row bottom-nav">
+        <div class="col-md-12">
+           <div class="nav-con">
+              <ul>
+                 <li onClick="location.href='adcontrol.html';">
+                  <i class="fa fa-users"></i>
+                  <h4>Users</h4>
+               </li>
+               
+               <li>
+                  <li onClick="location.href='stats.html';">
+                  <i class="fa fa-home" ></i>
+                  <h4>Restaurants</h4>
+               </li>
+                 <li>
+                    <i class="fa fa-gears" ></i>
+                    <h4>Logout</h4>
+                 </li>
+              </ul>
+           </div>
+        </div>
+     </div>
+    <div class="row quick-bar">
+      <thead id="hehe">
+       
+            
+      <tr>
+          <th class="text-center" width="100%"></th>
+          <h3><center>Admin Portal<center></h3>
+      </tr>
+      </thead>
+       <div class="col-md-2">
+        
+      </div> 
+    </div>
+  
+    
+     <div class="row content">
+        <div class="col-md-12">
+           
+              <p><button onclick="sortTable()">Sort</button></p>
+<table id="myTable" class="table table-bordered no-more-tables">
+  <tr>
+    <th class="text-center">Rank</th>
+    <th class="text-center">Name</th>
+    <th class="text-center">Likes</th>
+  </tr>
+  <tr>
+    <td class="text-center">1</td>
+    <td class="text-center">
+      <a href="google.com" class="nameLink">Ali pizzas</a>
+    </td>
+    <td class="text-center">1</td>
+  </tr>
+  <tr>
+    <td class="text-center">1</td>
+    <td class="text-center">
+      <a href="google.com" class="nameLink">BK</a>
+    </td>
+    <td class="text-center">1</td>
+  </tr>
+  <tr>
+    <td class="text-center">89</td>
+    <td class="text-center">
+      <a href="google.com" class="nameLink">Wendys</a>
+    </td>
+    <td class="text-center">24</td>
+  </tr>
+  <tr>
+    <td class="text-center">122</td>
+    <td class="text-center">
+      <a href="google.com" class="nameLink">Pizzzeria</a>
+    </td>
+    <td class="text-center">465</td>
+  </tr>
+</div>
+</div>
+</div>
+
+</table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+  function handleGetData(res) {
+    var json = JSON.parse(res);
+    for (var i = 0; i < json.length; i++) {
+      var js = json[i];
+      document.getElementById("hehe").innerHTML += "<tr><td class='text-center'>"+ js.res_id+"</td><td class='text-center'>"+js.name+"</td><td class='text-center'>"+js.SUM+"</td></tr>";
+    }
+  }
+
+  function getData() {
+    $.ajax({
+      url: 'rest.php',
+      data: {
+        type: 'get_data',
+      },
+      type: 'post',
+      success: function (output) {
+        handleGetData(output);
+      }
+    });
+  }
+
+function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("myTable");
+  switching = true;
+  while (switching) {
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[0];
+      y = rows[i + 1].getElementsByTagName("TD")[0];
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        shouldSwitch= true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+</script>
+
+</body>
+</html>

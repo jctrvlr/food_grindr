@@ -12,7 +12,7 @@
 
 </head>
 
-<body>
+<body onload="getData()">
 
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container">
@@ -21,21 +21,15 @@
       <div class="col-md-12">
          <div class="nav-con">
             <ul>
-               <li>
+               <li onClick="location.href='adcontrol.html';">
                   <i class="fa fa-users"></i>
                   <h4>Users</h4>
                </li>
+               
                <li>
+                  <li onClick="location.href='stats.html';">
                   <i class="fa fa-home" ></i>
                   <h4>Restaurants</h4>
-               </li>
-               <li>
-                  <i class="fa fa-cutlery" ></i>
-                  <h4>Cuisine</h4>
-               </li>
-               <li>
-                  <i class="fa fa-book" ></i>
-                  <h4>Names</h4>
                </li>
                <li>
                   <i class="fa fa-gears" ></i>
@@ -48,7 +42,7 @@
   <div class="row quick-bar">
     <thead>
 	<tr>
-		<th class="text-center" width="100%">Admin Shit</th>
+		<th class="text-center" width="100%">Admin Portal</th>
 	</tr>
 	</thead>
      <div class="col-md-2">
@@ -58,7 +52,7 @@
    <div class="row content">
       <div class="col-md-12">
          <table class="table table-bordered no-more-tables">
-            <thead>
+            <thead id="hehe">
                <tr>
                   <th class="text-center" width="33%">Restaurant ID</th>
                   <th class="text-center" width="33%">Restaurant name</th>
@@ -107,5 +101,28 @@
 </div>
 
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+  function handleGetData(res) {
+    var json = JSON.parse(res);
+    for (var i = 0; i < json.length; i++) {
+      var js = json[i];
+      document.getElementById("hehe").innerHTML += "<tr><td class='text-center'>"+ js.res_id+"</td><td class='text-center'>"+js.name+"</td><td class='text-center'>"+js.SUM+"</td></tr>";
+    }
+  }
+
+  function getData() {
+    $.ajax({
+      url: 'rest.php',
+      data: {
+        type: 'get_data',
+      },
+      type: 'post',
+      success: function (output) {
+        handleGetData(output);
+      }
+    });
+  }
+</script>
 
 </html>
