@@ -46,12 +46,14 @@ switch ($request["type"])
     }
     case "get_invites": {
         $req=array();
+        $req['type'] = "get_invites";
         $req['user']= $_SESSION["email"];
         $response = $client->send_request($req);
         break;
     }
     case "get_notif": {
         $req=array();
+        $req['type'] = "get_notif";
         $req['user']= $_SESSION["email"];
         $response = $client->send_request($req);
         break;
