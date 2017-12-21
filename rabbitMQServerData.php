@@ -80,6 +80,7 @@ function getData() {
 }
 
 function updateInfo($em, $fn, $ln, $pw) {
+  echo "inside updateInfo".PHP_EOL;
   $data = new dataProc();
   $output = $data->updateInfo($em, $fn, $ln, $pw);
   return $output;
