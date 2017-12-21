@@ -96,10 +96,6 @@
             sendGetResRequest();
             return 0;
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> dade92f156ff2c9e15746068a3d1b0fb559877db
         function HandleGetResResponse(response) {
             console.log('Inside handleRequest: ' + response);
             rest = JSON.parse(response);
@@ -115,10 +111,6 @@
                 document.getElementById("res_photo").setAttribute("src", "http://www.clker.com/cliparts/Q/3/D/I/L/u/knife-and-fork-clipart-hi.png");
             }
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> dade92f156ff2c9e15746068a3d1b0fb559877db
         function submitResp(like) {
             var obj = JSON.parse(rest);
             var res_id = obj.res_id;
@@ -126,13 +118,7 @@
             console.debug(obj);
             console.log(obj["res_id"]);
             sendRespRequest(res_id, like);
-<<<<<<< HEAD
         }
-=======
-
-        }
-
->>>>>>> dade92f156ff2c9e15746068a3d1b0fb559877db
         function sendRespRequest(res_id, like) {
             $.ajax({
                 url: 'rest.php',
@@ -147,10 +133,6 @@
                 }
             })
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> dade92f156ff2c9e15746068a3d1b0fb559877db
         function sendGetResRequest() {
             console.log('Inside sendRequest');
             $.ajax({
@@ -164,18 +146,10 @@
                 }
             });
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> dade92f156ff2c9e15746068a3d1b0fb559877db
         // Logout functions
         function handleLogout(){
             window.location.replace("login.html");
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> dade92f156ff2c9e15746068a3d1b0fb559877db
         function logout() {
             $.ajax({
                 url: 'rest.php',
@@ -188,9 +162,5 @@
                 }
             });
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> dade92f156ff2c9e15746068a3d1b0fb559877db
     </script>
 </html>
