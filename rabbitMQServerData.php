@@ -106,7 +106,7 @@ function requestProcessor($request)
       return lockUser($request['user_id']);
     case "unlock_user":
       return unlockUser($request['user_id']);
-    case "update_info":
+    case "update_user":
       return updateInfo($request['email'], $request['f_name'], $request['l_name'], $request['pass']);
     case "get_rest":
       return getRest($request['user'], $request['zip'], $request['last']); // last is last restaurant name, user is email
