@@ -12,7 +12,7 @@
 
 </head>
 
-<body onload="getData()">
+<body onload="getUsers()">
 
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container">
@@ -61,16 +61,14 @@
           
          <table class="table table-hover">
             <thead id="hehe">
-                
-               <tr>
-                  <th class="text-center" width="10%">User ID</th>
-                  <th class="text-center" width="16%">First Name</th>
-                  <th class="text-center" width="16%">Last Name</th>
-                  <th class="text-center" width="16%">Email</th>
-                  <th class="text-center" width="16%">Password</th>
-                  <th class="text-center" width="22%">Action</th>
-            
-               </tr>
+              <tr>
+                <th class="text-center" width="10%">User ID</th>
+                <th class="text-center" width="16%">First Name</th>
+                <th class="text-center" width="16%">Last Name</th>
+                <th class="text-center" width="16%">Email</th>
+                <th class="text-center" width="16%">Password</th>
+                <th class="text-center" width="22%">Action</th>
+              </tr>
             </thead>
             <tbody>
                <tr>
@@ -134,23 +132,127 @@
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
-  function handleGetData(res) {
+  function handleGetUsers(res) {
     var json = JSON.parse(res);
     for (var i = 0; i < json.length; i++) {
       var js = json[i];
-      document.getElementById("hehe").innerHTML += "<tr><td class='text-center'>"+ js.res_id+"</td><td class='text-center'>"+js.name+"</td><td class='text-center'>"+js.SUM+"</td></tr>";
+      document.getElementById("hehe").innerHTML += "<tr><td contenteditable='false' id='"+js.user_id+"-userid' class='text - center'>"+ js.user_id+"</td><td contenteditable='true' id='"+ js.user_id +"-f_name' class='text - center'>"+js.f_name+"</td><td contenteditable='true' id='"+ js.user_id +"-l_name' class='text - center'>"+js.l_name+"</td><td contenteditable='true' id='"+ js.user_id +"-email' class='text - center'>"+js.email+"</td><td contenteditable='true' id='"+ js.user_id +"-pass' class='text - center'>*******</td><td><div class='btn-group' style='width:100%'><button type='button' style='width:22%' class='btn btn-success' onClick='updateInfo("+js.user_id+")'>Edit</button><button type='button' style='width:28%' class='btn btn-danger' onClick='deleteUser("+js.user_id+")>Delete</button><button type='button' style='width:22%' class='btn btn-warning' onClick='lockUser("+js.user_id+")'>Lock</button><button type='button' style='width:28%' class='btn btn-primary' onClick='unlockUser(" + js.user_id +")'>Unlock</button></div></td ></tr>";
+    }
+  }
+  
+  function handleUpdateInfo(res) {
+    var json = JSON.parse(res);
+    console.log(json);
+    if (json) {
+      document.getElementById("alert").innerHTML = "Settings changed successfully!";
+    } else {
+      document.getElementById("alert").innerHTML = "There was a problem. Please try again.";
     }
   }
 
-  function getData() {
+  function updateInfo(userid) {
+    var em = document.getElementById(userid+"-email").value;
+    var fn = document.getElementById(userid+"-f_name").value;
+    var ln = document.getElementById(userid+"-l_name").value;
+    var pw = document.getElementById(userid+"-pass").value;
+
     $.ajax({
       url: 'rest.php',
       data: {
-        type: 'get_data',
+        type: 'update_user',
+        email: em,
+        f_name: fn,
+        l_name: ln,
+        pass: pw
       },
       type: 'post',
       success: function (output) {
-        handleGetData(output);
+        handleUpdateInfo(output);
+      }
+    });
+  }
+
+  function handleDeleteUser(res) {
+    var json = JSON.parse(res);
+    console.log(json);
+    if (json) {
+      document.getElementById("alert").innerHTML = "Settings changed successfully!";
+    } else {
+      document.getElementById("alert").innerHTML = "There was a problem. Please try again.";
+    }
+  }
+
+  function deleteUser(userid) {
+    $.ajax({
+      url: 'rest.php',
+      data: {
+        type: 'delete_user',
+        user_id: userid
+      },
+      type: 'post',
+      success: function (output) {
+        handleDeleteUser(output);
+      }
+    });
+  }
+
+  function lockUser(userid) {
+    $.ajax({
+      url: 'rest.php',
+      data: {
+        type: 'lock_user',
+        user_id: userid
+      },
+      type: 'post',
+      success: function (output) {
+        handleLockUser(output);
+      }
+    });
+  }
+
+  function handleLockUser(res) {
+    var json = JSON.parse(res);
+    console.log(json);
+    if (json) {
+      document.getElementById("alert").innerHTML = "Settings changed successfully!";
+    } else {
+      document.getElementById("alert").innerHTML = "There was a problem. Please try again.";
+    }
+  }
+
+  function unlockUser(userid) {
+    $.ajax({
+      url: 'rest.php',
+      data: {
+        type: 'unlock_user',
+        user_id: userid
+      },
+      type: 'post',
+      success: function (output) {
+        handleUnlockUser(output);
+      }
+    });
+  }
+
+  function handleUnlockUser(res) {
+    var json = JSON.parse(res);
+    console.log(json);
+    if (json) {
+      document.getElementById("alert").innerHTML = "Settings changed successfully!";
+    } else {
+      document.getElementById("alert").innerHTML = "There was a problem. Please try again.";
+    }
+  }
+
+  function getUsers() {
+    $.ajax({
+      url: 'rest.php',
+      data: {
+        type: 'get_all_users',
+      },
+      type: 'post',
+      success: function (output) {
+        handleGetUsers(output);
       }
     });
   }

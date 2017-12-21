@@ -49,6 +49,40 @@ class dataProc {
         $resp = mysqli_fetch_all($this->datadb->query($statement), MYSQLI_ASSOC);
         return $resp;
     }
+    public function updateInfo($em, $fn, $ln, $pw) {
+		if (is_null($fn)) {
+			return FALSE;
+		} else if (is_null($ln)) {
+			return FALSE;
+		}
+		$f = $this->datadb->real_escape_string($fn);
+		$l = $this->datadb->real_escape_string($ln);
+		if (is_null($pw)) {
+			$st = "UPDATE users SET f_name = '".$f."', l_name = '".$l."' WHERE email='".$em."';";
+			$response = $this->datadb->query($st);
+			echo "is null".PHP_EOL;
+			var_dump($response);
+			if(!$response) {
+				return false;
+			} 
+		} else {
+			$p = $this->datadb->real_escape_string($pw);
+			$pass = password_hash($p, PASSWORD_DEFAULT);
+			$st = "UPDATE users SET f_name = '".$f."', l_name = '".$l."', pass = '".$pass."' WHERE email='".$em."';";
+			$response = $this->datadb->query($st);
+			echo "is not null".PHP_EOL;
+			var_dump($response);
+			if(!$response) {
+				return false;	
+			}
+		}
+		echo "insert prefs".PHP_EOL;
+		var_dump($res);
+		if(!$res) {
+			return false;
+		}
+		return true;
+	}
     public function getAllUsers() {
         $statement = "SELECT id, f_name, l_name, email FROM users;";
         $resp = mysqli_fetch_all($this->datadb->query($statement), MYSQLI_ASSOC);

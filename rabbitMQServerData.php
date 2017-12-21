@@ -79,6 +79,12 @@ function getData() {
   return $output;
 }
 
+function updateInfo($em, $fn, $ln, $pw) {
+  $data = new datadb();
+  $output = $data->updateInfo($em, $fn, $ln, $pw);
+  return $output;
+}
+
 function requestProcessor($request)
 {
   echo "received request".PHP_EOL;
@@ -99,6 +105,8 @@ function requestProcessor($request)
       return lockUser($request['user_id']);
     case "unlock_user":
       return unlockUser($request['user_id']);
+    case "update_info":
+      return updateInfo($request['email'], $request['f_name'], $request['l_name'], $request['pass']);
     case "get_rest":
       return getRest($request['user'], $request['zip'], $request['last']); // last is last restaurant name, user is email
     case "rest_response":
