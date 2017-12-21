@@ -94,7 +94,7 @@ class dataProc {
         return $resp;
     }
     public function deleteUser($userid) {
-        $statement = "DELETE FROM users WHERE id = '"+$userid+"';";
+        $statement = "DELETE FROM users WHERE `id` = '"+$userid+"';";
         $resp = $this->datadb->query($statement);
         if($resp) {
             return true;
