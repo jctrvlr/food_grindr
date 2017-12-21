@@ -41,13 +41,15 @@ tr:nth-child(even) {
                   <i class="fa fa-users"></i>
                   <h4>Users</h4>
                </li>
-               
+               <li>
+
+               </li>
                <li>
                   <li onClick="location.href='stats.html';">
                   <i class="fa fa-home" ></i>
                   <h4>Restaurants</h4>
                </li>
-                 <li>
+                <li>
                     <i class="fa fa-gears" ></i>
                     <h4>Logout</h4>
                  </li>
@@ -75,11 +77,13 @@ tr:nth-child(even) {
            
               <p><button onclick="sortTable()">Sort</button></p>
 <table id="myTable" class="table table-bordered no-more-tables">
+  <thead id="hehe">
   <tr>
-    <th class="text-center">Rank</th>
+    <th class="text-center">Res ID</th>
     <th class="text-center">Name</th>
     <th class="text-center">Likes</th>
   </tr>
+  </thead>
   <tr>
     <td class="text-center">1</td>
     <td class="text-center">
@@ -146,8 +150,8 @@ function sortTable() {
     rows = table.getElementsByTagName("TR");
     for (i = 1; i < (rows.length - 1); i++) {
       shouldSwitch = false;
-      x = rows[i].getElementsByTagName("TD")[0];
-      y = rows[i + 1].getElementsByTagName("TD")[0];
+      x = rows[i].getElementsByTagName("TD")[1];
+      y = rows[i + 1].getElementsByTagName("TD")[1];
       if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
         shouldSwitch= true;
         break;
