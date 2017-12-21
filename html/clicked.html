@@ -134,6 +134,7 @@ tr:nth-child(even) {
   function getRestData() {
     var urlParams = new URLSearchParams(window.location.search);
     var rest = urlParams.get('rest');
+    console.log(rest);
     $.ajax({
       url: 'rest.php',
       data: {
