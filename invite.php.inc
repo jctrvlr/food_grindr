@@ -36,7 +36,7 @@ class inviteProc {
     public function createInvite($user, $rest, $date, $time, $recip) {
         if($this->checkUser($recip)) {
             // user has account
-            $statement = "INSERT INTO invites (usr_email, recip_email, rest, inv_date, inv_time, inv_status) VALUES ('"+$user+"', '"+$recip+"', '"+$rest+"', '"+$date+"', '"+$time+"', 'pending');";
+            $statement = "INSERT INTO invites (usr_email, recip_email, rest, inv_date, inv_time, inv_status) VALUES ('".$user."', '".$recip."', '".$rest."', '".$date."', '".$time."', 'pending');";
             $resp = $this->db->query($statement);
             $type = "curr_user";
             $this->sendEmail($recip, $type, $rest, $date, $time, $user);
@@ -50,7 +50,7 @@ class inviteProc {
             return $succ;
         } else {
             // user doesn't have account yet
-            $statement = "INSERT INTO invites (usr_email, recip_email, rest, inv_date, inv_time, inv_status) VALUES ('"+$user+"', '"+$recip+"', '"+$rest+"', '"+$date+"', '"+$time+"', 'pending');";
+            $statement = "INSERT INTO invites (usr_email, recip_email, rest, inv_date, inv_time, inv_status) VALUES ('".$user."', '".$recip."', '".$rest."', '".$date."', '".$time."', 'pending');";
             $resp = $this->db->query($statement);
             $type = "non_user";
             $this->sendEmail($recip, $type, $rest, $date, $time, $user);
@@ -65,7 +65,7 @@ class inviteProc {
         }
     }
     public function getInvites($user) {
-        $statement = "SELECT * FROM invites WHERE usr_email = '"+$user+"';";
+        $statement = "SELECT * FROM invites WHERE usr_email = '".$user."';";
         $response = mysqli_fetch_all($this->db->query($statement), MYSQLI_ASSOC);
         if(mysqli_num_rows($response) == 0) {
             // no Invites
@@ -75,7 +75,7 @@ class inviteProc {
         }
     }
     public function getNotif($user) {
-        $statement = "SELECT * FROM notif WHERE usr_email = '"+$user+"';";
+        $statement = "SELECT * FROM notif WHERE usr_email = '".$user."';";
         $response = mysqli_fetch_all($this->db->query($statement), MYSQLI_ASSOC);
         if(mysqli_num_rows($response) == 0) {
             // no Notifications
@@ -85,12 +85,12 @@ class inviteProc {
         }
     }
     public function updateNotif($notif_id, $status) {
-        $statement = "UPDATE notif SET notif_status = '"+$status+"' WHERE notif_id = '"+$notif_id+"';";
+        $statement = "UPDATE notif SET notif_status = '".$status."' WHERE notif_id = '".$notif_id."';";
         $resp = $this->db->query($statement);
         return true;
     }
     public function updateInvite($invite_id, $status) {
-        $statement = "UPDATE invites SET inv_status = '"+$status+"' WHERE inv_id = '"+$invite_id+"';";
+        $statement = "UPDATE invites SET inv_status = '".$status."' WHERE inv_id = '".$invite_id."';";
         $resp = $this->db->query($statement);
         return true;
     }
