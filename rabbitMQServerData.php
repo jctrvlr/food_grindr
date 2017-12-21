@@ -18,6 +18,36 @@ function findPref(){
   return $output;
 }
 
+function getAllUsers() {
+  $dat = new dataProc();
+  $output = $dat->getAllUsers();
+  return $output;
+}
+
+function getRestUsers($restid) {
+  $dat = new dataProc();
+  $output = $dat->getRestUsers($restid);
+  return $output;
+}
+
+function deleteUser($userid) {
+  $dat = new dataProc();
+  $output = $dat->deleteUser($userid);
+  return $output;
+}
+
+function lockUser($userid) {
+  $dat = new dataProc();
+  $output = $dat->lockUser($userid);
+  return $output;
+}
+
+function unlockUser($userid) {
+  $dat = new dataProc();
+  $output = $dat->unlockUser($userid);
+  return $output;
+}
+
 function getFavorites($user) {
   $dat = new dataProc();
   $output = $dat->getFavorites($user);
@@ -59,6 +89,16 @@ function requestProcessor($request)
   }
   switch ($request['type'])
   {
+    case "get_all_users":
+      return getAllUsers();
+    case "get_rest_users":
+      return getRestUsers($request['rest_id']);
+    case "delete_user":
+      return deleteUser($request['user_id']);
+    case "lock_user":
+      return lockUser($request['user_id']);
+    case "unlock_user":
+      return unlockUser($request['user_id']);
     case "get_rest":
       return getRest($request['user'], $request['zip'], $request['last']); // last is last restaurant name, user is email
     case "rest_response":

@@ -18,21 +18,25 @@ class dataProc {
      * Constructor
      */
     public function __construct() {
-        $this->logindb = new mysqli("127.0.0.1","root","Ireland2018","it490");
+        $this->datadb = new mysqli("127.0.0.1","root","Ireland2018","it490");
 
-		if ($this->logindb->connect_errno != 0)
+		if ($this->datadb->connect_errno != 0)
 		{
-			echo "Error connecting to database: ".$this->logindb->connect_error.PHP_EOL;
+			echo "Error connecting to database: ".$this->datadb->connect_error.PHP_EOL;
 			// Error logging
 			$options = array();
 			$options[0] = 'e';
 			$options[1] = 'loginServer';
-			$options[2] = 'Error connecting to database: '.$this->logindb->connect_error.PHP_EOL;
+			$options[2] = 'Error connecting to database: '.$this->datadb->connect_error.PHP_EOL;
 			sendLogs($options);
 			exit(1);
 		}
 		echo "correctly connected to database".PHP_EOL;
     }
+    /**
+     * ADMIN FUNCTIONS
+     */
+    
     /**
      * This method is called from the frontend to retrieve
      * a list of the top liked restaurants which are then displayed
@@ -42,9 +46,43 @@ class dataProc {
      */
     public function adminGetTop() {
         $statement = "SELECT restaurants.res_id, restaurants.name, SUM(responses.liked) AS SUM FROM restaurants INNER JOIN responses ON restaurants.res_id=responses.res_id GROUP BY restaurants.res_id ORDER BY SUM DESC;";
-        $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
+        $resp = mysqli_fetch_all($this->datadb->query($statement), MYSQLI_ASSOC);
         return $resp;
     }
+    public function getAllUsers() {
+        $statement = "SELECT id, f_name, l_name, email FROM users;";
+        $resp = mysqli_fetch_all($this->datadb->query($statement), MYSQLI_ASSOC);
+        return $resp;
+    }
+    public function getRestUsers($restid) {
+        $statement = "SELECT id.users, f_name.users, l_name.users, email.users FROM responses INNER JOIN users ON responses.user = users.email WHERE responses.res_id = '"+$rest+"';";
+        $resp = mysqli_fetch_all($this->datadb->query($statement), MYSQLI_ASSOC);
+        return $resp;
+    }
+    public function deleteUser($userid) {
+        $statement = "DELETE FROM users WHERE id = '"+$userid+"';";
+        $resp = $this->datadb->query($statement);
+        if($resp) {
+            return true;
+        }
+    }
+    public function lockUser($userid) {
+        $statement = "UPDATE users SET lock = 1;";
+        $resp = $this->datadb->query($statement);
+        if($resp) {
+            return true;
+        }
+    }
+    public function unlockUser($userid) {
+        $statement = "UPDATE users SET lock = 0;";
+        $resp = $this->datadb->query($statement);
+        if($resp) {
+            return true;
+        }
+    }
+    /**
+     * END ADMIN FUNCTIONS
+     */
     /**
      * This method is called by the frontend to retrieve the favorites for a specified user. These favorite restaurants
      * are then parsed, and displayed on the users favorites page.
@@ -54,12 +92,12 @@ class dataProc {
      */
     public function getFavorites($user) {
         $statement = "SELECT responses.user, restaurants.res_id, restaurants.name, restaurants.address, restaurants.longitude, restaurants.latitude, restaurants.cuisine, restaurants.price_range, restaurants.thumbnail, restaurants.online_delivery, restaurants.menu FROM responses INNER JOIN restaurants ON responses.res_id=restaurants.res_id WHERE responses.liked=1 AND responses.user='".$user."' GROUP BY responses.res_id;";
-        $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
+        $resp = mysqli_fetch_all($this->datadb->query($statement), MYSQLI_ASSOC);
         $ret = array();
         for($i=0; $i < count($resp); $i++) {
             $resid = $resp[$i]['res_id'];
             $st = "SELECT * FROM ratings where res_id = ".$resid.";";
-            $response = $this->logindb->query($st);
+            $response = $this->datadb->query($st);
             $count = 0;
             $sum = 0;
             while($row = $response->fetch_assoc()) {
@@ -102,7 +140,7 @@ class dataProc {
         $this->ent_id = $this->getEnt($zip);
         $statement = "select * from restaurants where entity_id = '".$this->ent_id."';";
         // Get restaurants from zipcode
-        $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
+        $resp = mysqli_fetch_all($this->datadb->query($statement), MYSQLI_ASSOC);
         // Get user preferences
         $this->pref = $this->getUser($user);
 
@@ -121,7 +159,7 @@ class dataProc {
      */
     private function getEnt($zipcode) {
         $statement = "select * from city where zip=".$zipcode.";";
-        $resp = $this->logindb->query($statement);
+        $resp = $this->datadb->query($statement);
         $row = mysqli_fetch_array($resp, MYSQLI_ASSOC);
         return $row['entity_id'];
     }
@@ -131,7 +169,7 @@ class dataProc {
      */
     public function restResp($user, $res_id, $like, $zip, $last) {
         $statement = "insert into responses (user, res_id, liked) values ('".$user."','".$res_id."',".$like.");";
-        $response = $this->logindb->query($statement);
+        $response = $this->datadb->query($statement);
         if($response) {
             $res = $this->getRest($user, $zip, $last);
         } else {
@@ -148,7 +186,7 @@ class dataProc {
 
     public function insertLoc($loc, $ent_type, $ent_id, $lat, $lon, $zip) {
 		$statement = "insert ignore into city (name, entity_id, entity_type, longitude, latitude, zip) values ('".$loc."', '".$ent_id."', '".$ent_type."', '".$lon."', '".$lat."', '".$zip."');";
-        $response = $this->logindb->query($statement);
+        $response = $this->datadb->query($statement);
 		if ($response) {
 			return true;
 		} else {
@@ -165,7 +203,7 @@ class dataProc {
         foreach($res_arr as $item) {
             $location = $item['restaurant']['location'];
             $statement = "insert ignore into restaurants (entity_id, res_id, name, address, zipcode, longitude, latitude, cuisine, price_range, thumbnail, online_delivery) values ('".$entity_id."','".$item['restaurant']['id']."','".$item['restaurant']['name']."','".$location['address']."','".$location['zipcode']."','".$location['longitude']."','".$location['latitude']."','".$item['restaurant']['cuisines']."','".$item['restaurant']['price_range']."','".$item['restaurant']['thumb']."','".$item['restaurant']['has_online_delivery']."');";
-            $response = $this->logindb->query($statement);
+            $response = $this->datadb->query($statement);
 
            // if ($response) {
                 //return true;
@@ -184,7 +222,7 @@ class dataProc {
     private function checkLocation($loc, $zip, $lat, $lon) {
         // Check if location is in database and if empty send request through rabbitmq to backend to get locations
         $statement = "select * from city where zip = '".$zip."';";
-        $response = $this->logindb->query($statement);
+        $response = $this->datadb->query($statement);
         if(mysqli_num_rows($response) == 0) { // Check if exists in database here
             $client = new rabbitMQClient("rabbitMQBack.ini","testServer");
             $request = array();
@@ -213,7 +251,7 @@ class dataProc {
 
     private function getUser($user) {
         $statement = "select cuisine from preferences where email = '".$user."';";
-        $response = $this->logindb->query($statement);
+        $response = $this->datadb->query($statement);
         $row = mysqli_fetch_array($response, MYSQLI_ASSOC);
 
         return $row['cuisine'];
@@ -250,7 +288,7 @@ class dataProc {
     // Utility Functions
     private function getCoord($zip) {
         $statement = "select * from zipcode where zipcode='".$zip."';";
-        $response = $this->logindb->query($statement);
+        $response = $this->datadb->query($statement);
         while($row = $response->fetch_assoc()) {
             $loc_arr = array();
             $loc_arr['name']=$row["city"];
@@ -310,10 +348,10 @@ class dataProc {
     public function findPref() {
         $statement = "select email from users;";
         // Get different emails
-        $resp = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
+        $resp = mysqli_fetch_all($this->datadb->query($statement), MYSQLI_ASSOC);
         for($x = 0; $x <= count($resp)-1; $x++) {
             $statement = "SELECT responses.res_id, responses.liked, restaurants.cuisine FROM responses INNER JOIN restaurants ON responses.res_id=restaurants.res_id WHERE responses.user = '".$resp[$x]['email']."';";
-            $res = mysqli_fetch_all($this->logindb->query($statement), MYSQLI_ASSOC);
+            $res = mysqli_fetch_all($this->datadb->query($statement), MYSQLI_ASSOC);
             $count = array();
             foreach($res as $item) {
                 $cuisine = $item['cuisine'];
@@ -334,7 +372,7 @@ class dataProc {
                 return;
             }
             $st = "UPDATE preferences SET cuisine='".$ak[0]."' WHERE email='".$resp[$x]['email']."';";
-            $this->logindb->query($st);
+            $this->datadb->query($st);
         }
         return true;
     }

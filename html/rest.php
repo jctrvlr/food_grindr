@@ -6,10 +6,6 @@ require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 require_once('logger.inc');
 
-// Hardcoded session variables that are set when log in.$_COOKIE
-//$_SESSION["email"] = "jic6@njit.edu";
-//$_SESSION["zipcode"] = "07103";
-
 if (!isset($_POST))
 {
 	$msg = "NO POST MESSAGE SET, POLITELY FUCK OFF";
@@ -21,6 +17,40 @@ $request = $_POST;
 
 switch ($request["type"])
 {
+	case "get_all_users": {
+		$req=array();
+		$req['type'] = "get_all_users";
+		$response = $client->send_request($req);
+		break;
+	}
+	case "get_rest_users": {
+		$req=array();
+		$req['type'] = "get_rest_users";
+		$req['rest_id'] = $request['rest_id'];
+		$response = $client->send_request($req);
+		break;
+	}
+	case "delete_user": {
+		$req=array();
+		$req['type'] = "delete_user";
+		$req['user_id'] = $request['user_id'];
+		$response = $client->send_request($req);
+		break;
+	}
+	case "lock_user": {
+		$req=array();
+		$req['type'] = "lock_user";
+		$req['user_id'] = $request['user_id'];
+		$response = $client->send_request($req);
+		break;
+	}
+	case "unlock_user": {
+		$req=array();
+		$req['type'] = "unlock_user";
+		$req['user_id'] = $request['user_id'];
+		$response = $client->send_request($req);
+		break;
+	}
 	case "get_res": {
 		$req=array();
 		$req['type'] = "get_rest";
