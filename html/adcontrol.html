@@ -1,0 +1,261 @@
+<html>
+
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8" />
+
+  <title>Admin for Dumpster Fire Group</title>
+
+  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+
+    <link rel="stylesheet" href="rank.css" media="screen" type="text/css" />
+
+</head>
+
+<body onload="getUsers()">
+
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+   
+   <div class="row bottom-nav">
+      <div class="col-md-12">
+         <div class="nav-con">
+            <ul>
+               <li onClick="location.href='adcontrol.html';">
+                  <i class="fa fa-users"></i>
+                  <h4>Users</h4>
+               </li>
+               
+               <li>
+                  <li onClick="location.href='stats.html';">
+                  <i class="fa fa-home" ></i>
+                  <h4>Restaurants</h4>
+               </li>
+               </li>
+               <li>
+        
+               </li>
+               <li>
+                  <i class="fa fa-gears" ></i>
+                  <h4>Logout</h4>
+               </li>
+            </ul>
+         </div>
+      </div>
+   </div>
+  <div class="row quick-bar">
+    <thead>
+    <tr>
+        <th class="text-center" width="100%"></th>
+        <h3><center>Admin Portal<center></h3>
+    </tr>
+    </thead>
+     <div class="col-md-2">
+      
+    </div> 
+  </div>
+
+  
+   <div class="row content">
+      <div class="col-md-12">
+          
+         <table class="table table-hover">
+            <thead id="hehe">
+              <tr>
+                <th class="text-center" width="10%">User ID</th>
+                <th class="text-center" width="16%">First Name</th>
+                <th class="text-center" width="16%">Last Name</th>
+                <th class="text-center" width="16%">Email</th>
+                <th class="text-center" width="16%">Password</th>
+                <th class="text-center" width="22%">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td contenteditable="false" class="text-center">456823</td>
+                  <td contenteditable="true" class="text-center">Khari</td>
+                  <td contenteditable="true" class="text-center">Davis</td>
+                  <td contenteditable="true" class="text-center">davis@gmail.com</td>
+                  <td contenteditable="true" class="text-center">***</td>
+                  <td>
+                      <div class="btn-group" style="width:100%">
+                        <button type="button" style="width:22%" class="btn btn-success">Edit</button>
+                        <button type="button" style="width:28%" class="btn btn-danger">Delete</button>
+                        <button type="button" style="width:22%" class="btn btn-warning">Lock</button>
+                        <button type="button" style="width:28%" class="btn btn-primary">Unlock</button>
+                      </div>
+                  </td>
+              
+               </tr>
+               <tr>
+                  <td contenteditable="false" class="text-center">3184</td>
+                  <td contenteditable="true" class="text-center">Charles</td>
+                  <td contenteditable="true" class="text-center">Smith</td>
+                  <td contenteditable="true" class="text-center">smith@gmail.com</td>
+                  <td contenteditable="true" class="text-center">*********</td>
+                  <td>
+                    <div class="btn-group" style="width:100%">
+                        <button type="button" style="width:22%" class="btn btn-success">Edit</button>
+                        <button type="button" style="width:28%" class="btn btn-danger">Delete</button>
+                        <button type="button" style="width:22%" class="btn btn-warning">Lock</button>
+                        <button type="button" style="width:28%" class="btn btn-primary">Unlock</button>
+                    </div>
+                </td>
+                  
+                      
+               </tr>
+               
+               <tr>
+                  <td contenteditable="false" class="text-center">32321</td>
+                  <td contenteditable="true" class="text-center">Daniel</td>
+                  <td contenteditable="true" class="text-center">Sams</td>
+                  <td contenteditable="true" class="text-center">sams@gmail.com</td>
+                  <td contenteditable="true" class="text-center">********</td>
+                  <td>
+                    <div class="btn-group" style="width:100%">
+                      <button type="button" style="width:22%" class="btn btn-success">Edit</button>
+                      <button type="button" style="width:28%" class="btn btn-danger">Delete</button>
+                      <button type="button" style="width:22%" class="btn btn-warning">Lock</button>
+                      <button type="button" style="width:28%" class="btn btn-primary">Unlock</button>
+                    </div>
+                </td>
+              
+               </tr>
+              
+              
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+  function handleGetUsers(res) {
+    var json = JSON.parse(res);
+    for (var i = 0; i < json.length; i++) {
+      var js = json[i];
+      console.log(js);
+      document.getElementById("hehe").innerHTML += "<tr><td contenteditable='false' id='"+js.id+"-userid' class='text - center'>"+ js.id+"</td><td contenteditable='true' id='"+ js.id +"-f_name' class='text - center'>"+js.f_name+"</td><td contenteditable='true' id='"+ js.id +"-l_name' class='text - center'>"+js.l_name+"</td><td contenteditable='true' id='"+ js.id +"-email' class='text - center'>"+js.email+"</td><td contenteditable='true' id='"+ js.id +"-pass' class='text - center'>*******</td><td><div class='btn-group' style='width:100%'><button type='button' style='width:22%' class='btn btn-success' onClick='updateInfo("+js.id+")'>Edit</button><button type='button' style='width:28%' class='btn btn-danger' onClick='deleteUser("+js.id+")'>Delete</button><button type='button' style='width:22%' class='btn btn-warning' onClick='lockUser("+js.id+")'>Lock</button><button type='button' style='width:28%' class='btn btn-primary' onClick='unlockUser(" + js.id +")'>Unlock</button></div></td ></tr>";
+    }
+  }
+
+  function handleUpdateInfo(res) {
+    var json = JSON.parse(res);
+    console.log(json);
+    if (json) {
+      document.getElementById("alert").innerHTML = "Settings changed successfully!";
+    } else {
+      document.getElementById("alert").innerHTML = "There was a problem. Please try again.";
+    }
+  }
+
+  function updateInfo(userid) {
+    var em = document.getElementById(userid+"-email").innerText;
+    var fn = document.getElementById(userid+"-f_name").innerText;
+    var ln = document.getElementById(userid+"-l_name").innerText;
+    var pw = document.getElementById(userid+"-pass").innerText;
+    $.ajax({
+      url: 'rest.php',
+      data: {
+        type: 'update_user',
+        email: em,
+        f_name: fn,
+        l_name: ln,
+        pass: pw
+      },
+      type: 'post',
+      success: function (output) {
+        handleUpdateInfo(output);
+      }
+    });
+  }
+
+  function handleDeleteUser(res) {
+    var json = JSON.parse(res);
+    console.log(json);
+    if (json) {
+      document.getElementById("alert").innerHTML = "Settings changed successfully!";
+    } else {
+      document.getElementById("alert").innerHTML = "There was a problem. Please try again.";
+    }
+  }
+
+  function deleteUser(userid) {
+    $.ajax({
+      url: 'rest.php',
+      data: {
+        type: 'delete_user',
+        user_id: userid
+      },
+      type: 'post',
+      success: function (output) {
+        handleDeleteUser(output);
+      }
+    });
+  }
+
+  function lockUser(userid) {
+    $.ajax({
+      url: 'rest.php',
+      data: {
+        type: 'lock_user',
+        user_id: userid
+      },
+      type: 'post',
+      success: function (output) {
+        handleLockUser(output);
+      }
+    });
+  }
+
+  function handleLockUser(res) {
+    var json = JSON.parse(res);
+    console.log(json);
+    if (json) {
+      document.getElementById("alert").innerHTML = "Settings changed successfully!";
+    } else {
+      document.getElementById("alert").innerHTML = "There was a problem. Please try again.";
+    }
+  }
+
+  function unlockUser(userid) {
+    $.ajax({
+      url: 'rest.php',
+      data: {
+        type: 'unlock_user',
+        user_id: userid
+      },
+      type: 'post',
+      success: function (output) {
+        handleUnlockUser(output);
+      }
+    });
+  }
+
+  function handleUnlockUser(res) {
+    var json = JSON.parse(res);
+    console.log(json);
+    if (json) {
+      document.getElementById("alert").innerHTML = "Settings changed successfully!";
+    } else {
+      document.getElementById("alert").innerHTML = "There was a problem. Please try again.";
+    }
+  }
+
+  function getUsers() {
+    $.ajax({
+      url: 'rest.php',
+      data: {
+        type: 'get_all_users',
+      },
+      type: 'post',
+      success: function (output) {
+        handleGetUsers(output);
+      }
+    });
+  }
+</script>
+
+</html>

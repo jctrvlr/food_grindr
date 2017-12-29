@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+<link href='ah.css' rel='stylesheet' type='text/css'>
+<div class = "zip">
+<h1>Please enter your zip code</h1>
+<input type="text" id="zipcode" name="zipcode" pattern="[0-9]{5}" placeholder="Enter your ZIP code" required="required">
+<input type="submit" value="GO" id="go">
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+function submitZipcode()
+{
+	var zipcode = document.getElementById("zipcode").value;
+	sendLoginRequest(zipcode);
+	return 0;
+}
+
+function sendZipcode(zipcode)
+{
+    console.log('Inside sendLoginRequest');
+    $.ajax({
+            url: 'login.php',
+            data: {
+                type: 'login',
+                zipcode: zipcode,
+              
+            },
+            type: 'post',
+            success: function (output) {
+                HandleLoginResponse(output);
+            }
+    });
+}
+
+</script>
+</html>

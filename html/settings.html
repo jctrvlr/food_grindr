@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html>
+    <<meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8" />
+    <head>
+            <link rel="stylesheet" type="text/css" href="css/main.css">
+    </head>
+    
+    <style type="text/css">
+    label{
+        display:inline-block;
+        width:100px;
+    }
+    </style>
+
+    <body onload="getUserInfo(); getNotif();" >
+
+    <div class="wrapper">
+    <div class="wrapper_container">
+    <!-- start content -->
+        <div class="site-wrapper active" id="target">
+        <div class="site-wrapper_left-col">
+            <a href="#" class="logo">Food Grindr</a>
+            <div class="left-nav">
+               
+               <a href="main.html"><i class="fa fa-dashboard"></i>Dashboard</a>
+                <a href="favorites.html"><i class="fa fa-favorites"></i>Favorites</a>
+                <a href="settings.html"><i class="fa fa-settings"></i>Settings</a>
+                <a href="about.html"><i class="fa fa-about"></i>About</a>
+                <a href="#" onclick="logout()"><i class="fa fa-about"></i>Logout</a>
+               
+            </div>
+        </div>
+        <div class="site-wrapper_top-bar">
+            <ul id="menu-header-menu-left" class="nav navbar-nav navbar-left">
+               <li id="submenu">
+                <a href="#" id="toggle"><img src="bellwhite.png" alt="bell"></a>  
+                  <ul class="dropdown-menu" id="notifs">
+                  </ul>
+               </li>
+            </ul>
+         </div>
+        
+            <!-- inner content -->
+            <div class="row">
+                               
+                <div class="col-2">
+                    <div class="chat">
+                        <div class="user-item_infoname">
+                        <p id="name"></p>
+                        </div>
+                        <div class="user-item_info">
+                            <span id="alert"></span>
+                        <!--<p id="name"></p>-->
+                        <label>Zipcode</label>
+                        <input id="zip" /><br>
+                        <label>First Name</label>
+                        <input id="f_name" /><br>
+                        <label>Last Name</label>
+                        <input id="l_name" /><br>
+                        <label>Password</label>
+                        <input type="password"id="password" /><br><br>
+                        <div style="text-align:center">
+                        <button type="button" onclick="updateInfo()">Submit</button>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           <!-- </div> -->
+            <!-- end inner content -->
+        </div>  
+    <!-- end content -->
+    </div>
+    </div>
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function handleGetNotif(res) {
+                json = JSON.parse(res);
+                for (var i = 0; i < json.length; i++) {
+                    var js = json[i];
+                    var email = js.notif_inviter;
+                    var res = js.notif_rest;
+                    var date = js.notif_date;
+                    var time = js.notif_time;
+                    if (js.notif_status === "pending") {
+                        document.getElementById("notifs").innerHTML += "<li style='background: blue'><a href=''>" + email + " has invited you to " + res + " on " + date + " at " + time + "</a></li>";
+                    } else {
+                        document.getElementById("notifs").innerHTML += "<li style='background: cyan'><a href=''>" + email + " has invited you to " + res + " on " + date + " at " + time + "</a></li>";
+                    }
+
+                }
+                res = JSON.parse
+                console.log(json);
+            }
+            function getNotif() {
+                $.ajax({
+                    url: 'invite.php',
+                    data: {
+                        type: 'get_notif',
+                    },
+                    type: 'post',
+                    success: function (output) {
+                        handleGetNotif(output);
+                    }
+                });
+            }
+        function getUserInfo() {
+            $.ajax({
+                url: 'login.php',
+                data: {
+                    type: 'get_settings',
+                },
+                type: 'post',
+                success: function (output) {
+                    handleUserInfo(output);
+                }
+            });
+        }
+        
+        function handleUserInfo(res) {
+            var json = JSON.parse(res);
+            document.getElementById("zip").setAttribute("value", json.zipcode);
+            document.getElementById("f_name").setAttribute("value", json.f_name);
+            document.getElementById("l_name").setAttribute("value", json.l_name);
+            document.getElementById("password").setAttribute("value", "********");
+        }
+        
+        function handleUpdateInfo(res) {
+            var json = JSON.parse(res);
+            console.log(json);
+            if(json) {
+                document.getElementById("alert").innerHTML="Settings changed successfully!";
+            } else {
+                document.getElementById("alert").innerHTML = "There was a problem. Please try again.";
+            }
+        }
+        function updateInfo() {
+            var zip = document.getElementById("zip").value;
+            var fn = document.getElementById("f_name").value;
+            var ln = document.getElementById("l_name").value;
+            var pw = document.getElementById("password").value;
+            $.ajax({
+                url: 'login.php',
+                data: {
+                    type: 'update_info',
+                    zip: zip,
+                    f_name: fn,
+                    l_name: ln,
+                    pass: pw
+                },
+                type: 'post',
+                success: function (output) {
+                    handleUpdateInfo(output);
+                }
+            });
+        }
+         // Logout functions
+        function handleLogout() {
+            window.location.replace("login.html");
+        }
+        function logout() {
+            $.ajax({
+                url: 'rest.php',
+                data: {
+                    type: 'logout',
+                },
+                type: 'post',
+                success: function () {
+                    handleLogout();
+                }
+            });
+        }
+    </script>
+</html>

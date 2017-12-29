@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="UTF-8">
+        
+          <title>Admin for Dumpster Fire Group</title>
+        
+          <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+        
+            <link rel="stylesheet" href="clicked.css" media="screen" type="text/css" />
+<style>
+table {
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 16px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+</style>
+</head>
+<body onload="getRestData()">
+
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <div class="container">
+
+
+
+
+            <div class="row bottom-nav">
+                <div class="col-md-12">
+                   <div class="nav-con">
+                      <ul>
+                         <li onClick="location.href='stats.html';">
+                            <i class="fa fa-users"></i>
+                            <h4>Users</h4>
+                         </li>
+                         <li>
+                            
+                         </li>
+                         <li onClick="location.href='stats.html';">
+                            <i class="fa fa-home" ></i>
+                            <h4>Restaurants</h4>
+                            
+                         </li>
+                         <li>
+                           
+                         </li>
+                         <li>
+                            <i class="fa fa-gears" ></i>
+                            <h4>Logout</h4>
+                         </li>
+                      </ul>
+                   </div>
+                </div>
+             </div>
+    <div class="row quick-bar">
+      <thead id="hehe">
+       
+            
+      <tr>
+          <th class="text-center" width="100%"></th>
+          <h3><center>Restaurant Followers<center></h3>
+      </tr>
+      </thead>
+       <div class="col-md-2">
+        
+      </div> 
+    </div>
+  
+    
+     <div class="row content">
+        <div class="col-md-12">
+           
+              <p><button onclick="sortTable()">Sort</button></p>
+<table id="myTable" class="table table-bordered no-more-tables">
+  <thead id="hehe">
+  <tr>
+    <th class="text-center">User ID</th>
+    <th class="text-center">Name</th>
+    <th class="text-center">Email</th>
+  </tr>
+  </thead>
+</div>
+</div>
+</div>
+
+</table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+  function handleGetRestData(res) {
+    var json = JSON.parse(res);
+    for (var i = 0; i < json.length; i++) {
+      var js = json[i];
+      document.getElementById("hehe").innerHTML += "<tr><td class='text-center'>"+ js.id+"</td><td class='text-center'>"+js.f_name+" "+js.l_name+"</td><td class='text-center'>"+js.email+"</td></tr>";
+    }
+  }
+
+  function getRestData() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var rest = urlParams.get('rest');
+    console.log(rest);
+    $.ajax({
+      url: 'rest.php',
+      data: {
+        type: 'get_rest_users',
+        rest_id: rest
+      },
+      type: 'post',
+      success: function (output) {
+        handleGetRestData(output);
+      }
+    });
+  }
+
+function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("myTable");
+  switching = true;
+  while (switching) {
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[0];
+      y = rows[i + 1].getElementsByTagName("TD")[0];
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        shouldSwitch= true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+</script>
+
+</body>
+</html>
